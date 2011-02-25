@@ -1,0 +1,101 @@
+# Migrating my old .gitconfig blog post from 2007 to here so I can update it easier.
+# Original URL:
+# http://geek.susanpotter.net/2007/11/my-gitconfig.html
+[user]
+  name = Susan Potter # make sure you change this
+  email = me@susanpotter.net # make sure you change this
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[diff]
+  rename = copy
+  color = auto
+[apply]
+  whitespace = strip
+[pager]
+  color = true
+[status]
+  color = auto
+[branch]
+	autosetuprebase = always
+[gc]
+  reflogexpireunreachable = 1
+[rerere]
+	enabled = 1
+[alias]
+  co = "checkout"
+  ci = "commit"
+  ciall = "commit -a -v"
+  cleanbr = "symbolic-ref -m 'Creating clean branch' HEAD "
+  unmerge = "reset --hard ORIG_HEAD"
+  lsbr = "branch -a" # list all branches, even remote ones
+  mkbr = "branch" # create branch if you specify a branch name after it, e.g. git mkbr upgrading_rails
+  # remove branch named after it, e.g. git rmbr upgrading_rails
+  rmbr = "branch -d"
+  # rename branch from one name to another
+  mvbr = "branch -m"
+  # add tracking to a branch
+  track = "branch --track"
+  log = "log -p"
+  lol = "log --graph --decorate --pretty=oneline --abbrev-commit"
+  lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all"
+  # list remote repositories
+  lsrem = "remote"
+  # list stashes
+  lsst = "stash list"
+  # list all tags, to keep commands consistent, e.g. git lstag
+  lstag = "tag -l"
+  # list unmerged branches
+  lsunmerged = "branch --no-merged"
+  # create a new tag based on specified commit
+  mktag = "tag -a"
+  # remove existing tag by name
+  rmtag = "tag -d"
+  # rename tag from one name to another
+  mvtag = "tag -m"
+  # create new remote repository for project
+  mkrem = "remote add"
+  # initialize all submodules
+  modinit = "submodule init"
+  # update all submodules
+  modup = "submodule update"
+  # show status of all submodules
+  modst = "submodule status"
+  # add new submodule, i.e. git modadd module-name url
+  modadd = "submodule add"
+  # push local committed changes to rubyforge and origin (usually GitHub)
+  osspush = !git push rubyforge master && git push origin master
+  # pull changes from rubyforge and origin (usually GitHub)
+  osspull = !git pull rubyforge master && git pull origin master
+  # sync (pull then push) from rubyforge and origin (usually GitHub)
+  osssync = !git osspull && git osspush
+  # show last 15 log entries
+  recentlog = "log -n 15"
+  # short log
+  shlog = "log --oneline --decorate"
+  # show status, keep same as svn command I used most frequently
+  st = "status --porcelain"
+  # staging rebase-push
+  # assumes you have a tracking staging branch which will be rebased from master
+  stagingpush = !git co staging && git rebase master && git push && git co master
+  # another alias for status that some scripts might use
+  stat = "status --porcelain"
+  # fetch and rebase from svn repository
+  svnpull = !git svn fetch && git svn rebase
+  # push keeping each local commit as atomic.
+  svnpush = !git svn dcommit
+  # tracking push
+  tpush = "push -u"
+  # word diff
+  wdiff = "diff --word-diff"
+  # prints out the branches a commit is on
+  whbr = "branch -a --contains"
+  # prints commits from a branch are already present upstream
+  whci = "cherry -v"
+  # prints out the tags a commit is a part of
+  whtag = "name-rev --name-only"
+  # search alias
+  search = "log --pretty=short -S"
+  # pull and update submodules
+  up = !git pull && git submodule update

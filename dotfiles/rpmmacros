@@ -1,0 +1,8 @@
+%_topdir          %(echo $HOME)/src/redhat
+%vendor           linsignia
+%_host            x86_64-redhat-linux
+%_smp_mflags      -j2
+%packager         Susan Potter <susan@managedopensource.com>
+%vendor           Linsignia YUM Repository http://linsignia.com
+%_signature       gpg
+%_gpg_name        Susan Potter (Managed Open Source)

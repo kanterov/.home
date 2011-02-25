@@ -1,0 +1,21 @@
+# .zshrc
+# (c) 2006-2011 Susan Potter <me at susanpotter dot net>
+# ~/.zshrc
+
+autoload -U compinit zrecompile
+ZSH_CACHE_DIR=${HOME}/.zsh.d/cache
+mkdir -p ${ZSH_CACHE_DIR}
+
+if [ ${UID} -eq 0 ]; then
+  compinit
+else
+  compinit -d ${ZSH_CACHE_DIR}/zcomp-${HOST}
+  for f in ${HOME}/.zshrc ${ZSH_CACHE_DIR}/zcomp-${HOST}; do
+    zrecompile -p ${f} && rm -f ${f}.zwc.old
+  done
+fi
+
+setopt extended_glob
+for snippet in ${HOME}/.zsh.d/rc/S[0-9][0-9]*[^~]; do
+  source ${snippet}
+done

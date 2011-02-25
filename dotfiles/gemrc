@@ -1,0 +1,10 @@
+--- 
+:benchmark: false
+:verbose: true
+:update_sources: true
+:sources: 
+- http://www.gemcutter.org/
+:bulk_threshold: 1000
+:backtrace: false
+gem: --no-ri
+rdoc: --inline-source --line-numbers --format=html

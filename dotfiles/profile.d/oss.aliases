@@ -1,0 +1,8 @@
+OSS_DIR=${HOME}/code/oss
+OSS_TWITTER4R_DIR=${OSS_DIR}/twitter4r
+
+alias vim.oss.twitter4r="vim --servername oss.twitter4r ${OSS_TWITTER4R_DIR}"
+
+alias goto.oss="cd ${OSS_DIR}"
+alias goto.oss.twitter4r="cd ${OSS_TWITTER4R_DIR}"
+

@@ -1,0 +1,7 @@
+zmodload zsh/complist
+autoload -Uz colors
+autoload -Uz vcs_info
+colors
+zmodload -a zsh/stat stat
+zmodload -a zsh/zpty zpty
+zmodload -ap zsh/mapfile mapfile

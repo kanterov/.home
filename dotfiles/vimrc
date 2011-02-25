@@ -1,0 +1,2 @@
+source $HOME/.vim.d/global/global.vim
+source $HOME/.vim.d/global/functions.vim

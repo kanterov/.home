@@ -1,0 +1,4 @@
+if [[ -s ${HOME}/.Xdefaults ]]; then
+    xrdb -merge ${HOME}/.Xdefaults
+fi
+

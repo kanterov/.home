@@ -1,0 +1,8 @@
+# environment variables
+if [[ -s ${HOME}/.profile.d/environment ]] ; then source ${HOME}/.profile.d/environment ; fi
+
+# rvm-install added line
+if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
+
+# merge .Xdefaults settings
+if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi

@@ -1,0 +1,4 @@
+Emacs*font: Monospace-9
+Emacs*geometry: 0x0+1000x768
+emacsclient*font: Monospace-9
+emacsclient*geometry: 0x0+1000x768

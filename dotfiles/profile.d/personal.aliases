@@ -1,0 +1,10 @@
+PERSONAL_DIR=${HOME}/code/personal
+PERSONAL_WEB_DIR=${PERSONAL_DIR}/website
+
+# Vim launch shortcuts
+alias vim.personal.web="vim --servername personal.web ${PERSONAL_WEB_PATH}"
+
+# Directory shortcuts
+alias goto.personal="cd ${PERSONAL_DIR}"
+alias goto.personal.web="cd ${PERSONAL_WEB_DIR}"
+
