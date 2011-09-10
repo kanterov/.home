@@ -32,7 +32,7 @@
   lsbr = "branch -a" # list all branches, even remote ones
   mkbr = "branch" # create branch if you specify a branch name after it, e.g. git mkbr upgrading_rails
   # remove branch named after it, e.g. git rmbr upgrading_rails
-  rmbr = "branch -d"
+  rmbr = "branch -D"
   # rename branch from one name to another
   mvbr = "branch -m"
   # add tracking to a branch
