@@ -9,6 +9,8 @@ if [ -f ${HOME}/.bash_profile ]; then
         . ${HOME}/.bash_profile
 fi
 
+if [[ -x ${HOME}/.profile_environment ]] ; then source ${HOME}/.profile_environment ; fi
+
 # rvm-install added line:
-if [[ -s /home/supo/.rvm/scripts/rvm ]] ; then source /home/supo/.rvm/scripts/rvm ; fi
+if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
 
