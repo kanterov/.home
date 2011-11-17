@@ -23,6 +23,12 @@
   reflogexpireunreachable = 1
 [rerere]
 	enabled = 1
+[github]
+  user = mbbx6spp
+  token = a6f0c21f9b0d4bb68ca7408decf92d59
+[core]
+  autocrlf = input
+  safecrlf = true
 [alias]
   co = "checkout"
   ci = "commit"
@@ -35,11 +41,11 @@
   rmbr = "branch -D"
   # rename branch from one name to another
   mvbr = "branch -m"
-  # add tracking to a branch
-  track = "branch --track"
+  hist = "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
   log = "log -p"
   lol = "log --graph --decorate --pretty=oneline --abbrev-commit"
   lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all"
+  lsmerged = "branch --merged"
   # list remote repositories
   lsrem = "remote"
   # list stashes
@@ -72,6 +78,8 @@
   osssync = !git osspull && git osspush
   # show last 15 log entries
   recentlog = "log -n 15"
+  # stat diff
+  sdiff = "diff --stat"
   # short log
   shlog = "log --oneline --decorate"
   # show status, keep same as svn command I used most frequently
@@ -79,6 +87,7 @@
   # staging rebase-push
   # assumes you have a tracking staging branch which will be rebased from master
   stagingpush = !git co staging && git rebase master && git push && git co master
+  stashall = "stash -u"
   # another alias for status that some scripts might use
   stat = "status --porcelain"
   # fetch and rebase from svn repository
@@ -87,6 +96,8 @@
   svnpush = !git svn dcommit
   # tracking push
   tpush = "push -u"
+  # add tracking to a branch
+  track = "branch --track"
   # word diff
   wdiff = "diff --word-diff"
   # prints out the branches a commit is on
