@@ -25,6 +25,7 @@
 	enabled = 1
 [github]
   user = mbbx6spp
+  # Yeah, it doesn't work - boo hoo, script kiddies! ;P
   token = a6f0c21f9b0d4bb68ca7408decf92d59
 [core]
   autocrlf = input
