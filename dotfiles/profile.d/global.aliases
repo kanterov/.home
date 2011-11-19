@@ -43,3 +43,5 @@ alias tiga='tig --all'
 alias flushdns="sudo /etc/init.d/nscd restart"
 alias findbackups="find . -name '*~'"
 
+# Most important alias ever. Be nice to your shell.
+alias please=sudo
