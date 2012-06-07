@@ -18,7 +18,7 @@
 [status]
   color = auto
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
 [gc]
   reflogexpireunreachable = 1
 [rerere]
@@ -90,7 +90,7 @@
   stagingpush = !git co staging && git rebase master && git push && git co master
   stashall = "stash -u"
   # another alias for status that some scripts might use
-  stat = "status --porcelain"
+  stat = "status -sb"
   # fetch and rebase from svn repository
   svnpull = !git svn fetch && git svn rebase
   # push keeping each local commit as atomic.
@@ -108,6 +108,9 @@
   # prints out the tags a commit is a part of
   whtag = "name-rev --name-only"
   # search alias
-  search = "log --pretty=short -S"
+  search = "log --all  --pretty=oneline -S"
+  fresh-search = !git fetch origin && git search
   # pull and update submodules
   up = !git pull && git submodule update
+[help]
+	autocorrect = 1

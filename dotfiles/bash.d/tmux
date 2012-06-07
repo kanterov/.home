@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+DEFAULT_SESSION="development"
+SH_CMD="exec bash"
+DSK_MCSCMD="cd ${DSK_DIR}/mailchannel; ${SH_CMD}"
+DSK_WEBCMD="cd ${DSK_DIR}/assistly; ${SH_CMD}"
+DSK_INFCMD="cd ${DSK_DIR}/infrastructure; ${SH_CMD}"
+
+function trimSession() {
+  local name=$1;
+  echo ${1};
+}
+
+# This should only ever return either "0" or "1"
+function tmuxSessionMatches() {
+  local name=$1;
+  trimSession $(tmux ls | grep "^${name}$" | wc -l);
+}
+
+function configureWindows() {
+  # Create Desk MC window
+  tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
+  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n dskmcs "${DSK_MCSCMD}";
+  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
+  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:1 -k -n dskweb "${DSK_WEBCMD}";
+  tmux split-window -v   -t ${DEFAULT_SESSION}:1 "${DSK_WEBCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:2 -k -n dskinf "${DSK_INFCMD}";
+  tmux split-window -h   -t ${DEFAULT_SESSION}:2 "${DSK_INFCMD}";
+  tmux split-window -v   -t ${DEFAULT_SESSION}:2 "${DSK_INFCMD}";
+}
+
+tmux start-server
+if [[ -z $TMUX ]]; then
+  if [ ! -z "$SSHAGENT" ]; then
+    echo "Starting ssh-agent ${SSH_AUTH_SOCK}...";
+    CMD="$SSHAGENT $SSHAGENTARGS"
+    echo "Evaluating $CMD"
+    SSHAGENTOUT=$($CMD)
+    echo "Output $SSHAGENTOUT"
+    eval $SSHAGENTOUT;
+  fi
+
+  if [[ "0" == $(tmuxSessionMatches ${DEFAULT_SESSION}) ]]; then
+    echo "Launching tmux base session ${DEFAULT_SESSION}...";
+    tmux new-session -d -s ${DEFAULT_SESSION};
+    configureWindows;
+    tmux attach -t ${DEFAULT_SESSION};
+  else
+    echo "Launching synced copy of base session ${DEFAULT_SESSION}...";
+    sid="${DEFAULT_SESSION}-$(date +%Y%m%d%H%M%S)";
+    tmux new-session -d -t ${sid} -s ${DEFAULT_SESSION};
+    configureWindows;
+    tmux attach -t ${sid};
+  fi
+fi

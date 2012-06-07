@@ -1,5 +1,6 @@
 # Bundle prefix aliases
 alias brake="bundle exec rake"
+alias bguard="bundle exec guard"
 
 # JRuby aliases
 alias jgem="jruby -S gem"

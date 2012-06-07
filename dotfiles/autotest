@@ -1,22 +1,18 @@
-# -*- ruby -*-
-module Autotest::GnomeNotify
-  EXPIRATION_IN_SECONDS = 5
-  ERROR_ICON = "gtk-dialog-error"
-  SUCCESS_ICON = "gtk-dialog-info"
-  def self.notify(title, msg, icon)
-    options = "-t #{EXPIRATION_IN_SECONDS * 1000} -i #{icon}"
-    system "notify-send #{options} '#{title}' '#{msg}'"
+require 'autotest/fsevent'
+require 'autotest/rails'
+require 'autotest/growl'
+require "autotest/restart"
+#require 'redgreen/autotest'
+require 'autotest/timestamp'
+
+Autotest.add_hook :initialize do |autotest|
+  %w{.git .svn .hg .DS_Store ._* vendor}.each do |exception|
+    autotest.add_exception(exception)
   end
-  Autotest.add_hook :ran_command do |at|
-    results = [at.results].flatten.join("\n")
-    output = results.slice(/(\d+)\s+examples?,\s*(\d+)\s+failures?(,\s*(\d+)\s+not implemented)?/)
-    if output
-      if $~[2].to_i > 0
-        notify "FAIL", "#{output}", ERROR_ICON
-      else
-        notify "Success!", "#{output}", SUCCESS_ICON
-      end
-    end
-  end
+  false
 end
 
+Autotest::Growl::show_modified_files = true
+Autotest::Growl::one_notification_per_run = true
+Autotest::Growl::clear_terminal = false
+Autotest::Growl::hide_label = true

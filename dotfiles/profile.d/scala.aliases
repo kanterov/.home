@@ -1,0 +1,1 @@
+alias scala="LC_ALL=en_US.UTF-8 rlwrap scala -Xnojline -Dfile.encoding=UTF-8"

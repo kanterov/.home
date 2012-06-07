@@ -4,5 +4,11 @@ if [[ -s ${HOME}/.profile.d/environment ]] ; then source ${HOME}/.profile.d/envi
 # rvm-install added line
 if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
 
+# customized autocompleters for bash
+if [[ -s ${HOME}/.bash.d/autocompleter ]] ; then source ${HOME}/.bash.d/autocompleter ; fi
+
+if [[ -s ${HOME}/.bash.d/tmux ]] ; then source ${HOME}/.bash.d/tmux ; fi
+
+if [[ -s ${HOME}/.bash.d/git ]] ; then source ${HOME}/.bash.d/git ; fi
 # merge .Xdefaults settings
-if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
+#if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
