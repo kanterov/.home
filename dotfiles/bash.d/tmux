@@ -5,6 +5,7 @@ SH_CMD="exec bash"
 DSK_MCSCMD="cd ${DSK_DIR}/mailchannel; ${SH_CMD}"
 DSK_WEBCMD="cd ${DSK_DIR}/assistly; ${SH_CMD}"
 DSK_INFCMD="cd ${DSK_DIR}/infrastructure; ${SH_CMD}"
+DSK_HRKCMD="cd /dev_exclusions/heroku; ${SH_CMD}"
 
 function trimSession() {
   local name=$1;
@@ -20,14 +21,15 @@ function tmuxSessionMatches() {
 function configureWindows() {
   # Create Desk MC window
   tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
-  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n dskmcs "${DSK_MCSCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n mailchannel "${DSK_MCSCMD}";
   tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
   tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:1 -k -n dskweb "${DSK_WEBCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:1 -k -n assistly "${DSK_WEBCMD}";
   tmux split-window -v   -t ${DEFAULT_SESSION}:1 "${DSK_WEBCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:2 -k -n dskinf "${DSK_INFCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:2 -k -n infrastructure "${DSK_INFCMD}";
   tmux split-window -h   -t ${DEFAULT_SESSION}:2 "${DSK_INFCMD}";
   tmux split-window -v   -t ${DEFAULT_SESSION}:2 "${DSK_INFCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:3 -k -n heroku "${DSK_HRKCMD}";
 }
 
 tmux start-server
