@@ -114,3 +114,5 @@
   up = !git pull && git submodule update
 [help]
 	autocorrect = 1
+[heroku]
+	account = personal
