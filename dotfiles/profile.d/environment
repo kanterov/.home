@@ -3,6 +3,7 @@ source ${HOME}/.profile.d/personal.aliases
 source ${HOME}/.profile.d/oss.aliases
 source ${HOME}/.profile.d/ruby.aliases
 source ${HOME}/.profile.d/scala.aliases
+source ${HOME}/.profile.d/desk.aliases
 
 source ${HOME}/.profile.d/global.env
 source ${HOME}/.profile.d/clojure.env
@@ -19,9 +20,8 @@ source ${HOME}/.profile.d/python.env
 source ${HOME}/.profile.d/ruby.env
 source ${HOME}/.profile.d/scala.env
 source ${HOME}/.profile.d/ssh.env
-
-source ${HOME}/.profile.d/desk.aliases
 source ${HOME}/.profile.d/desk.env
+source ${HOME}/.profile.d/adium.env
 
 # User specific environment and startup programs
 
