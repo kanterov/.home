@@ -35,6 +35,8 @@
   ci = "commit"
   ciall = "commit -a -v"
   cleanbr = "symbolic-ref -m 'Creating clean branch' HEAD "
+  descbr = !git branch --edit-description $1
+  brdesc = !git show-branch-description
   unmerge = "reset --hard ORIG_HEAD"
   lsbr = "branch" # list all branches, even remote ones
   mkbr = "branch" # create branch if you specify a branch name after it, e.g. git mkbr upgrading_rails
