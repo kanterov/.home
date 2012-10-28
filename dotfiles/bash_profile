@@ -4,6 +4,8 @@ if [[ -s ${HOME}/.profile.d/environment ]] ; then source ${HOME}/.profile.d/envi
 # rvm-install added line
 if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
 
+rvm use 1.9.3
+
 # customized autocompleters for bash
 if [[ -s ${HOME}/.bash.d/autocompleter ]] ; then source ${HOME}/.bash.d/autocompleter ; fi
 
