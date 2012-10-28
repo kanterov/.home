@@ -1,0 +1,7 @@
+
+HISTCONTROL=ignoredups:ignorespace
+
+shopt -s histappend
+
+HISTSIZE=5000
+HISTFILESIZE=10000

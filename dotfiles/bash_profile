@@ -14,5 +14,9 @@ if [[ -s ${HOME}/.bash.d/tmux ]] ; then source ${HOME}/.bash.d/tmux ; fi
 
 # git related completers
 if [[ -s ${HOME}/.bash.d/git ]] ; then source ${HOME}/.bash.d/git ; fi
+
+# history related config
+if [[ -s ${HOME}/.bash.d/history ]] ; then source ${HOME}/.bash.d/history ; fi
+
 # merge .Xdefaults settings
 #if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
