@@ -9,8 +9,10 @@ rvm use 1.9.3
 # customized autocompleters for bash
 if [[ -s ${HOME}/.bash.d/autocompleter ]] ; then source ${HOME}/.bash.d/autocompleter ; fi
 
+# tmux config
 if [[ -s ${HOME}/.bash.d/tmux ]] ; then source ${HOME}/.bash.d/tmux ; fi
 
+# git related completers
 if [[ -s ${HOME}/.bash.d/git ]] ; then source ${HOME}/.bash.d/git ; fi
 # merge .Xdefaults settings
 #if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
