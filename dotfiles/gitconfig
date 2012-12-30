@@ -25,11 +25,10 @@
 	enabled = 1
 [github]
   user = mbbx6spp
-  # Yeah, it doesn't work - boo hoo, script kiddies! ;P
-  token = a6f0c21f9b0d4bb68ca7408decf92d59
 [core]
   autocrlf = input
   safecrlf = true
+  whitespace = space-before-tab,tabwidth=2,trailing-space
 [alias]
   co = "checkout"
   ci = "commit"
@@ -44,10 +43,10 @@
   rmbr = "branch -D"
   # rename branch from one name to another
   mvbr = "branch -m"
-  hist = "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
+  hist = "log --no-merges --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
   log = "log -p"
-  lol = "log --graph --decorate --pretty=oneline --abbrev-commit"
-  lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all"
+  lol = "log --no-merges --graph --decorate --pretty=oneline --abbrev-commit"
+  lola = "log --no-merges --graph --decorate --pretty=oneline --abbrev-commit --all"
   lsmerged = "branch --merged"
   # list remote repositories
   lsrem = "remote"
@@ -118,3 +117,9 @@
 	autocorrect = 1
 [heroku]
 	account = personal
+[hub]
+	protocol = https
+[push]
+	default = nothing
+[rebase]
+	stat = true
