@@ -1,2 +1,1 @@
-rvm_make_flags="-j 2"
 export rvm_pretty_print=1

@@ -1,5 +1,8 @@
 [extensions]
 hgext.bookmarks =
-hggit = 
+hggit =
+hgext.record =
 [git]
 intree = True
+[ui]
+username = Susan Potter <me@susanpotter.net>
