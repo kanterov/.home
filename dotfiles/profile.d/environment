@@ -1,11 +1,13 @@
+source ${HOME}/.profile.d/global.env
 source ${HOME}/.profile.d/global.aliases
+
 source ${HOME}/.profile.d/personal.aliases
 source ${HOME}/.profile.d/oss.aliases
+source ${HOME}/.profile.d/haskell.aliases
 source ${HOME}/.profile.d/ruby.aliases
 source ${HOME}/.profile.d/scala.aliases
 source ${HOME}/.profile.d/desk.aliases
 
-source ${HOME}/.profile.d/global.env
 source ${HOME}/.profile.d/clojure.env
 source ${HOME}/.profile.d/ec2.env
 source ${HOME}/.profile.d/erlang.env
@@ -28,4 +30,4 @@ source ${HOME}/.profile.d/adium.env
 export PATH EDITOR GAEPATH PYTHONPATH RAILS_ENV MOZ_DISABLE_PANGO RUBYLIB
 export ERL_LIBS AUTOFEATURE RSPEC SSH_AUTH_SOCK SDL_AUDIODRIVER LANG LC_ALL
 export PS_PERSONALITY PROMPT PS2 RPROMPT WINDOW_MANAGER DIALYZER_PLT
-export DESK_ENV
+export DESK_ENV PLATFORM

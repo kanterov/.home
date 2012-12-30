@@ -1,4 +1,5 @@
 # Bundle prefix aliases
+alias bx="bundle exec"
 alias brake="bundle exec rake"
 alias bguard="bundle exec guard"
 

@@ -1,0 +1,2 @@
+#alias cabal=cabal-dev
+alias ydev="yesod devel"

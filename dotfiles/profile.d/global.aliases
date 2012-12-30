@@ -7,41 +7,45 @@
 
 # General shell aliases
 alias c='clear'
-alias l='ls -CF'
-alias psaw='ps waux'
-alias pss='ps waux | grep $1'
-alias psu='ps waux | grep $1'
-alias mc='mc -bs'
-alias man='PAGER=less man -a'
-alias j=jobs
-alias pu=pushd
-alias po=popd
 alias d='dirs -v'
-alias h=history
+alias dig='dig +noall +answer'
+alias findbackups='find . -name '\''*~'\'''
+alias grep='egrep'
+alias h='history'
 alias hs='history | grep $1'
-alias grep=egrep
-alias ll='ls -lh'
+alias j='jobs'
+alias l='ls -CF'
 alias la='ls -a'
+alias ll='ls -lh'
+# List only file beginning with "."
+alias lsa='ls -ld .*'
 # List only directories and symbolic
 # links that point to directories
 alias lsd='ls -ld *(-/DN)'
-# List only file beginning with "."
-alias lsa='ls -ld .*'
+alias man='PAGER=less man -a'
+alias mc='mc -bs'
+alias openports='lsof -Pni4 | grep LISTEN'
+alias please='sudo'
+alias procmem='ps -o rss= -p'
+alias psaw='ps waux'
+alias pss='ps waux | grep $1'
+alias rvm.restart='rvm_reload_flag=1 source '\''/Users/spotter/.rvm/scripts/rvm'\'''
+alias tiga='tig --all'
 # web cat
 alias wcat='wget -q -O -'
-alias openports='netstat -tulpn | less'
-alias allowedports='sudo /sbin/iptables -L -n'
 
-# software shortcut aliases
-alias tiga='tig --all'
 #alias e='emacs -Q'
 #alias ec='emacsclient -n'
 #alias ecc='emacsclient -c -n'
 #alias starte='emacs --daemon'
 #alias kille='emacsclient -c --eval "(progn (save-some-buffers t t) (kill-emacs))"'
 #alias note='emacsclient -c -e "(remember-other-frame)"'
-alias flushdns="sudo /etc/init.d/nscd restart"
-alias findbackups="find . -name '*~'"
-
-# Most important alias ever. Be nice to your shell.
-alias please=sudo
+if [[ "${PLATFORM}" == "Darwin" ]]; then
+  #ln -s /Applications/Utilities/Network\ Utility.app/Contents/Resources/stroke  ${HOME}/bin/stroke
+  #chmod u+x ${HOME}/bin/stroke
+  alias allowedports='sudo ipfw list'
+  alias flushdns="dscacheutil -flushcache"
+elif [[ "${PLATFORM}" == "Linux" ]]; then
+  alias allowedports='sudo /sbin/iptables -L -n'
+  alias flushdns="sudo /etc/init.d/nscd restart"
+fi;
