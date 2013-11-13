@@ -18,7 +18,7 @@ set smartcase   "except when using caps in the search
 set nowrap      "dont wrap lines
 set linebreak   "wrap lines at convenient points
 set whichwrap+=<,>,[,]
-set modelines=1
+set modelines=5
 set cursorline
 
 "set selection=exclusive
