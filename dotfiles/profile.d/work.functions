@@ -1,0 +1,13 @@
+FORK_NAME=mbbx6spp
+BASE_BRANCH=master
+UPSTREAM_NAME=upstream
+
+puppet_repo_start_ticket() {
+  local id=$1;
+  local desc=$2;
+  local branch="tickets/${1}-${2}";
+  echo ${branch}
+  git fetch ${UPSTREAM_NAME};
+  git checkout -b ${branch} ${UPSTREAM_NAME}/${BASE_BRANCH};
+  git push ${FORK_NAME} ${branch};
+}
