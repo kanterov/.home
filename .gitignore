@@ -1,5 +1,5 @@
-dotfiles/profile.d/desk.env
-dotfiles/profile.d/desk.aliases
+dotfiles/profile.d/work.env
+dotfiles/profile.d/work.aliases
 dotfiles/zsh.d/cache
 dotfiles/vim/backups
 dotfiles/vim/tmp
