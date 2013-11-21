@@ -4,3 +4,6 @@ dotfiles/zsh.d/cache
 dotfiles/vim/backups
 dotfiles/vim/tmp
 dotfiles/vim/.netrwhist
+dotfiles/mutt.d/account.include
+dotfiles/mutt.d/cache
+dotfiles/mutt.d/certificates
