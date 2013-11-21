@@ -21,11 +21,6 @@ set whichwrap+=<,>,[,]
 set modelines=5
 set cursorline
 
-"set selection=exclusive
-"set selectmode=mouse,key
-"set mousemodel=popup
-"set keymodel=startsel,stopsel
-
 set clipboard+=unnamed  " Yanks go on clipboard instead.
 set cf              " Enable error files & error jumping.
 set autowrite       " Writes on make/shell commands
@@ -105,6 +100,8 @@ set foldenable        "fold by default
 set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
 
 " display tabs and trailing spaces
 set list
@@ -170,9 +167,6 @@ inoremap <C-L> <C-O>:nohls<CR>
 "map to bufexplorer
 nnoremap <C-B> :BufExplorer<CR>
 
-"map to fuzzy finder text mate stylez
-nnoremap <C-F> :FuzzyFinderFile<CR>
-
 " }}}
 
 "map Q to something useful
@@ -191,7 +185,16 @@ let g:solarized_termtrans=1
 let g:solarized_bold=1
 let g:solarized_underline=1
 let g:solarized_italics=1
-colorscheme solarized
+colorscheme jellyx
+
+" Ctrl+P
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 " TaskList keybindings
 map <F3> <Esc>:TaskList<CR>
@@ -246,9 +249,14 @@ nnoremap g# g#zz
 
 if has("autocmd")
   augroup vimrc_autocmds
-    autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-    autocmd BufEnter * match OverLength /\%78v.*/
+    autocmd BufEnter    * highlight OverLength ctermbg=darkgrey guibg=#592929
+    autocmd BufEnter    * match OverLength /\%79v.*/
     autocmd BufWritePre * :%s/\s\+$//e
+    autocmd BufEnter    * :set relativenumber
+    autocmd FocusLost   * :set number
+    autocmd FocusGained * :set relativenumber
+    autocmd InsertEnter * :set number
+    autocmd InsertLeave * :set relativenumber
   augroup END
 
   augroup fugitive_autocmds
