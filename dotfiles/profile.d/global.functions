@@ -1,0 +1,12 @@
+function pre_prompt() {
+  local exit_code=$?;
+  history -a;
+  history -n;
+  if [ ${exit_code} -eq 0 ]; then
+    local msg="OK"
+    echo "${BLUE}?=${exit_code} | ${msg}${D}";
+  else
+    local msg=$(fortune -o -s -n 140)
+    echo "${RED}?=${exit_code} | ${msg}${D}";
+  fi;
+}
