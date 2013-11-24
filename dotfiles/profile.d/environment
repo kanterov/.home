@@ -30,6 +30,12 @@ source ${HOME}/.profile.d/personal.env
 source ${HOME}/.profile.d/work.env
 source ${HOME}/.profile.d/adium.env
 
+if [ "${PLATFORM}" == "Darwin" ]; then
+  source ${HOME}/.profile.d/osx.env
+  source ${HOME}/.profile.d/osx.functions
+  source ${HOME}/.profile.d/osx.aliases
+fi;
+
 # User specific environment and startup programs
 
 export PATH EDITOR GAEPATH PYTHONPATH RAILS_ENV MOZ_DISABLE_PANGO RUBYLIB
