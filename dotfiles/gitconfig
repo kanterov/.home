@@ -117,12 +117,10 @@
   latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
   summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
 [help]
-	autocorrect = 1
-[heroku]
-	account = personal
+  autocorrect = 1
 [hub]
-	protocol = https
+  protocol = https
 [push]
-	default = nothing
+  default = nothing
 [rebase]
-	stat = true
+  stat = true
