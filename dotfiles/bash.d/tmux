@@ -2,16 +2,7 @@
 
 DEFAULT_SESSION="development"
 SH_CMD="exec bash"
-DSK_MCSCMD="cd ${DSK_DIR}/mailchannel; ${SH_CMD}"
-DSK_WEBCMD="cd ${DSK_DIR}/assistly; ${SH_CMD}"
-DSK_DEVOPSCMD="cd ${DSK_DIR}/devops; ${SH_CMD}"
-DSK_DEPLOYCMD="cd ${DSK_DIR}/deploy; ${SH_CMD}"
-DSK_DEVSCPTSCMD="cd ${DSK_DIR}/devscripts; ${SH_CMD}"
-DSK_WIKICMD="cd ${DSK_DIR}/wikis; ${SH_CMD}"
-DSK_HRKCMD="cd /dev_exclusions/heroku; ${SH_CMD}"
-DSK_OSSCMD="cd /dev_exclusions/oss; ${SH_CMD}"
-DSK_TLKCMD="cd /dev_exclusions/talks; ${SH_CMD}"
-DSK_LRNCMD="cd /dev_exclusions/coursera; ${SH_CMD}"
+WORK_PUPPETCMD="cd ${WORK_DIR}/puppet; ${SH_CMD}"
 
 function trimSession() {
   local name=$1;
@@ -25,27 +16,10 @@ function tmuxSessionMatches() {
 }
 
 function configureWindows() {
-  # Create Desk MC window
   tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
-  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n mailchannel "${DSK_MCSCMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${DSK_MCSCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:1 -k -n assistly "${DSK_WEBCMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:1 "${DSK_WEBCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:2 -k -n devops "${DSK_DEVOPSCMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:2 "${DSK_DEVOPSCMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:2 "${DSK_DEVOPSCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:3 -k -n deploy "${DSK_DEPLOYCMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:3 "${DSK_DEPLOYCMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:3 "${DSK_DEPLOYCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:4 -k -n deploy "${DSK_DEVSCPTSCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:5 -k -n wiki "${DSK_WIKICMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:5 "${DSK_WIKICMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:5 "${DSK_WIKICMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:6 -k -n heroku "${DSK_HRKCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:7 -k -n oss "${DSK_OSSCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:8 -k -n talks "${DSK_TLKCMD}";
-  tmux new-window        -t ${DEFAULT_SESSION}:9 -k -n coursera "${DSK_LRNCMD}";
+  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n devops "${WORK_PUPPETCMD}";
+  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${WORK_PUPPETCMD}";
+  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${WORK_PUPPETCMD}";
 }
 
 tmux start-server
