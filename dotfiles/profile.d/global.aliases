@@ -29,7 +29,6 @@ alias please='sudo'
 alias procmem='ps -o rss= -p'
 alias psaw='ps waux'
 alias pss='ps waux | grep $1'
-alias rvm.restart='rvm_reload_flag=1 source '\''/Users/spotter/.rvm/scripts/rvm'\'''
 alias tiga='tig --all'
 # web cat
 alias wcat='wget -q -O -'
