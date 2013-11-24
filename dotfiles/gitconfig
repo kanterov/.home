@@ -114,32 +114,8 @@
   fresh-search = !git fetch origin && git search
   # pull and update submodules
   up = !git pull && git submodule update
-	latest = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(refname:short)'
-	latest-tags = for-each-ref --shell --format='  ' --sort='*objecttype' --sort='taggerdate' refs/tags
-	latest-tags = for-each-ref --shell --format='%(taggerdate:short) %(objectname:short) %(refname:short)' --sort='*objecttype' --sort='taggerdate' refs/tags
-	latest-tags = for-each-ref --shell --format='%(taggerdate:short) %(objectname:short) %(refname:short)' --sort='taggerdate' refs/tags
-	latest-tags = for-each-ref --shell --format='%(taggerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
-	latest-tags = for-each-ref --format='%(taggerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
-	latest-tags = for-each-ref --format='%(objectdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
-	latest-tags = for-each-ref --format='%(commitdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
-	latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(committer:short) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(author:name) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(committer:name) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(*committer:name) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(*authorname:short) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(*authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(authorname:name) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(authorname:short) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:iso8601) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = "for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='\\033[1;35m %(committerdate:short)\\033[0m %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'"
-	summarize-branches = "for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='\\033[1;35m %(committerdate:short)\\033[0m %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'"
-	summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
-	summarize-branches = "for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) \\033[1;31m %(refname:short) \\033[1;44m | %(contents:subject)'"
+  latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
+  summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
 [help]
 	autocorrect = 1
 [heroku]
