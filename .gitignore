@@ -7,3 +7,5 @@ dotfiles/vim/.netrwhist
 dotfiles/mutt.d/account.include
 dotfiles/mutt.d/cache
 dotfiles/mutt.d/certificates
+dotfiles/weechat/logs
+dotfiles/weechat/weechat.log
