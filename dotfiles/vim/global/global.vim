@@ -88,6 +88,7 @@ set statusline+=\ %P    "percent through file
 set laststatus=2
 
 " indent settings
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
@@ -114,6 +115,9 @@ set scrolloff=3
 set sidescrolloff=7
 set sidescroll=1
 
+filetype on
+filetype indent on
+filetype plugin on
 filetype plugin indent on
 
 "some stuff to get the mouse going in term
@@ -178,7 +182,7 @@ nnoremap Y y$
 "mark syntax errors with :signs
 let g:syntastic_enable_signs=1
 
-syntax enable
+syntax on
 set background=dark
 let g:solarized_termcolors = &t_Co
 let g:solarized_termtrans=1
