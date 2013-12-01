@@ -6,7 +6,9 @@ function pre_prompt() {
     local msg="OK"
     echo "${BLUE}?=${exit_code} | ${msg}${D}";
   else
-    local msg=$(fortune -o -s -n 140)
+    # Use following for "offensive" fortunes:
+    #   fortune -o -s -n 140
+    local msg=$(fortune -s -n 140)
     echo "${RED}?=${exit_code} | ${msg}${D}";
   fi;
 }
