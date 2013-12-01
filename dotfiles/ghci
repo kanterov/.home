@@ -1,1 +1,8 @@
+:set stop :list
+:set +m
+:set +t
+:set -fbreak-on-exception
+:set -fbreak-on-error
+:set -fwarn-missing-signatures
+
 :def hoogle \x -> return $ ":!hoogle \"" ++ x ++ "\""
