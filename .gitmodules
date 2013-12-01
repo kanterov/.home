@@ -9,13 +9,13 @@
 	url = git://github.com/scrooloose/syntastic.git
 [submodule "dotfiles/vim/bundle/vim-rebar"]
 	path = dotfiles/vim/bundle/vim-rebar
-	url = git://github.com:mbbx6spp/vim-rebar.git
+	url = git://github.com/mbbx6spp/vim-rebar.git
 [submodule "dotfiles/vim/bundle/vim-colorschemes"]
 	path = dotfiles/vim/bundle/vim-colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
 [submodule "dotfiles/vim/bundle/vim-valgrind"]
 	path = dotfiles/vim/bundle/vim-valgrind
-	url = git@github.com:mbbx6spp/vim-valgrind.git
+	url = git://github.com/mbbx6spp/vim-valgrind.git
 [submodule "dotfiles/vim/bundle/vim-rails"]
 	path = dotfiles/vim/bundle/vim-rails
 	url = https://github.com/tpope/vim-rails.git
@@ -24,7 +24,7 @@
 	url = git://github.com/Lokaltog/vim-powerline.git
 [submodule "dotfiles/vim/bundle/vim-haskell-cabal"]
 	path = dotfiles/vim/bundle/vim-haskell-cabal
-	url = git://github.com/Lokaltog/vim-haskell-cabal.git
+	url = git://github.com/mbbx6spp/vim-haskell-cabal.git
 [submodule "dotfiles/vim/bundle/vim-fuzzyfinder-pathogen"]
 	path = dotfiles/vim/bundle/vim-fuzzyfinder-pathogen
 	url = https://github.com/itspriddle/vim-fuzzyfinder-pathogen.git
@@ -55,3 +55,6 @@
 [submodule "dotfiles/vim/bundle/ack.vim"]
 	path = dotfiles/vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
+[submodule "dotfiles/vim/bundle/vim-sbt"]
+	path = dotfiles/vim/bundle/vim-sbt
+	url = git@github.com:ktvoelker/sbt-vim.git
