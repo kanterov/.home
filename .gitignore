@@ -9,3 +9,10 @@ dotfiles/mutt.d/cache
 dotfiles/mutt.d/certificates
 dotfiles/weechat/logs
 dotfiles/weechat/weechat.log
+dotfiles/ghc/ghci_history
+dotfiles/ghc/x86*
+dotfiles/sbt/**/*/project/
+dotfiles/sbt/**/*/target/
+dotfiles/sbt/**/*.jar
+dotfiles/sbt/**/*.lock
+dotfiles/sbt/**/*.log
