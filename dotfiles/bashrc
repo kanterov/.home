@@ -11,10 +11,10 @@ fi
 
 if [[ -x ${HOME}/.profile_environment ]] ; then source ${HOME}/.profile_environment ; fi
 
-# rvm-install added line:
-if [[ -s ${HOME}/.rvm/scripts/rvm ]] ; then source ${HOME}/.rvm/scripts/rvm ; fi
-
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin:${PATH}
 PATH=${HOME}/.cabal/bin:${HOME}/.rvm/bin:${HOME}/.npmjs/bin:${PATH}
 PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:${PATH}
 export PATH
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
