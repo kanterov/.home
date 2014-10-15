@@ -12,6 +12,7 @@ source ${HOME}/.profile.d/ruby.aliases
 source ${HOME}/.profile.d/scala.aliases
 source ${HOME}/.profile.d/work.aliases
 
+source ${HOME}/.profile.d/nix.env
 source ${HOME}/.profile.d/clojure.env
 source ${HOME}/.profile.d/ec2.env
 source ${HOME}/.profile.d/erlang.env

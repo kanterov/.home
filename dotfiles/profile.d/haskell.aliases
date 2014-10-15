@@ -1,2 +1,3 @@
 #alias cabal=cabal-dev
 alias ydev="yesod devel"
+alias unregister_ghc_packages="ghc-pkg check --simple-output | xargs -n 1 ghc-pkg unregister --force"
