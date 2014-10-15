@@ -116,6 +116,9 @@
   up = !git pull && git submodule update
   latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
   summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
+  fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+  squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+  resquash = rebase --interactive --autosquash
 [help]
   autocorrect = 1
 [hub]
