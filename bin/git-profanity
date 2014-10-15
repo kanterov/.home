@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# To override this list you could do:
+#    git profanity "asshat|plonker|idiot|stupid"
+WORDS=${1:-"fuck|shit|bitch|damn|piss|hack"}
+
+git log --pretty=format:'%s' | \
+  tr '[:upper:]' '[:lower:]' | \
+  tr '([:space:]|[:punct:])' '\n' | \
+  sort | uniq -c | sort -nr | \
+  grep -iE "(${WORDS})"
