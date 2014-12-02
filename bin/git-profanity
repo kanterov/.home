@@ -2,7 +2,7 @@
 
 # To override this list you could do:
 #    git profanity "asshat|plonker|idiot|stupid"
-WORDS=${1:-"fu+ck|shi+t|bitch|damn|piss|hack|fixme|kill|whoops|crap|stfu|ffs|wtf|omfg|frickin|frackin|whoops|balls|todger|tallywhacker|tupping"}
+WORDS=${1:-"fu+ck|shi+t|bitch|damn|piss|hack|fixme|kill|whoops|crap|stfu|ffs|wtf|omfg|frickin|frackin|whoops|balls|todger|tallywh?acker|tupping"}
 
 git log --pretty=format:'%s' | \
   tr '[:upper:]' '[:lower:]' | \
