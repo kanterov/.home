@@ -1,48 +1,76 @@
 #!/usr/bin/env bash
 
-DEFAULT_SESSION="development"
-SH_CMD="exec bash"
-WORK_PUPPETCMD="cd ${WORK_DIR}/puppet; ${SH_CMD}"
+declare -r default_session="work"
+declare -r sh_cmd="exec bash"
+declare -r work_cmd="cd ${WORK_DIR}; ${sh_cmd}"
 
 function trimSession() {
-  local name=$1;
-  echo ${1};
+  local -r name="$1"
+  echo "${1}"
 }
 
 # This should only ever return either "0" or "1"
 function tmuxSessionMatches() {
-  local name=$1;
-  trimSession $(tmux ls | grep "^${name}$" | wc -l);
+  local -r name="$1"
+  trimSession "$(tmux ls | grep -c "^${name}$")"
 }
 
 function configureWindows() {
-  tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
-  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n devops "${WORK_PUPPETCMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${WORK_PUPPETCMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${WORK_PUPPETCMD}";
+  tmux set-window-option -t "${default_session}" -g automatic-rename off;
+
+  # remote
+  tmux new-window        -t "${default_session}:0" -k -n remote "${work_cmd}";
+  tmux split-window -h   -t "${default_session}:0" "${work_cmd}";
+  tmux split-window -v   -t "${default_session}:0" "${work_cmd}";
+
+  # services
+  tmux new-window        -t "${default_session}:1" -k -n services "${work_cmd}";
+  tmux send-keys         -t "${default_session}:1" 'use_j_tree svc' Enter
+  tmux split-window -h   -t "${default_session}:1" "${work_cmd}";
+  tmux send-keys         -t "${default_session}:1" 'use_j_tree svc' Enter
+
+  # SOA
+  tmux new-window        -t "${default_session}:2" -k -n soa "${work_cmd}";
+  tmux send-keys         -t "${default_session}:2" 'use_j_tree soa' Enter
+
+  # Puppet
+  tmux new-window        -t "${default_session}:3" -k -n puppet "${work_cmd}";
+  tmux send-keys         -t "${default_session}:3" 'use_j_tree svc' Enter
+  tmux send-keys         -t "${default_session}:3" 'cdc puppet' Enter
+
+  # Ansible
+  tmux new-window        -t "${default_session}:4" -k -n ansible "${work_cmd}";
+  tmux send-keys         -t "${default_session}:4" 'use_j_tree svc' Enter
+  tmux send-keys         -t "${default_session}:4" 'cdc common-services/deployer' Enter
+
+  # Monitoring
+  tmux new-window        -t "${default_session}:5" -k -n monitoring "${work_cmd}";
+  tmux send-keys         -t "${default_session}:5" 'use_j_tree svc' Enter
+  tmux send-keys         -t "${default_session}:5" 'cdc common-services/monitoring' Enter
+
+  # Dashboards
+  tmux new-window        -t "${default_session}:6" -k -n dashboards "${work_cmd}";
+  tmux send-keys         -t "${default_session}:6" 'use_j_tree svc' Enter
+  tmux send-keys         -t "${default_session}:6" 'cdc common-services/dashboards' Enter
+
+  # Styleguides
+  tmux new-window        -t "${default_session}:7" -k -n styleguides "${work_cmd}";
+  tmux send-keys         -t "${default_session}:7" "cd ${HOME}/Code/oss/styleguides" Enter
 }
 
-tmux start-server
-if [[ -z $TMUX ]]; then
-  if [ ! -z "$SSHAGENT" ]; then
-    echo "Starting ssh-agent ${SSH_AUTH_SOCK}...";
-    CMD="$SSHAGENT $SSHAGENTARGS"
-    echo "Evaluating $CMD"
-    SSHAGENTOUT=$($CMD)
-    echo "Output $SSHAGENTOUT"
-    eval $SSHAGENTOUT;
-  fi
-
-  if [[ "0" == $(tmuxSessionMatches ${DEFAULT_SESSION}) ]]; then
-    echo "Launching tmux base session ${DEFAULT_SESSION}...";
-    tmux new-session -d -s ${DEFAULT_SESSION};
-    configureWindows;
-    tmux attach -t ${DEFAULT_SESSION};
+if [ -z "${TMUX}" ]; then
+  if [ "0" = "$(tmuxSessionMatches "${default_session}")" ]; then
+    echo "Launching tmux base session ${default_session}..."
+    if tmux new-session -d -s "${default_session}"; then
+      configureWindows
+      tmux attach -t "${default_session}"
+    elif tmux new-session -d -t "${sid}" -s "${default_session}"; then
+      configureWindows
+      tmux attach -t "${sid}"
+    fi
   else
-    echo "Launching synced copy of base session ${DEFAULT_SESSION}...";
-    sid="${DEFAULT_SESSION}-$(date +%Y%m%d%H%M%S)";
-    tmux new-session -d -t ${sid} -s ${DEFAULT_SESSION};
-    configureWindows;
-    tmux attach -t ${sid};
+    echo "Launching synced copy of base session ${default_session}..."
+    sid="${default_session}-$(date +%Y%m%d%H%M%S)"
+    tmux new-session -d -t "${sid}" -s "${default_session}"
   fi
 fi
