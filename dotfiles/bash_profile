@@ -15,3 +15,4 @@ if [[ -s ${HOME}/.bash.d/history ]] ; then source ${HOME}/.bash.d/history ; fi
 
 # merge .Xdefaults settings
 #if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
+if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then . "${HOME}/.nix-profile/etc/profile.d/nix.sh"; fi # added by Nix installer
