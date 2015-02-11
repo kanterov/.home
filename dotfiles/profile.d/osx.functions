@@ -47,3 +47,8 @@ function createSystemUser() {
   sudo dscl . -append /Groups/${grp} GroupMembership ${usr};
   echo "Created system user ${usr}";
 }
+
+function unfuckMavericksDns() {
+  sudo launchctl unload /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+  sudo launchctl load /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+}
