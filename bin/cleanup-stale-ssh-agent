@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+rm "${HOME}/.ssh/agent.sock"
+eval "${SSHAGENT}" "${SSHAGENTARGS}"
+
+declare -r timeout="96h"
+declare -ra rsa_keys=(git gh bb)
+declare -ra dsa_keys=(jive)
+
+for t in "${rsa_keys[@]}"; do
+  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_rsa"
+done
+
+for t in "${dsa_keys[@]}"; do
+  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_dsa"
+done
