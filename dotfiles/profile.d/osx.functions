@@ -49,6 +49,6 @@ function createSystemUser() {
 }
 
 function unfuckMavericksDns() {
-  sudo launchctl unload /System/Library/LaunchDaemons/com.apple.discoveryd.plist
-  sudo launchctl load /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+  sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
+  sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
 }
