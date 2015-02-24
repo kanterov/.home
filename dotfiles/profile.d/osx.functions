@@ -2,44 +2,44 @@
 # Purpose: Provide functions to automate OSX tasks.
 
 if [ "${PLATFORM}" = "Darwin" ]; then
-  function listUsers() {
+  function sp_osx_list_users() {
     dscl . -list /Users UniqueID;
   }
 
-  function listGroups() {
+  function sp_osx_list_groups() {
     dscl . -list /Groups PrimaryGroupID;
   }
 
-  function lastSystemUID() {
-    echo "$(listUsers | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
+  function sp_osx_last_system_uid() {
+    echo "$(sp_osx_list_users | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
   }
 
-  function nextSystemUID() {
-    echo "$(lastSystemUID | awk '{ print $1+1 }')"
+  function sp_osx_next_system_uid() {
+    echo "$(sp_osx_last_system_uid | awk '{ print $1+1 }')"
   }
 
-  function lastSystemGID() {
-    echo "$(listGroups | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
+  function sp_osx_last_system_gid() {
+    echo "$(sp_osx_list_groups | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
   }
 
-  function nextSystemGID() {
-    echo "$(lastSystemGID | awk '{ print $1+1 }')"
+  function sp_osx_next_system_gid() {
+    echo "$(sp_osx_last_system_gid | awk '{ print $1+1 }')"
   }
 
-  function createSystemGroup() {
+  function sp_osx_create_system_group() {
     if [ "$#" -eq 1 ]; then
       >&2 echo "Error: Expected one argument for ${FUNCNAME}: GROUP"
       return 1
     fi
     local -r grp="$1"
-    local -r grpId="${nextSystemGID}"
+    local -r grpId="${sp_osx_next_system_gid}"
     sudo dscl . -create "/Groups/${grp}"
     sudo dscl . -create "/Groups/${grp}" PrimaryGroupID "${grpId}"
     sudo dscl . -append "/Groups/${grp}i" RecordName "${grp}"
     echo "Created system group ${grp}"
   }
 
-  function createSystemUser() {
+  function sp_osx_create_system_user() {
     if [ "$#" -eq 3 ]; then
       >&2 echo "Error: Expected three arguments for ${FUNCNAME}:"
       >&2 echo "  ${FUNCNAME} USER GROUP NAME"
@@ -48,8 +48,8 @@ if [ "${PLATFORM}" = "Darwin" ]; then
     local -r usr=$1;
     local -r grp=$2;
     local -r name=$3;
-    local -r usrId=${nextSystemUID};
-    createSystemGroup "${grp}"
+    local -r usrId=${sp_osx_next_system_uid};
+    sp_osx_create_system_group "${grp}"
     sudo dscl . -create "/Users/${usr}"
     sudo dscl . -create "/Users/${usr}" UniqueID "${usrId}"
     sudo dscl . -create "/Users/${usr}" PrimaryGroupID 1
@@ -61,21 +61,21 @@ if [ "${PLATFORM}" = "Darwin" ]; then
     echo "Created system user ${usr} in group ${grp} with name ${name}"
   }
 
-  function unfuckMavericksDns() {
+  function sp_osx_unfuck_mavericks_dns() {
     sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
   }
 
   if [ "${BASH_SOURCE[0]}" != "$0" ]; then
-    export -f listUsers
-    export -f listGroups
-    export -f lastSystemUID
-    export -f lastSystemGID
-    export -f nextSystemUID
-    export -f nextSystemGID
-    export -f createSystemGroup
-    export -f createSystemUser
-    export -f unfuckMavericksDns
+    export -f sp_osx_list_users
+    export -f sp_osx_list_groups
+    export -f sp_osx_last_system_uid
+    export -f sp_osx_last_system_gid
+    export -f sp_osx_next_system_uid
+    export -f sp_osx_next_system_gid
+    export -f sp_osx_create_system_group
+    export -f sp_osx_create_system_user
+    export -f sp_osx_unfuck_mavericks_dns
   else
     >&2 echo "Error: executing ${0} intended to be sourced...nothing to do."
     exit 1
