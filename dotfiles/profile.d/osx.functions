@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# Purpose: Provide functions to automate OSX tasks.
+
 function listUsers() {
   dscl . -list /Users UniqueID;
 }
@@ -7,45 +10,54 @@ function listGroups() {
 }
 
 function lastSystemUID() {
-  echo $(listUsers | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1);
+  echo "$(listUsers | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
 }
 
 function nextSystemUID() {
-  echo $(lastSystemUID | awk '{ print $1+1 }');
+  echo "$(lastSystemUID | awk '{ print $1+1 }')"
 }
 
 function lastSystemGID() {
-  echo $(listGroups | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1);
+  echo "$(listGroups | awk '{if ($2 < 500) print $2}' | sort -ug | tail -1)"
 }
 
 function nextSystemGID() {
-  echo $(lastSystemGID | awk '{ print $1+1 }');
+  echo "$(lastSystemGID | awk '{ print $1+1 }')"
 }
 
 function createSystemGroup() {
-  local grp=$1;
-  local grpId=${nextSystemGID};
-  sudo dscl . -create /Groups/${grp};
-  sudo dscl . -create /Groups/${grp} PrimaryGroupID ${grpId};
-  sudo dscl . -append /Groups/${grp} RecordName ${grp};
-  echo "Created system group ${grp}";
+  if [ "$#" -eq 1 ]; then
+    >&2 echo "Error: Expected one argument for ${FUNCNAME}: GROUP"
+    return 1
+  fi
+  local -r grp="$1"
+  local -r grpId="${nextSystemGID}"
+  sudo dscl . -create "/Groups/${grp}"
+  sudo dscl . -create "/Groups/${grp}" PrimaryGroupID "${grpId}"
+  sudo dscl . -append "/Groups/${grp}i" RecordName "${grp}"
+  echo "Created system group ${grp}"
 }
 
 function createSystemUser() {
-  local usr=$1;
-  local grp=$2;
-  local name=$3;
-  local usrId=${nextSystemUID};
-  createSystemGroup ${grp};
-  sudo dscl . -create /Users/${usr}
-  sudo dscl . -create /Users/${usr} UniqueID ${usrId};
-  sudo dscl . -create /Users/${usr} PrimaryGroupID 1;
-  sudo dscl . -create /Users/${usr} NFSHomeDirectory /Users/${usr};
-  sudo dscl . -create /Users/${usr} UserShell /bin/bash;
-  sudo dscl . -create /Users/${usr} RealName "${name}";
-  sudo dscl . -append /Users/${usr} RecordName ${usr};
-  sudo dscl . -append /Groups/${grp} GroupMembership ${usr};
-  echo "Created system user ${usr}";
+  if [ "$#" -eq 3 ]; then
+    >&2 echo "Error: Expected three arguments for ${FUNCNAME}:"
+    >&2 echo "  ${FUNCNAME} USER GROUP NAME"
+    return 1
+  fi
+  local -r usr=$1;
+  local -r grp=$2;
+  local -r name=$3;
+  local -r usrId=${nextSystemUID};
+  createSystemGroup "${grp}"
+  sudo dscl . -create "/Users/${usr}"
+  sudo dscl . -create "/Users/${usr}" UniqueID "${usrId}"
+  sudo dscl . -create "/Users/${usr}" PrimaryGroupID 1
+  sudo dscl . -create "/Users/${usr}" NFSHomeDirectory "/Users/${usr}"
+  sudo dscl . -create "/Users/${usr}" UserShell /bin/bash
+  sudo dscl . -create "/Users/${usr}" RealName "${name}"
+  sudo dscl . -append "/Users/${usr}" RecordName "${usr}"
+  sudo dscl . -append "/Groups/${grp}" GroupMembership "${usr}"
+  echo "Created system user ${usr} in group ${grp} with name ${name}"
 }
 
 function unfuckMavericksDns() {
