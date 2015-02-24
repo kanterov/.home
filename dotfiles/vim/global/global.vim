@@ -18,7 +18,7 @@ set smartcase   "except when using caps in the search
 set nowrap      "dont wrap lines
 set linebreak   "wrap lines at convenient points
 set whichwrap+=<,>,[,]
-set modelines=5
+set modelines=0
 set cursorline
 
 set clipboard+=unnamed  " Yanks go on clipboard instead.
@@ -95,7 +95,7 @@ set expandtab
 
 " folding settings
 set foldmethod=indent   "fold based on indent
-set foldnestmax=2       "deepest fold is 3 levels
+set foldnestmax=3       "deepest fold is 3 levels
 set foldenable        "fold by default
 
 set wildmode=list:longest   "make cmdline tab completion similar to bash
