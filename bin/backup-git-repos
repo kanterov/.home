@@ -3,8 +3,9 @@
 # artifacts plus GC and prune the Git repositories.
 
 function usage() {
-  echo "Usage: $0 [ROOTDIR]"
+  echo "Usage: $0 [OPTIONS] [ROOTDIR]"
   echo "where ROOTDIR is optional and defaults to PWD (${PWD})."
+  echo "  and OPTIONS include --skip-artifact-clean."
 }
 
 function sp_find_git_repos() {
@@ -29,21 +30,25 @@ function sp_clean_artifacts() {
   # first let's check if Makefile exists
   [ -f Makefile ] && (make clean || true)
   # now check if a *.cabal file exists
-  [ -f "*.cabal" ] && cabal clean
+  [ -f "*.cabal" ] && (cabal clean || true)
   # now check if a cabal sandbox exists
-  [ -d ".cabal-sandbox" ] && cabal sandbox delete
+  [ -d ".cabal-sandbox" ] && (cabal sandbox delete || true)
   # now clean up any scala projects using SBT
-  [ -f build.sbt -o -f "project/*.scala" -o -f "project/*.sbt" ] && sbt clean
+  [ -f build.sbt -o -f "project/*.scala" -o -f "project/*.sbt" ] && sbt clean || true
   # now clean up any maven projects
-  [ -f pom.xml ] && mvn clean
+  [ -f pom.xml ] && (mvn clean || true)
   # what about Ruby rake projects?
   [ -f Rakefile -a -f Gemfile ] && (bundle exec rake clean || true)
   [ -f Rakefile -a ! -f Gemfile ] && (rake clean || true)
   # and clean up local ruby bundles
-  [ -d .bundle ] && rm -rf .bundle
+  [ -f Gemfile -a -d .bundle ] && (rm -rf .bundle || true)
+
+  # Allow errors on remote communication to occur since they are probably
+  # just stale remotes. It does not require to stop all processing of this
+  # script.
+  git remote | xargs git remote prune || true
 
   # now we will GC the git repo and aggressively prune
-  git remote | xargs git remote prune
   git prune
   git gc --aggressive
   popd
@@ -63,12 +68,18 @@ if [ "${BASH_SOURCE[0]}" != "$0" ]; then
   >&2 echo "Error: Sourcing executable script ${0}."
 else
   if [ "$#" -gt 0 ]; then
-    case "$1" in
-      -h|--help) usage; exit 0;;
-      *) declare -r sp_root_dir="${1:-${PWD}}";;
-    esac
+    for arg in "${@}"; do
+      case "${arg}" in
+        -h|--help) usage; exit 0;;
+        --skip-artifact-clean) declare -ri sp_skip_clean=1; shift;;
+        *) ;;
+      esac
+    done
+    declare -r sp_root_dir="${1}"
+    [ -z "${sp_skip_clean}" ] && declare -r sp_skip_clean=0
   else
     declare -r sp_root_dir="${PWD}"
+    declare -ri sp_skip_clean=0
   fi
   echo "Using sp_root_dir=${sp_root_dir}"
 
@@ -76,11 +87,13 @@ else
   declare -a sp_git_repos=($(sp_find_git_repos "${sp_root_dir}"))
   echo "${sp_git_repos[@]}"
   if [ ! -z "${sp_git_repos[*]}" ]; then
-    for gr in "${sp_git_repos[@]}"; do
-      echo "Cleaning up ${gr}..."
-      sp_clean_artifacts "${gr}"
-    done
-    _compress_repos ${sp_git_repos[*]}
+    if [ "${sp_skip_clean}" -eq 0 ]; then
+      for gr in "${sp_git_repos[@]}"; do
+        echo "Cleaning up ${gr}..."
+        sp_clean_artifacts "${gr}"
+      done
+    fi
+    sp_compress_repos ${sp_git_repos[*]}
     exit 0
   else
     >&2 echo "Error: no git repositories found."
