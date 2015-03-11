@@ -7,6 +7,7 @@ source ${HOME}/.profile.d/work.functions
 source ${HOME}/.profile.d/all.aliases
 source ${HOME}/.profile.d/personal.aliases
 source ${HOME}/.profile.d/oss.aliases
+source ${HOME}/.profile.d/gerrit.aliases
 source ${HOME}/.profile.d/haskell.aliases
 source ${HOME}/.profile.d/ruby.aliases
 source ${HOME}/.profile.d/scala.aliases
