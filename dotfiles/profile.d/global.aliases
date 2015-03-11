@@ -32,6 +32,7 @@ alias pss='ps waux | grep $1'
 alias tiga='tig --all'
 # web cat
 alias wcat='wget -q -O -'
+alias ack='ag'
 
 #alias e='emacs -Q'
 #alias ec='emacsclient -n'
