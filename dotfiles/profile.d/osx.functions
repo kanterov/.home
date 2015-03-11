@@ -66,6 +66,10 @@ if [ "${PLATFORM}" = "Darwin" ]; then
     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
   }
 
+  function sp_osx_unfuck_yosemite_dns() {
+    sudo discoveryutil mdnsactivedirectory yes
+  }
+
   if [ "${BASH_SOURCE[0]}" != "$0" ]; then
     export -f sp_osx_list_users
     export -f sp_osx_list_groups
