@@ -1,18 +1,30 @@
+
+function sourceFile() {
+  if [ "$#" -ne 1 ]; then
+    >&2 echo "Error: Expected one argument to ${FUNCNAME}, received $#."
+    >&2 echo "Usage: ${FUNCNAME} PATH"
+    return 1
+  fi
+
+  local -r path="${1}"
+  if [ -f "${path}" ]; then
+    echo "Sourcing ${path}..."
+    source "${path}"
+  fi
+}
+
+
 # environment variables
-if [[ -s ${HOME}/.profile.d/environment ]] ; then source ${HOME}/.profile.d/environment ; fi
+sourceFile "${HOME}/.profile.d/environment"
 
-# customized autocompleters for bash
-if [[ -s ${HOME}/.bash.d/autocompleter ]] ; then source ${HOME}/.bash.d/autocompleter ; fi
+# setup Nix
+sourceFile "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
-# tmux config
-if [[ -s ${HOME}/.bash.d/tmux ]] ; then source ${HOME}/.bash.d/tmux ; fi
-
-# git related completers
-if [[ -s ${HOME}/.bash.d/git ]] ; then source ${HOME}/.bash.d/git ; fi
-
-# history related config
-if [[ -s ${HOME}/.bash.d/history ]] ; then source ${HOME}/.bash.d/history ; fi
+# random autocompleters
+sourceFile "${HOME}/.bash.d/autocompleter"
+sourceFile "${HOME}/.bash.d/git"
+sourceFile "${HOME}/.bash.d/history"
+sourceFile "${HOME}/.bash.d/tmux"
 
 # merge .Xdefaults settings
-#if [[ -s ${HOME}/.Xdefaults ]]; then xrdb -merge ${HOME}/.Xdefaults ; fi
-if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then . "${HOME}/.nix-profile/etc/profile.d/nix.sh"; fi # added by Nix installer
+#if [ -s ${HOME}/.Xdefaults ]; then xrdb -merge ${HOME}/.Xdefaults ; fi
