@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+stalonetray -i 12 --window-type normal --geometry 12x1+3720 \
+    --window-strut none --background black --icon-gravity NE
