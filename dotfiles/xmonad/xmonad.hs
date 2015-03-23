@@ -32,14 +32,15 @@ supoManageHook = composeAll
   , isFullscreen --> (doF W.focusDown <+> doFullFloat)
   ]
 
-supoLayout = avoidStruts (
-  Tall 1 (3/100) (1/2) |||
-  Mirror (Tall 1 (3/100) (1/2)) |||
-  tabbed shrinkText tabConfig |||
-  Full |||
-  spiral (6/7)) |||
-  noBorders (fullscreenFull Full
-)
+supoLayout =
+  avoidStruts (
+    Tall 1 (3/100) (1/2) |||
+    Mirror (Tall 1 (3/100) (1/2)) |||
+    tabbed shrinkText tabConfig |||
+    Full |||
+    spiral (6/7)) |||
+    noBorders (fullscreenFull Full
+  )
 
 
 ------------------------------------------------------------------------
@@ -50,14 +51,15 @@ supoNormalBorderColor  = "#7c7c7c"
 supoFocusedBorderColor = "#ffb6b0"
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
-tabConfig = defaultTheme {
+tabConfig =
+  defaultTheme {
     activeBorderColor = "#7C7C7C",
     activeTextColor = "#CEFFAC",
     activeColor = "#000000",
     inactiveBorderColor = "#7C7C7C",
     inactiveTextColor = "#EEEEEE",
     inactiveColor = "#000000"
-}
+  }
 
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFB6B0"
@@ -70,14 +72,11 @@ supoBorderWidth = 1
 
 
 ------------------------------------------------------------------------
--- Key bindings
---
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
---
-supoModMask = mod1Mask
+supoModMask = mod4Mask
 
 supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
