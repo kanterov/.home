@@ -2,7 +2,12 @@
 
 DEFAULT_SESSION="development"
 SH_CMD="exec bash"
-WORK_PUPPETCMD="cd ${WORK_DIR}; ${SH_CMD}"
+WORKDIR_CMD="cd ${WORK_DIR}; ${SH_CMD}"
+
+function trimSession() {
+  local name=$1;
+  echo ${1};
+}
 
 # This should only ever return either "0" or "1"
 function tmuxSessionMatches() {
@@ -11,10 +16,10 @@ function tmuxSessionMatches() {
 }
 
 function configureWindows() {
-  tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off
-  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n docs "${WORK_CMD}"
-  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${WORK_CMD}"
-  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${WORK_CMD}"
+  tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
+  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n devops "${WORKDIR_CMD}";
+  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${WORKDIR_CMD}";
+  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${WORKDIR_CMD}";
 }
 
 tmux start-server
