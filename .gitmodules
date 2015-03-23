@@ -55,9 +55,6 @@
 [submodule "dotfiles/vim/bundle/ack.vim"]
 	path = dotfiles/vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "dotfiles/vim/bundle/vim-sbt"]
-	path = dotfiles/vim/bundle/vim-sbt
-	url = git@github.com:ktvoelker/sbt-vim.git
 [submodule "dotfiles/vim/bundle/vim-scala"]
 	path = dotfiles/vim/bundle/vim-scala
 	url = https://github.com/derekwyatt/vim-sbt.git
