@@ -20,15 +20,17 @@ supoTerminal = "xterm"
 
 supoWorkspaces =
   [ "1:term"
-  , "2:workweb"
-  , "3:persweb"
+  , "2:admin"
+  , "3:research"
   , "4:media"
   ]
 
 supoManageHook = composeAll
-  [ className =? "Chromium"       --> doShift "2:web"
-  , className =? "Firefox"  	    --> doShift "2:web"
-  , className =? "Spotify"        --> doShift "4:media"
+  [ className =? "chromium"       --> doShift "2:admin"
+  , className =? "firefox"  	    --> doShift "3:research"
+  , className =? "opera"  	      --> doShift "3:research"
+  , className =? "spotify"        --> doShift "4:media"
+  , className =? "xterm"          --> doShift "1:term"
   , isFullscreen --> (doF W.focusDown <+> doFullFloat)
   ]
 
@@ -42,6 +44,7 @@ supoLayout =
     noBorders (fullscreenFull Full
   )
 
+supoDmenuCmd = "dmenu_run -nb '#111111' -nf '#d8d8d8' -sf '#000000' -fn '10x20'"
 
 ------------------------------------------------------------------------
 -- Colors and borders
@@ -93,7 +96,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Use this to launch programs without a key binding.
   , ((modMask, xK_p),
-     spawn "dmenu")
+     spawn supoDmenuCmd)
 
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
@@ -237,8 +240,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 ------------------------------------------------------------------------
 -- Mouse bindings
 --
--- Focus rules
--- True if your focus should follow your mouse cursor.
+-- Why would anyone set this to True? Ugh.
 supoFocusFollowsMouse :: Bool
 supoFocusFollowsMouse = False
 
@@ -276,14 +278,11 @@ supoMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
---
--- By default, do nothing.
 supoStartupHook = return ()
 
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
---
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   xmonad $ defaults {
@@ -303,9 +302,6 @@ main = do
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
 defaults = defaultConfig {
     -- simple stuff
     terminal           = supoTerminal,
