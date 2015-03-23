@@ -26,10 +26,10 @@ supoWorkspaces =
   ]
 
 supoManageHook = composeAll
-  [ className =? "chromium"       --> doShift "2:admin"
-  , className =? "firefox"  	    --> doShift "3:research"
-  , className =? "opera"  	      --> doShift "3:research"
-  , className =? "spotify"        --> doShift "4:media"
+  [ className =? "Chromium"       --> doShift "2:admin"
+  , className =? "Firefox"  	    --> doShift "3:research"
+  , className =? "Opera"  	      --> doShift "3:research"
+  , className =? "Spotify"        --> doShift "4:media"
   , className =? "xterm"          --> doShift "1:term"
   , isFullscreen --> (doF W.focusDown <+> doFullFloat)
   ]
@@ -125,6 +125,9 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -q set Master 10%+")
+
+  -- Put contents from primary selection into X selection
+  , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
 
   -- Audio previous.
   , ((0, 0x1008FF16),
