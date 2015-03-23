@@ -1,4 +1,3 @@
-
 function sourceFile() {
   if [ "$#" -ne 1 ]; then
     >&2 echo "Error: Expected one argument to ${FUNCNAME}, received $#."
@@ -27,4 +26,4 @@ sourceFile "${HOME}/.bash.d/history"
 sourceFile "${HOME}/.bash.d/tmux"
 
 # merge .Xdefaults settings
-#if [ -s ${HOME}/.Xdefaults ]; then xrdb -merge ${HOME}/.Xdefaults ; fi
+if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
