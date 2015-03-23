@@ -29,7 +29,7 @@ XTerm*color13: #cf9ebe
 XTerm*color14: #71bebe
 XTerm*color15: #ffffff
 XTerm*foreground: White
-XTerm*background: #212021
+XTerm*background: #111111
 XTerm*colorBD: lightyellow
 XTerm*colorMode: on
 XTerm*colorUL: yellow
@@ -38,7 +38,7 @@ XTerm*customization: -color
 XTerm*dynamicColors: off
 !XTerm*font: -*-monospace-*-*-*-*-*-*-*-*-*-*-*-*
 !XTerm*font: *-monospace-*-*-*-14-*
-!XTerm*font: 10x20 
+!XTerm*font: 10x20
 XTerm*highlightSelection: true
 XTerm*scrollBar: false
 XTerm*underLine: on
