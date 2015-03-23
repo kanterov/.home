@@ -7,7 +7,9 @@ function sourceFile() {
 
   local -r path="${1}"
   if [ -f "${path}" ]; then
-    echo "Sourcing ${path}..."
+    if [ -z "${TMUX}" ]; then
+      echo "Sourcing ${path}..."
+    fi
     source "${path}"
   fi
 }
