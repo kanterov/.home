@@ -1,9 +1,12 @@
 Config {
-    font = "xft:Monospace-14",
-    bgColor = "#000000",
+    font = "xft:Monospace:pixelsize=30",
+    bgColor = "#001122",
     fgColor = "#ffffff",
+    overrideRedirect = False,
     lowerOnStart = True,
-    position = Top,
+    position = Bottom,
+    border = FullBM 2,
+    borderColor = "#111111",
     commands = [
         Run Weather "KCMI" ["-t","<tempC>C / <tempF>F <skyCondition>","-L","64","-H","77","-n","#CEFFAC","-h","#FFB6B0","-l","#96CBFE"] 36000,
         Run MultiCpu ["-t","Cpu: <total>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10,
@@ -12,7 +15,6 @@ Config {
         Run Network "eth0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 50,
         Run Wireless "wlp2s0" ["-t","<essid>: <qualitybar>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
         Run Battery ["-t", "AC: <acstatus> Battery: <leftbar>"] 100,
-        --Run Uptime ["-t", "Up: <days>d <hours>h <minutes>m"] 600,
         Run Date "%a %b %_d %H:%M %Z" "date" 10
     ],
     sepChar = "%",

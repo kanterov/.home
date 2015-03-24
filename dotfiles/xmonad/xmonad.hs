@@ -44,14 +44,29 @@ supoLayout =
     noBorders (fullscreenFull Full
   )
 
-supoDmenuCmd = "dmenu_run -nb '#111111' -nf '#d8d8d8' -sf '#000000' -fn '10x20'"
+supoDmenuFg = "'#d8d8d8'"
+supoDmenuBg = "'#111111'"
+supoDmenuFont = "'-*-lucida-bold-*-*-*-34-*-*-*-*-*-*-*'"
 
-------------------------------------------------------------------------
--- Colors and borders
--- Currently based on the ir_black theme.
---
+supoDmenuCmd =
+  unwords [ "dmenu_run"
+    , "-nb"
+    , supoDmenuBg
+    , "-nf"
+    , supoDmenuFg
+    , "-sf"
+    , "'#000000'"
+    , "-fn"
+    , supoDmenuFont
+  ]
+
 supoNormalBorderColor  = "#7c7c7c"
-supoFocusedBorderColor = "#ffb6b0"
+supoFocusedBorderColor = "#eeb0b6"
+
+-- Color of current window title in xmobar.
+xmobarTitleColor = "#FFB6B0"
+-- Color of current workspace in xmobar.
+xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig =
@@ -63,12 +78,6 @@ tabConfig =
     inactiveTextColor = "#EEEEEE",
     inactiveColor = "#000000"
   }
-
--- Color of current window title in xmobar.
-xmobarTitleColor = "#FFB6B0"
-
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Width of the window border in pixels.
 supoBorderWidth = 1
