@@ -35,5 +35,5 @@ else
   declare -r weaselwords_regex="$(echo "${weaselwords[*]}" | sed 's/ /|/g')"
 
   echo "${weaselwords_regex}"
-  egrep -i -n --color "\\b(${weaselwords_regex})\\b" $*
+  ! egrep -i -n --color "\\b(${weaselwords_regex})\\b" $*
 fi
