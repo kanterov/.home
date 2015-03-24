@@ -40,6 +40,7 @@
     terminus_font
   ];
 
+  nix.trustedBinaryCaches = [ http://hydra.nixos.org ];
   nix.binaryCaches =
     [
       http://cache.nixos.org
@@ -80,6 +81,15 @@
     fortune
     tig
     weechat
+    scrot
+    xbindkeys
+    pamixer
+    xscreensaver
+    tk
+    zip
+    unzip
+    sysdig
+    tcpdump
 
     # power management
     acpi
@@ -91,6 +101,7 @@
     skype
     dmenu
     haskellPackages.xmobar
+    stalonetray
 
     # music
     mplayer2
@@ -101,6 +112,7 @@
     truecrypt
     googleAuthenticator
     openvpn
+    vpnc
     nmap
 
     # virtualization
