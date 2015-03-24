@@ -104,6 +104,7 @@
     skype
     dmenu
     haskellPackages.xmobar
+    haskellPackages.xmonadScreenshot
     stalonetray
 
     # music
