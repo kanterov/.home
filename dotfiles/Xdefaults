@@ -1,18 +1,24 @@
 !!! General
+Xft.dpi:        160
+Xft.antialias:  1
+Xft.hinting:    1
+Xft.hintsyle:   hintfull
+Xft.rgba:       rgb
+
 *renderFont: true
-*faceName: Terminus
-*faceSize1: 14
-*faceSize2: 18
-*faceSize3: 20
-*faceSize4: 24
+*font: xft:Inconsolata:pixelsize=12
+*faceSize1: 10
+*faceSize2: 14
+*faceSize3: 18
+*faceSize4: 22
 *faceSize5: 28
 *faceSize6: 32
-*initialFont: 2
+*initialFont: 1
 
 
 !!! XTerm
 
-XTerm*color0: #000000
+XTerm*color0: #111111
 XTerm*color1: #ffa2a5
 XTerm*color2: #bdb66b
 XTerm*color3: #f7e78c
@@ -36,9 +42,6 @@ XTerm*colorUL: yellow
 XTerm*colorULMode: on
 XTerm*customization: -color
 XTerm*dynamicColors: off
-!XTerm*font: -*-monospace-*-*-*-*-*-*-*-*-*-*-*-*
-!XTerm*font: *-monospace-*-*-*-14-*
-!XTerm*font: 10x20
 XTerm*highlightSelection: true
 XTerm*scrollBar: false
 XTerm*underLine: on
