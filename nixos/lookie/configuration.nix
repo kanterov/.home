@@ -153,7 +153,7 @@
   programs.bash.enableCompletion = true;
 
   services.upower.enable = true;
-  services.acpid.enable = false;
+  services.acpid.enable = true;
 
   services.xserver.enable = true;
   services.xserver.enableTCP = false;
