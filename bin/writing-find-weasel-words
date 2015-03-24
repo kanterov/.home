@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Purpose: To find "weasel" words in text files passed in
+# Expects: WRITING_WEASEL_WORDS env var or assumes ~/.weasel.words
+# Note: Modified from Matt Might's excellent '3 shell scripts ...'
+# blog post:
+# http://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  >&2 echo "Error: attempted to source executable script ${0}"
+  >&2 echo "Nothing to do."
+else
+  function usage() {
+    echo "Usage: $(basename "$0") FILES"
+  }
+
+  function verifyFiles {
+    for f in "${@}"; do
+      if [ ! -f "${f}" ]; then
+        >&2 echo "Error: File ${f} not found"
+        return 1
+      fi
+    done
+  }
+
+  if [ "$#" -lt 1 ]; then
+    usage
+    exit 1
+  fi
+
+  set -eu
+  declare -r weaselwords_file="${WEASEL_WORDS:-"${HOME}/.weasel.words"}"
+  verifyFiles $* "${weaselwords_file}"
+
+  declare -ar weaselwords=($(cat "${weaselwords_file}"))
+  declare -r weaselwords_regex="$(echo "${weaselwords[*]}" | sed 's/ /|/g')"
+
+  echo "${weaselwords_regex}"
+  egrep -i -n --color "\\b(${weaselwords_regex})\\b" $*
+fi
