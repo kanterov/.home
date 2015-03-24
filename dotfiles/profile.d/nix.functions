@@ -1,0 +1,33 @@
+# Functions that can assist in developing against the latest built unstable
+# nixos channel locally for building extensions.
+
+# Needed so that we can keep our sanity
+function nixos_unstable_channel_url() {
+  curl -sI https://nixos.org/channels/nixos-unstable/ | grep "^Location" | cut -f2 -d' '
+}
+
+function nixos_unstable_channel_git_sha() {
+  local -r url="$(nixos_unstable_channel_url)"
+
+  echo "${url}" | cut -f4 -d'.' | cut -f1 -d'/'
+}
+
+function nixos_unstable_checkout() {
+  local -r dir="${1:-"${HOME}/src/nixos"}"
+  local -r repo="${dir}/nixpkgs"
+  local -r sha="$(nixos_unstable_channel_git_sha)"
+
+  if [ ! -d "${repo}/.git" ]; then
+    set -eu
+    nixos-checkout "${dir}"
+    pushd "${repo}"
+    git checkout -b "${USER}-local" "${sha}"
+    popd
+  else
+    set -eu
+    pushd "${repo}"
+    git fetch origin
+    git checkout -b "${USER}-local" "${sha}"
+    popd
+  fi
+}
