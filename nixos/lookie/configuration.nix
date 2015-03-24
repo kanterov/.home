@@ -159,6 +159,7 @@
   services.xserver.enable = true;
   services.xserver.enableTCP = false;
   services.xserver.layout = "us";
+  services.xserver.xkbVariant = "mac";
   services.xserver.videoDrivers = [ "intel" "nouveau" ];
   services.xserver.xkbOptions = "terminate:ctrl_alt_bksp, ctrl:nocaps";
   services.xserver.vaapiDrivers = [ pkgs.vaapiIntel ];
