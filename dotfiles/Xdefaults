@@ -1,12 +1,16 @@
 !!! General
 Xft.dpi:        160
-Xft.antialias:  1
-Xft.hinting:    1
-Xft.hintsyle:   hintfull
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.hintsyle:   hintslight
 Xft.rgba:       rgb
+Xft.letterSpace: -2
+!!Xft.lineSpace: -1
+!!Xft.lineHeight: -1
+!!Xft.linePadding: -1
 
 *renderFont: true
-*font: xft:Inconsolata:pixelsize=12
+*font: xft:Inconsolata:pixelsize=11
 *faceSize1: 10
 *faceSize2: 14
 *faceSize3: 18
@@ -34,7 +38,7 @@ XTerm*color12: #4186be
 XTerm*color13: #cf9ebe
 XTerm*color14: #71bebe
 XTerm*color15: #ffffff
-XTerm*foreground: White
+XTerm*foreground: #e8e8e8
 XTerm*background: #111111
 XTerm*colorBD: lightyellow
 XTerm*colorMode: on
@@ -46,12 +50,12 @@ XTerm*highlightSelection: true
 XTerm*scrollBar: false
 XTerm*underLine: on
 XTerm*renderFont: true
-XTerm*faceName: Terminus
-XTerm*faceSize1: 14
-XTerm*faceSize2: 18
-XTerm*faceSize3: 20
-XTerm*faceSize4: 24
-XTerm*faceSize5: 28
+XTerm*faceName: Inconsolata
+XTerm*faceSize1: 10
+XTerm*faceSize2: 12
+XTerm*faceSize3: 16
+XTerm*faceSize4: 20
+XTerm*faceSize5: 24
 XTerm*faceSize6: 32
 XTerm*initialFont: 2
 
