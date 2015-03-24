@@ -52,6 +52,9 @@
   networking.firewall.enable = true;
   networking.wireless.enable = true;
   #networking.wicd.enable = true;
+  networking.vpnc.services = {
+    default = builtins.readFile ./vpnc.conf;
+  };
 
   hardware.bluetooth.enable = true;
 
