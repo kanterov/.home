@@ -27,7 +27,7 @@ supoWorkspaces =
 
 supoManageHook = composeAll
   [ className =? "Chromium"       --> doShift "2:admin"
-  , className =? "Firefox"  	    --> doShift "3:research"
+  , className =? "Firefox"  	    --> doShift "2:admin"
   , className =? "Opera"  	      --> doShift "3:research"
   , className =? "Spotify"        --> doShift "4:media"
   , className =? "xterm"          --> doShift "1:term"
@@ -82,10 +82,6 @@ supoBorderWidth = 1
 supoModMask = mod4Mask
 
 supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  ----------------------------------------------------------------------
-  -- Custom key bindings
-  --
-
   -- Start a terminal.  Terminal to start is specified by supoTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
@@ -95,24 +91,8 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "xscreensaver-command -lock")
 
   -- Use this to launch programs without a key binding.
-  , ((modMask, xK_p),
+  , ((modMask, xK_space),
      spawn supoDmenuCmd)
-
-  -- Take a screenshot in select mode.
-  -- After pressing this key binding, click a window, or draw a rectangle with
-  -- the mouse.
-  , ((modMask .|. shiftMask, xK_p),
-     spawn "select-screenshot")
-
-  -- Take full screenshot in multi-head mode.
-  -- That is, take a screenshot of everything you see.
-  , ((modMask .|. controlMask .|. shiftMask, xK_p),
-     spawn "screenshot")
-
-  -- Fetch a single use password.
-  , ((modMask .|. shiftMask, xK_o),
-     spawn "fetchotp -x")
-
 
   -- Mute volume.
   , ((modMask .|. controlMask, xK_m),
@@ -129,32 +109,12 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Put contents from primary selection into X selection
   , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
 
-  -- Audio previous.
-  , ((0, 0x1008FF16),
-     spawn "")
-
-  -- Play/pause.
-  , ((0, 0x1008FF14),
-     spawn "")
-
-  -- Audio next.
-  , ((0, 0x1008FF17),
-     spawn "")
-
-  -- Eject CD tray.
-  , ((0, 0x1008FF2C),
-     spawn "eject -T")
-
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
   --
 
-  -- Close focused window.
-  , ((modMask .|. shiftMask, xK_c),
-     kill)
-
   -- Cycle through the available layout algorithms.
-  , ((modMask, xK_space),
+  , ((modMask, xK_p),
      sendMessage NextLayout)
 
   --  Reset the layouts on the current workspace to default.
@@ -212,9 +172,6 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Decrement the number of windows in the master area.
   , ((modMask, xK_period),
      sendMessage (IncMasterN (-1)))
-
-  -- Toggle the status bar gap.
-  -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
