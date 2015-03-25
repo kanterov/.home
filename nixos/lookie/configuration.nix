@@ -17,8 +17,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.cleanTmpDir = true;
   boot.extraModprobeConfig = ''
-    options snd_hda_intel index=0 model=intel-mac-auto id=PCH
+    options snd_hda_intel index=0 model=intel-mac-auto id=PCH 
     options snd_hda_intel index=1 model=intel-mac-auto id=HDMI
+    options snd-hda-intel model=mbp101
     options hid_apple fnmode=2
   '';
   boot.loader.generationsDir.enable = false;
@@ -40,6 +41,7 @@
     terminus_font
   ];
 
+  nix.useChroot = true;
   nix.trustedBinaryCaches = [ http://hydra.nixos.org ];
   nix.binaryCaches =
     [
@@ -58,6 +60,9 @@
 
   hardware.bluetooth.enable = true;
 
+  environment.variables = {
+    #Z_HOME = "\${HOME}/src/zedtech";
+  };
   environment.systemPackages = with pkgs; [
     # CLI tools
     ack
@@ -88,11 +93,18 @@
     xbindkeys
     pamixer
     xscreensaver
-    tk
+    tk 
     zip
     unzip
     sysdig
     tcpdump
+    vcprompt
+    cowsay
+    figlet
+    rlwrap
+    tree
+    nixbang
+    mkpasswd
 
     # power management
     acpi
@@ -126,9 +138,12 @@
     # development
     vim
     python
+    pypyPackages.pip
+    pypyPackages.virtualenvwrapper
     erlang
     #oraclejdk8
     scala
+    sbt
     nixops
   ];
 
@@ -150,9 +165,11 @@
   powerManagement.enable = true;
 
   programs.light.enable = true;
+  programs.ssh.startAgent = true;
   programs.ssh.agentTimeout = "72h";
   programs.bash.enableCompletion = true;
 
+  services.mpd.enable = true;
   services.upower.enable = true;
   services.acpid.enable = true;
 
@@ -168,6 +185,7 @@
   services.xserver.windowManager.default = "xmonad";
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+  #services.xserver.startGnuPGAgent = true;
 
   services.xserver.synaptics.additionalOptions = ''
     Option "VertScrollDelta" "-100"
