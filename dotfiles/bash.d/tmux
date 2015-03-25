@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_SESSION="development"
+DEFAULT_SESSION="work"
 SH_CMD="exec bash"
 WORKDIR_CMD="cd ${WORK_DIR}; ${SH_CMD}"
 
