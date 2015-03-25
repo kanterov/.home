@@ -61,7 +61,7 @@ XTerm*initialFont: 2
 
 !!! UXTerm
 
-UXTerm*color0: #000000
+UXTerm*color0: #111111
 UXTerm*color1: #ffa2a5
 UXTerm*color2: #bdb66b
 UXTerm*color3: #f7e78c
@@ -77,20 +77,27 @@ UXTerm*color12: #4186be
 UXTerm*color13: #cf9ebe
 UXTerm*color14: #71bebe
 UXTerm*color15: #ffffff
-UXTerm*foreground: White
-UXTerm*background: #212021
+UXTerm*foreground: #e8e8e8
+UXTerm*background: #111111
 UXTerm*colorBD: lightyellow
 UXTerm*colorMode: on
 UXTerm*colorUL: yellow
 UXTerm*colorULMode: on
 UXTerm*customization: -color
 UXTerm*dynamicColors: off
-UXTerm*font: -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 UXTerm*highlightSelection: true
 UXTerm*scrollBar: false
 UXTerm*underLine: on
+UXTerm*renderFont: true
+UXTerm*faceName: Inconsolata
+UXTerm*faceSize1: 10
+UXTerm*faceSize2: 12
+UXTerm*faceSize3: 16
+UXTerm*faceSize4: 20
+UXTerm*faceSize5: 24
+UXTerm*faceSize6: 32
+UXTerm*initialFont: 1
 
-UXTerm*.Translations: #override \
 Mod1 <Key> C: select-end(PRIMARY, CLIPBOARD) \n\
 Mod1 <Key> V: insert-selection(PRIMARY, CLIPBOARD) \n\
 

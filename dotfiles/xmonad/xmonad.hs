@@ -16,7 +16,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 
-supoTerminal = "xterm"
+supoTerminal = "uxterm"
 
 supoWorkspaces =
   [ "1:term"
@@ -232,38 +232,11 @@ supoMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 
 ------------------------------------------------------------------------
--- Status bars and logging
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'DynamicLog' extension for examples.
---
--- To emulate dwm's status bar
---
--- > logHook = dynamicLogDzen
---
-
-
-------------------------------------------------------------------------
 -- Startup hook
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 supoStartupHook = return ()
-
-
-------------------------------------------------------------------------
--- Run xmonad with all the defaults we set up.
-main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = "   "
-      }
-      , manageHook = manageDocks <+> supoManageHook
-      , startupHook = setWMName "LG3D"
-  }
 
 
 ------------------------------------------------------------------------
@@ -290,3 +263,19 @@ defaults = defaultConfig {
     manageHook         = supoManageHook,
     startupHook        = supoStartupHook
 }
+
+
+------------------------------------------------------------------------
+-- Run xmonad with all the defaults we set up.
+main = do
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmonad $ defaults {
+      logHook = dynamicLogWithPP $ xmobarPP {
+            ppOutput = hPutStrLn xmproc
+          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+          , ppSep = "   "
+      }
+      , manageHook = manageDocks <+> supoManageHook
+      , startupHook = setWMName "LG3D"
+  }
