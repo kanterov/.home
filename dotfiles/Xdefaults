@@ -2,8 +2,9 @@
 Xft.dpi:        160
 Xft.antialias:  true
 Xft.hinting:    true
-Xft.hintsyle:   hintslight
+Xft.hintsyle:   hintfull
 Xft.rgba:       rgb
+Xft.lcdfilter:  lcddefault
 Xft.letterSpace: -2
 !!Xft.lineSpace: -1
 !!Xft.lineHeight: -1
@@ -18,7 +19,6 @@ Xft.letterSpace: -2
 *faceSize5: 28
 *faceSize6: 32
 *initialFont: 1
-
 
 !!! XTerm
 
@@ -77,7 +77,7 @@ UXTerm*color12: #4186be
 UXTerm*color13: #cf9ebe
 UXTerm*color14: #71bebe
 UXTerm*color15: #ffffff
-UXTerm*foreground: #e8e8e8
+UXTerm*foreground: white
 UXTerm*background: #111111
 UXTerm*colorBD: lightyellow
 UXTerm*colorMode: on
@@ -101,49 +101,3 @@ UXTerm*initialFont: 1
 Mod1 <Key> C: select-end(PRIMARY, CLIPBOARD) \n\
 Mod1 <Key> V: insert-selection(PRIMARY, CLIPBOARD) \n\
 
-!!! URxvt (weapon of choice)
-
-! black (Black)
-URxvt*color0: #000000
-! red (Red3)
-URxvt*color1: #ffa2a5
-! green (Green3)
-URxvt*color2: #bdb66b
-! yellow (Yellow3)
-URxvt*color3: #f7e78c
-! blue (Blue3)
-URxvt*color4: #84cfef
-! magenta (Magenta3)
-URxvt*color5: #ce5d5a
-! cyan (Cyan3)
-URxvt*color6: #87ff87
-! white (AntiqueWhite)
-URxvt*color7: #bebebe
-! bright black (Grey25)
-URxvt*color8: #666666
-! bright red (Red)
-URxvt*color9: #cf6171
-! bright green (Green)
-URxvt*color10: #c5f779
-! bright yellow (Yellow)
-URxvt*color11: #fff796
-! bright blue (Blue)
-URxvt*color12: #4186be
-! bright magenta (Magenta)
-URxvt*color13: #cf9ebe
-! bright cyan (Cyan)
-URxvt*color14: #71bebe
-! bright white (White)
-URxvt*color15: #ffffff
-! (White)
-URxvt*foreground: White
-! (Black)
-URxvt*background: #212021
-URxvt*colorBD: lightyellow
-URxvt*colorUL: yellow
-URxvt*font: -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt.keysym.M-c: perl:macosx-clipboard:copy
-URxvt.keysym.M-v: perl:macosx-clipboard:paste
-URxvt.modifier: mod1
-URxvt.perl-ext-common: macosx-clipboard
-URxvt.scrollBar: false
