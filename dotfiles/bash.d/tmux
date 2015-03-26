@@ -24,7 +24,7 @@ function configureWindows() {
 
 tmux start-server
 if [ -z $TMUX ]; then
-  if [ ! -z "$SSHAGENT" ]; then
+  if [ ! -z "$SSHAGENT" -a "${PLATFORM}" = "Darwin" ]; then
     echo "Starting ssh-agent ${SSH_AUTH_SOCK}..."
     CMD="$SSHAGENT $SSHAGENTARGS"
     echo "Evaluating $CMD"
