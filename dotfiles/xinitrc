@@ -1,1 +1,1 @@
-exec xterm -geometry 439x100
+#/usr/bin/xscreensaver -no-splash &
