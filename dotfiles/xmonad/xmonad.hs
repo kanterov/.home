@@ -29,7 +29,7 @@ supoManageHook = composeAll
   [ className =? "Chromium"       --> doShift "2:admin"
   , className =? "Firefox"  	    --> doShift "2:admin"
   , className =? "Opera"  	      --> doShift "3:research"
-  , className =? "Spotify"        --> doShift "4:media"
+  , resource  =? "spotify"        --> doShift "4:media"
   , className =? "xterm"          --> doShift "1:term"
   , isFullscreen --> (doF W.focusDown <+> doFullFloat)
   ]
