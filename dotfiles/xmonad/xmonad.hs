@@ -14,7 +14,10 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
+--import Control.Monad.Trans
+--import System.FilePath
+--import System.Directory
+--import XMonad.Util.WorkspaceScreenshot
 
 supoTerminal = "uxterm"
 
@@ -186,6 +189,10 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_q),
      io (exitWith ExitSuccess))
 
+  -- Take screenshot
+  --, ((modMask .|. shiftMask, xK_u),
+  --  captureWorkspacesWhen defaultPredicate supoScreenshotHook horizontally)
+
   -- Restart xmonad.
   , ((modMask, xK_q),
      restart "xmonad" True)
@@ -240,6 +247,15 @@ supoStartupHook = return ()
 
 
 ------------------------------------------------------------------------
+-- Screenshot hook
+-- Perform an arbitrary action each time xmonad starts or is restarted
+-- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
+-- per-workspace layout choices.
+--supoScreenshotHook fp = do
+--  hd <- getHomeDirectory
+--  renameFile fp (hd </> "Pictures" </> fp)
+
+------------------------------------------------------------------------
 -- Combine it all together
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -269,13 +285,14 @@ defaults = defaultConfig {
 -- Run xmonad with all the defaults we set up.
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  --initCapturing
   xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = "   "
-      }
-      , manageHook = manageDocks <+> supoManageHook
-      , startupHook = setWMName "LG3D"
+    logHook = dynamicLogWithPP $ xmobarPP {
+        ppOutput = hPutStrLn xmproc
+      , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+      , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+      , ppSep = "   "
+    }
+    , manageHook = manageDocks <+> supoManageHook
+    , startupHook = setWMName "LG3D"
   }
