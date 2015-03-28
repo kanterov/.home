@@ -269,4 +269,4 @@ if has("autocmd")
   augroup END
 endif
 
-hi CursorLine ctermbg=darkblue cterm=none
+hi CursorLine ctermbg=yellow ctermfg=black cterm=none
