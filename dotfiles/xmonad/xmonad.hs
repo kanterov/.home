@@ -187,7 +187,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
-     io (exitWith ExitSuccess))
+     io exitSuccess)
 
   -- Take screenshot
   --, ((modMask .|. shiftMask, xK_u),
