@@ -80,6 +80,7 @@ if [ "${PLATFORM}" = "Darwin" ]; then
     export -f sp_osx_create_system_group
     export -f sp_osx_create_system_user
     export -f sp_osx_unfuck_mavericks_dns
+    export -f sp_osx_unfuck_yosemite_dns
   else
     >&2 echo "Error: executing ${0} intended to be sourced...nothing to do."
     exit 1

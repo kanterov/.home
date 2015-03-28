@@ -1,1 +1,0 @@
-alias gerrit="ssh -p 29418 gerrit.flexilis.local gerrit"

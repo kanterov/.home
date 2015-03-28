@@ -1,0 +1,4 @@
+
+function gerrit() {
+  ssh -p "${GERRIT_PORT}" "${GERRIT_HOST}" gerrit $*
+}

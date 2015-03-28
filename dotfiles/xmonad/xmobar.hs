@@ -19,5 +19,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%multicpu%  |  %memory%  |  %swap%   [ %eth0% | %wlp2s0wi% ]   }{  %battery%  -  %KCMI%  |  <fc=#000099>%date%</fc>"
+    template = "%multicpu%  |  %memory%  |  %swap%   [ %eth0% | %wlp2s0wi% ]   }{  %battery%  |  %KCMI%  |  <fc=#000099>%date%</fc>"
 }
