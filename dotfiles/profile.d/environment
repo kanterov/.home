@@ -51,6 +51,7 @@ sourceProfileInit "adium.env"
 sourceProfileInit "gerrit.env"
 sourceProfileInit "lookout.env"
 sourceProfileInit "xmonad.env"
+sourceProfileInit "gradle.env"
 
 sourceProfileInit "all.aliases"
 sourceProfileInit "personal.aliases"
