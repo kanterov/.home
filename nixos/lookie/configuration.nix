@@ -31,13 +31,14 @@ in
       ./hardware-configuration.nix
     ];
 
-  #boot.kernelPackages = pkgs.linuxPackages_3_19;
+  #boot.kernelPackages = pkgs.linuxPackages_3_18;
   boot.loader.grub.enable = false;
   boot.loader.gummiboot.enable = true;
   boot.loader.gummiboot.timeout = 2;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.cleanTmpDir = true;
   boot.extraModprobeConfig = ''
+    options libata.force=noncq
     options resume=/dev/sda5
     options snd_hda_intel index=0 model=intel-mac-auto id=PCH 
     options snd_hda_intel index=1 model=intel-mac-auto id=HDMI
@@ -135,6 +136,9 @@ in
     jq
     awscli
     xmonad-with-packages
+    libressl
+    gnupg
+    gnupg1compat
 
     # power management
     acpi
