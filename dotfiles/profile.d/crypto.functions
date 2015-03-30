@@ -1,4 +1,4 @@
-function spp_crypo_passgen() {
+function spp_crypto_passgen() {
   if [ "$#" -eq 0 ]; then
     local -r len=32
   else
