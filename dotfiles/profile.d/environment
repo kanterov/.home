@@ -29,6 +29,7 @@ sourceProfileInit "github.functions"
 sourceProfileInit "ssh.functions"
 sourceProfileInit "gerrit.functions"
 sourceProfileInit "lookout.functions"
+sourceProfileInit "crypto.functions"
 
 sourceProfileInit "nix.env"
 sourceProfileInit "clojure.env"
