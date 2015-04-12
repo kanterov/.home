@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  >&2 echo "ERROR: Sourced executable script, ${BASH_SOURCE[0]}."
+else
+  declare -r browser="${DEFAULT_BROWSER:-firefox}"
+
+  if [ -z "${DEFAULT_BROWSER}" ]; then
+    >&2 echo "WARN: No DEFAULT_BROWSER set in environment. Using firefox."
+  fi
+
+  set -eu
+
+  declare -r client_file="${HOME}/.imgur.client"
+  if [ ! -f "${client_file}" ]; then
+    >&2 echo "ERROR: Client credentials not found at ${client_file}."
+    exit 1
+  fi
+
+  declare -r oauth_url="https://api.imgur.com/oauth2"
+  declare -r auth_url="${oauth_url}/authorize"
+  declare -r token_url="${oauth_url}/token"
+
+  declare -r client_info=($(cat "${client_file}"))
+  declare -r client_id="${client_info[0]}"
+  declare -r client_secret="${client_info[1]}"
+
+  echo "Opening ${browser} to authorize app and retrive PIN"
+  "${browser}" "${auth_url}?client_id=${client_id}&response_type=pin"
+
+  read -p "Enter PIN here: " pin
+
+  declare -r token_info="$(curl --silent -XPOST "${token_url}" \
+    --data "client_id=${client_id}" \
+    --data "client_secret=${client_secret}" \
+    --data "grant_type=pin" \
+    --data "pin=${pin}")"
+
+  mv -f "${HOME}/.imgur.atoken" "${HOME}/.imgur.atoken.bak"
+  echo "${token_info}" | jq -r '.access_token' > ~/.imgur.atoken
+
+  mv -f "${HOME}/.imgur.rtoken" "${HOME}/.imgur.rtoken.bak"
+  echo "${token_info}" | jq -r '.refresh_token' > ~/.imgur.rtoken
+fi
