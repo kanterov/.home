@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  >&2 echo "ERROR: Sourced executable script ${BASH_SOURCE[0]}."
+else
+  declare -r screenshots_dir="${SCREENSHOTS_DIR:-"${HOME}/.screenshots"}"
+  set -eu
+  declare -r ts="$(date +"%Y%m%dT%H%M%S%Z")"
+  declare -r fn="${screenshots_dir}/${ts}.png"
+  import -window root "${fn}"
+  echo "${fn}"
+fi

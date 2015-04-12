@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  >&2 echo "ERROR: Sourced executable script, ${BASH_SOURCE[0]}."
+else
+  declare -r imgur_base_url="https://api.imgur.com/3"
+  declare -r access_token="$(cat "${HOME}/.imgur.atoken")"
+  #declare -r refresh_token="$(cat "${HOME}/.imgur.rtoken")"
+
+  function upload_image() {
+    if [ "$#" -lt 2 ]; then
+      >&2 echo "ERROR: Expected at least 2 arguments, received $# to ${FUNCNAME}."
+      >&2 echo "USAGE: ${FUNCNAME} AUTH DATA [ALBUM [TYPE]]"
+      return 1
+    fi
+    local -r auth="${1}"
+    local -r data="${2}"
+    local -r album="${3:-}"
+    local -r itype="${4:-file}"
+    curl --silent \
+      --show-error \
+      --data-binary "${data}" \
+      --data "album=${album}" \
+      --data "type=${itype}" \
+      -H "Authorization: Bearer ${auth}" \
+      "${imgur_base_url}/image"
+  }
+
+  set -eu
+  if [ "$#" -ne 1 ]; then
+    >&2 echo "Usage: $0 IMGFILE"
+    exit 1
+  else
+    declare -r json="$(upload_image "${access_token}" "@${1}")"
+    echo "${json}" | jq -r '.data .link' | xsel -ib
+  fi
+fi
