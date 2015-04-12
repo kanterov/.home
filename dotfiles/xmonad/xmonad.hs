@@ -112,14 +112,27 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Decrease volume.
   , ((modMask .|. controlMask, xK_j),
-     spawn "amixer -q set Master 10%-")
+     spawn "amixer -q set Master 5%-")
 
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
-     spawn "amixer -q set Master 10%+")
+     spawn "amixer -q set Master 5%+")
+
+  -- Fn key labeled with mute/unmute symbol
+  , ((0, 0x1008FF12),
+     spawn "amixer -q set Master toggle")
+
+  -- Fn key labeled with volume decrease
+  , ((0, 0x1008FF11),
+     spawn "amixer -q set Master 5%-")
+
+  -- Fn key labeled with volume increase
+  , ((0, 0x1008FF13),
+     spawn "amixer -q set Master 5%+")
 
   -- Put contents from primary selection into X selection
-  , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
+  , ((modMask .|. shiftMask, xK_b),
+    spawn "xsel -op | xsel -ib")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -195,7 +208,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Restart xmonad.
   , ((modMask, xK_q),
-     restart "xmonad" True)
+     spawn "xmonad --recompile")
   ]
   ++
 
