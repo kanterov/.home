@@ -4,8 +4,7 @@ if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
   >&2 echo "ERROR: Sourced executable script, ${BASH_SOURCE[0]}."
 else
   declare -r imgur_base_url="https://api.imgur.com/3"
-  declare -r access_token="$(cat "${HOME}/.imgur.atoken")"
-  #declare -r refresh_token="$(cat "${HOME}/.imgur.rtoken")"
+  declare access_token="$(cat "${HOME}/.imgur.atoken")"
 
   function upload_image() {
     if [ "$#" -lt 2 ]; then
@@ -26,13 +25,54 @@ else
       "${imgur_base_url}/image"
   }
 
+  # Not the most elegant handling, but this is Bash so...whatevs?
+  # This comment was just for the benefit of @pj_brew
+  function refresh_token() {
+    local -r token_url="https://api.imgur.com/oauth2/token"
+    local -r client_file="${HOME}/.imgur.client"
+    if [ ! -f "${client_file}" ]; then
+      >&2 echo "ERROR: Client credentials not found at ${client_file}."
+      return 1
+    fi
+
+    local -r client_info=($(cat "${client_file}"))
+    local -r client_id="${client_info[0]}"
+    local -r client_secret="${client_info[1]}"
+
+    local refresh_token="$(cat "${HOME}/.imgur.rtoken")"
+    set -x
+    local -r token_info="$(curl --silent -XPOST "${token_url}" \
+      --data "client_id=${client_id}" \
+      --data "client_secret=${client_secret}" \
+      --data "grant_type=refresh_token" \
+      --data "refresh_token=${refresh_token}")"
+
+    echo "${token_info}" > ~/.imgur.last.tokens
+
+    mv -f "${HOME}/.imgur.atoken" "${HOME}/.imgur.atoken.bak"
+    access_token="$(echo "${token_info}" | jq -r '.access_token')"
+    echo "${access_token}" > ~/.imgur.atoken
+
+
+    mv -f "${HOME}/.imgur.rtoken" "${HOME}/.imgur.rtoken.bak"
+    echo "${token_info}" | jq -r '.refresh_token' > ~/.imgur.rtoken
+  }
+
   set -eu
   if [ "$#" -ne 1 ]; then
     >&2 echo "Usage: $0 IMGFILE"
     exit 1
   else
-    declare -r json="$(upload_image "${access_token}" "@${1}")"
+    declare json="$(upload_image "${access_token}" "@${1}")"
+    echo "${json}" > ~/.imgur.last.json
     echo "${json}" | jq -r '.data .link' | xsel -ib
+
+    # Really gross here, but I just want this working.
+    if [ "$(xsel -ob)" = "null" ]; then
+      refresh_token
+      json="$(upload_image "${access_token}" "@${1}")"
+      echo "${json}" | jq -r '.data .link' | xsel -ib
+    fi
     xsel -ob
   fi
 fi
