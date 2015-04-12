@@ -131,8 +131,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master 5%+")
 
   -- Put contents from primary selection into X selection
-  , ((modMask .|. shiftMask, xK_b),
-    spawn "xsel -op | xsel -ib")
+  , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -140,75 +139,75 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Cycle through the available layout algorithms.
   , ((modMask, xK_p),
-     sendMessage NextLayout)
+    sendMessage NextLayout)
 
   --  Reset the layouts on the current workspace to default.
   , ((modMask .|. shiftMask, xK_space),
-     setLayout $ XMonad.layoutHook conf)
+    setLayout $ XMonad.layoutHook conf)
 
   -- Resize viewed windows to the correct size.
   , ((modMask, xK_n),
-     refresh)
+    refresh)
 
   -- Move focus to the next window.
   , ((modMask, xK_Tab),
-     windows W.focusDown)
+    windows W.focusDown)
 
   -- Move focus to the next window.
   , ((modMask, xK_j),
-     windows W.focusDown)
+    windows W.focusDown)
 
   -- Move focus to the previous window.
   , ((modMask, xK_k),
-     windows W.focusUp  )
+    windows W.focusUp  )
 
   -- Move focus to the master window.
   , ((modMask, xK_m),
-     windows W.focusMaster  )
+    windows W.focusMaster  )
 
   -- Swap the focused window and the master window.
   , ((modMask, xK_Return),
-     windows W.swapMaster)
+    windows W.swapMaster)
 
   -- Swap the focused window with the next window.
   , ((modMask .|. shiftMask, xK_j),
-     windows W.swapDown  )
+    windows W.swapDown  )
 
   -- Swap the focused window with the previous window.
   , ((modMask .|. shiftMask, xK_k),
-     windows W.swapUp    )
+    windows W.swapUp    )
 
   -- Shrink the master area.
   , ((modMask, xK_h),
-     sendMessage Shrink)
+    sendMessage Shrink)
 
   -- Expand the master area.
   , ((modMask, xK_l),
-     sendMessage Expand)
+    sendMessage Expand)
 
   -- Push window back into tiling.
   , ((modMask, xK_t),
-     withFocused $ windows . W.sink)
+    withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area.
   , ((modMask, xK_comma),
-     sendMessage (IncMasterN 1))
+    sendMessage (IncMasterN 1))
 
   -- Decrement the number of windows in the master area.
   , ((modMask, xK_period),
-     sendMessage (IncMasterN (-1)))
+    sendMessage (IncMasterN (-1)))
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
-     io exitSuccess)
+    io exitSuccess)
 
   -- Take screenshot
-  --, ((modMask .|. shiftMask, xK_u),
-  --  captureWorkspacesWhen defaultPredicate supoScreenshotHook horizontally)
+  , ((modMask .|. shiftMask, xK_u),
+    spawn "screenshot-workspace | xargs imgur-upload | xargs firefox -new-tab")
 
   -- Restart xmonad.
   , ((modMask, xK_q),
-     spawn "pkill xmobar; xmonad --recompile && xmonad --restart")
+    restart "xmonad" True)
   ]
   ++
 

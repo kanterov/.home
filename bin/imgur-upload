@@ -33,5 +33,6 @@ else
   else
     declare -r json="$(upload_image "${access_token}" "@${1}")"
     echo "${json}" | jq -r '.data .link' | xsel -ib
+    xsel -ob
   fi
 fi
