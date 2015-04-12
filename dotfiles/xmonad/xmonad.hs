@@ -208,7 +208,7 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Restart xmonad.
   , ((modMask, xK_q),
-     spawn "xmonad --recompile")
+     spawn "pkill xmobar; xmonad --recompile && xmonad --restart")
   ]
   ++
 
