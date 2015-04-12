@@ -29,3 +29,6 @@ sourceFile "${HOME}/.bash.d/tmux"
 
 # merge .Xdefaults settings
 if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
+
+# merge .Xmodmap settings
+if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
