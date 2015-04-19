@@ -21,6 +21,7 @@ else
       --data-binary "${data}" \
       --data "album=${album}" \
       --data "type=${itype}" \
+      --data "title=screenshot" \
       -H "Authorization: Bearer ${auth}" \
       "${imgur_base_url}/image"
   }
