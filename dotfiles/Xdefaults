@@ -77,7 +77,7 @@ UXTerm*color12: #4186be
 UXTerm*color13: #cf9ebe
 UXTerm*color14: #71bebe
 UXTerm*color15: #ffffff
-UXTerm*foreground: white
+UXTerm*foreground: #cf9ebe
 UXTerm*background: #111111
 UXTerm*colorBD: lightyellow
 UXTerm*colorMode: on
