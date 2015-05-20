@@ -1,48 +1,92 @@
 #!/usr/bin/env bash
 
-DEFAULT_SESSION="work"
-SH_CMD="exec bash"
-WORKDIR_CMD="cd ${WORK_DIR}; ${SH_CMD}"
-
-function trimSession() {
-  local name=$1;
-  echo ${1};
-}
+declare -r default_session_name="work"
+declare -r sh_cmd="exec bash"
+declare -r work_dir="${WORK_HOME:-"${HOME}/src/work"}"
 
 # This should only ever return either "0" or "1"
-function tmuxSessionMatches() {
+function tmux_session_matches() {
   local name=$1
-  echo $(tmux ls | grep "^${name}$" | wc -l)
+  tmux ls | grep -c "^${name}$"
 }
 
-function configureWindows() {
-  tmux set-window-option -t ${DEFAULT_SESSION} -g automatic-rename off;
-  tmux new-window        -t ${DEFAULT_SESSION}:0 -k -n devops "${WORKDIR_CMD}";
-  tmux split-window -h   -t ${DEFAULT_SESSION}:0 "${WORKDIR_CMD}";
-  tmux split-window -v   -t ${DEFAULT_SESSION}:0 "${WORKDIR_CMD}";
+function setup_window() {
+  if [ "$#" -ne 3 ]; then
+    >&2 echo "ERROR: Expected 2 arguments, received $# for ${FUNCNAME}."
+    >&2 echo "USAGE: ${FUNCNAME} INDEX NAME DIR"
+    return 1
+  fi
+
+  local -r idx="${1}"
+  local -r name="${2}"
+  local -r dir="${3}"
+  local -r cmd="cd ${dir}; ${sh_cmd}"
+
+  tmux set-window-option -t "${default_session_name}" -g automatic-rename off;
+  tmux new-window        -t "${default_session_name}:${idx}" -k -n "${name}" "${cmd}";
+  tmux split-window -h   -t "${default_session_name}:${idx}" "${cmd}";
+}
+
+function setup_nix_window() {
+  if [ "$#" -ne 3 ]; then
+    >&2 echo "ERROR: Expected 2 arguments, received $# for ${FUNCNAME}."
+    >&2 echo "USAGE: ${FUNCNAME} INDEX NAME DIR"
+    return 1
+  fi
+
+  local -r idx="${1}"
+  local -r name="${2}"
+  local -r dir="${3}"
+  local -r cmd="cd ${dir}; ${sh_cmd}"
+  local -r dname="${name}-${Z_ENV:-dev-${USER}}-${Z_DEPLOYMENT_TARGET_ENV:-"virtualbox/singlenode"//\//-}"
+
+  tmux set-window-option -t "${default_session_name}" -g automatic-rename off
+  tmux new-window        -t "${default_session_name}:${idx}" -k -n "${name}" "${cmd}"
+  tmux split-window -h   -t "${default_session_name}:${idx}" "${cmd}"
+  tmux split-window -v   -t "${default_session_name}:${idx}" "${cmd}; nix-repl"
+}
+
+function configure_windows() {
+  local -r root_dir="${work_dir}/root"
+  local -r services_dir="${root_dir}/services"
+  local -ra services=("${SERVICE_NAMES[@]}")
+  local -ra docs=("$(ls "${root_dir}/docs")")
+
+  setup_window 0 "root" "${work_dir}/root"
+
+  local -i tab_idx=1
+  for s in "${services[@]}"; do
+    setup_window "${tab_idx}" "${s}" "${services_dir}/${s}"
+    tab_idx=$((tab_idx+1))
+  done
+
+  for d in "${docs[@]}"; do
+    setup_window "${tab_idx}" "${d}" "${root_dir}/docs/${d}"
+    tab_idx=$((tab_idx+1))
+  done
 }
 
 tmux start-server
-if [ -z $TMUX ]; then
+if [ -z "${TMUX}" ]; then
   if [ ! -z "$SSHAGENT" -a "${PLATFORM}" = "Darwin" ]; then
     echo "Starting ssh-agent ${SSH_AUTH_SOCK}..."
     CMD="$SSHAGENT $SSHAGENTARGS"
     echo "Evaluating $CMD"
     SSHAGENTOUT=$($CMD)
     echo "Output $SSHAGENTOUT"
-    eval $SSHAGENTOUT
+    eval "${SSHAGENTOUT}"
   fi
 
-  if [ $(tmuxSessionMatches ${DEFAULT_SESSION}) -eq 0 ]; then
-    echo "Launching tmux base session ${DEFAULT_SESSION}..."
-    tmux new-session -d -s ${DEFAULT_SESSION}
-    configureWindows
-    tmux attach -t ${DEFAULT_SESSION}
+  if [ "$(tmux_session_matches "${default_session_name}")" -eq 0 ]; then
+    echo "Launching tmux base session ${default_session_name}..."
+    tmux new-session -d -s ${default_session_name}
+    configure_windows
+    tmux attach -t ${default_session_name}
   else
-    echo "Launching synced copy of base session ${DEFAULT_SESSION}..."
-    sid="${DEFAULT_SESSION}-$(date +%Y%m%d%H%M%S)"
-    tmux new-session -d -t ${sid} -s ${DEFAULT_SESSION}
-    configureWindows
-    tmux attach -t ${sid}
+    echo "Launching synced copy of base session ${default_session_name}..."
+    sid="${default_session_name}-$(date +%Y%m%d%H%M%S)"
+    tmux new-session -d -t "${sid}" -s "${default_session_name}"
+    configure_windows
+    tmux attach -t "${sid}"
   fi
 fi
