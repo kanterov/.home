@@ -2,3 +2,22 @@
 function gerrit() {
   ssh -p "${GERRIT_PORT}" "${GERRIT_HOST}" gerrit $*
 }
+
+function gerrit-download-patch() {
+  if [ "$#" -ne 1 ]; then
+    >&2 echo "ERROR: Expected one argument for ${FUNCNAME}, received $#."
+    return 1
+  fi
+
+  local -r refspec="$(git lspatchsets  | grep "${1}" | sort | tail -1 | cut -f2)"
+  local -r stat="$(git status --short)"
+
+  if [ -z "${stat}" ]; then
+    git fetch gerrit "${refspec}"
+    git checkout -b "${refspec}" FETCH_HEAD
+  else
+    >&2 echo "ERROR: Local changes:"
+    echo "${stat}"
+    return 1
+  fi
+}
