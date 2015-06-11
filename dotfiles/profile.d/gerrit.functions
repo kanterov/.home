@@ -9,7 +9,7 @@ function gerrit-download-patch() {
     return 1
   fi
 
-  local -r refspec="$(git lspatchsets  | grep "${1}" | sort | tail -1 | cut -f2)"
+  local -r refspec="$(git lspatchsets  | grep "${1}" | sort -k2 -V | tail -1 | cut -f2)"
   local -r stat="$(git status --short)"
 
   if [ -z "${stat}" ]; then
