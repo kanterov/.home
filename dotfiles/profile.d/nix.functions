@@ -31,3 +31,22 @@ function nixos_unstable_checkout() {
     popd
   fi
 }
+
+# This assumes a few things:
+# * the command supplied is active in the current Nix profile
+# * the command being using in the active profile is in the package you want
+#   to lookup (sometime multiple packages provide the same command).
+#
+# User beware! Use at your own peril. :)
+function nix_lookup_command_package() {
+  if [ "$#" -ne 1 ]; then
+    >&2 echo "ERROR: Expected one argument for ${FUNCNAME}, received $#."
+    return 1
+  fi
+
+  local -r cmd="${1}"
+  local pkg
+
+  pkg="$(type -P "${cmd}" | xargs readlink -f | cut -f2- -d'-' | cut -f1 -d'/')"
+  nix-env -qaP "${pkg}"
+}
