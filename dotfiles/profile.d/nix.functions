@@ -50,3 +50,7 @@ function nix_lookup_command_package() {
   pkg="$(type -P "${cmd}" | xargs readlink -f | cut -f2- -d'-' | cut -f1 -d'/')"
   nix-env -qaP "${pkg}"
 }
+
+function nix_installed_packages() {
+  nix-store -q --references /var/run/current-system/sw
+}
