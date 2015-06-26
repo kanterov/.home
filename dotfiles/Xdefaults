@@ -1,24 +1,25 @@
 !!! General
-Xft.dpi:        120
+Xft.dpi:        160
 Xft.antialias:  true
 Xft.hinting:    true
 Xft.hintsyle:   hintfull
 Xft.rgba:       rgb
 Xft.lcdfilter:  lcddefault
 Xft.letterSpace: -1
-!!Xft.lineSpace: -1
-!!Xft.lineHeight: -1
-!!Xft.linePadding: -1
+Xft.lineSpace: -1
+Xft.lineHeight: -1
+Xft.linePadding: -1
 
 *renderFont: true
-*font: xft:Inconsolata:pixelsize=14
-*faceSize1: 10
+*font: xft:Inconsolata:size=12
+*faceName: Inconsolata
+*faceSize1: 12
 *faceSize2: 14
-*faceSize3: 18
-*faceSize4: 22
-*faceSize5: 28
-*faceSize6: 32
-*initialFont: 1
+*faceSize3: 16
+*faceSize4: 18
+*faceSize5: 20
+*faceSize6: 22
+*initialFont: 3
 
 !!! XTerm
 
@@ -49,15 +50,6 @@ XTerm*dynamicColors: off
 XTerm*highlightSelection: true
 XTerm*scrollBar: false
 XTerm*underLine: on
-XTerm*renderFont: true
-XTerm*faceName: Inconsolata
-XTerm*faceSize1: 10
-XTerm*faceSize2: 12
-XTerm*faceSize3: 16
-XTerm*faceSize4: 20
-XTerm*faceSize5: 24
-XTerm*faceSize6: 32
-XTerm*initialFont: 2
 XTerm*urlLauncher: firefox
 XTerm*selectToClipboard: true
 ! XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
@@ -91,15 +83,6 @@ UXTerm*dynamicColors: off
 UXTerm*highlightSelection: true
 UXTerm*scrollBar: false
 UXTerm*underLine: on
-UXTerm*renderFont: true
-UXTerm*faceName: Inconsolata
-UXTerm*faceSize1: 10
-UXTerm*faceSize2: 12
-UXTerm*faceSize3: 16
-UXTerm*faceSize4: 20
-UXTerm*faceSize5: 24
-UXTerm*faceSize6: 32
-UXTerm*initialFont: 2
 UXTerm*urlLauncher: firefox
 UXTerm*selectToClipboard: true
 ! UXTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
@@ -107,8 +90,6 @@ UXTerm*selectToClipboard: true
 Mod1 <Key> C: select-end(PRIMARY, CLIPBOARD) \n\
 Mod1 <Key> V: insert-selection(PRIMARY, CLIPBOARD) \n\
 
-! URxvt.font: xft:monaco:bold:size=14
-URxvt.font: xft:Inconsolata:size=14
 URxvt.color0: #111111
 URxvt.color1: #ffa2a5
 URxvt.color2: #bdb66b
@@ -126,7 +107,7 @@ URxvt.color13: #cf9ebe
 URxvt.color14: #71bebe
 URxvt.color15: #ffffff
 URxvt.foreground: #cf9ebe
-URxvt.background: #111111
+URxvt.background: [95]#111111
 URxvt.colorBD: lightyellow
 URxvt.colorMode: on
 URxvt.colorUL: yellow
@@ -144,21 +125,22 @@ URxvt.faceSize3: 18
 URxvt.faceSize4: 20
 URxvt.faceSize5: 24
 URxvt.faceSize6: 32
-URxvt.initialFont: 3
+URxvt.initialFont: 4
 URxvt.urlLauncher: firefox
 URxvt.selectToClipboard: true
-
-! Clickable URLs
-URxvt.perl-ext-common: default,matcher,font-size
+URxvt.perl-ext: default,matcher,font-size,url-select
 URxvt.url-launcher: firefox
-URxvt.matcher.button: 1
-
-! Mouse free URL clicks
-URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: firefox
 URxvt.url-select.underline: true
 
-URxvt.keysym.M-S-+:     perl:font-size:increase
-URxvt.keysym.M-S--:   perl:font-size:decrease
-URxvt.keysym.M-S-Up:   perl:font-size:incglobal
-URxvt.keysym.M-S-Down: perl:font-size:decglobal
+! Clickable URLs
+URxvt.matcher.button: 1
+
+! Mouse free URL clicks
+URxvt.keysym.C-u:     perl:url-select:select_next
+
+URxvt.keysym.F11:     perl:fullscreen:switch
+URxvt.font-size.step: 2
+URxvt.keysym.F4:      perl:font-size:incglobal
+URxvt.keysym.F3:      perl:font-size:decglobal
+
