@@ -16,3 +16,8 @@ dotfiles/sbt/**/*/target/
 dotfiles/sbt/**/*.jar
 dotfiles/sbt/**/*.lock
 dotfiles/sbt/**/*.log
+dotfiles/xmonad/*.hi
+dotfiles/xmonad/*.o
+dotfiles/xmonad/*.errors
+dotfiles/xmonad/xmonad-x86_64-*
+dotfiles/profile.d/lookout.*

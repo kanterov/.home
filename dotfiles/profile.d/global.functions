@@ -1,4 +1,7 @@
-function pre_prompt() {
+#!/usr/bin/env bash
+# Purpose: share reusable functions that are globally applicable
+
+function sp_global_pre_prompt() {
   local exit_code=$?;
   history -a;
   history -n;
@@ -12,3 +15,63 @@ function pre_prompt() {
     echo "${RED}?=${exit_code} | ${msg}${D}";
   fi;
 }
+
+function sp_global_list_largest_dirs() {
+  if [ "$#" -lt 1 ]; then
+    >&2 echo "Error: Expected at least one argument to ${FUNCNAME}:"
+    >&2 echo "Usage: ${FUNCNAME} ROOT [[DEPTH] TOPN]"
+    return 1
+  fi
+
+  local -r root="${1}"
+  local -ri depth="${2:-1}"
+  local -ri topn="${3:-10}"
+
+  du -d ${depth} -H "${root}" | sort -rn -k1 | head -${topn}
+}
+
+function sp_global_list_large_files() {
+  if [ "$#" -lt 1 ]; then
+    >&2 echo "Error: Expected at least one argument to ${FUNCNAME}:"
+    >&2 echo "Usage: ${FUNCNAME} ROOT [SIZE]"
+    return 1
+  fi
+
+  local -r root="${1}"
+  local -r size="${2:-256M}"
+
+  find "${root}" -size +${size} -type f
+}
+
+# sp_global_create_tarbz2_backup NAME DESTDIR *DIRS
+# yields tar.bz2 file named $(hostname -s).${NAME}-${TIMESTAMP}.tar.bz2 in DESTDIR
+function sp_global_create_tarbz2_backup() {
+  local -r shortname="$(hostname -s)"
+  local -r timestamp="$(date +"%Y%m%dT%H%M%S%z")"
+
+  if [ "$#" -lt 3 ]; then
+    >&2 echo "Error: Expected at least three arguments to ${FUNCNAME}"
+    >&2 echo "Usage: ${FUNCNAME} NAME DESTDIR *DIRS"
+    >&2 echo "Result: tar.bz2 backup file in in ${DESTDIR} named "
+    >&2 echo "        ${shortname}.NAME-${timestamp}.tar.bz2"
+    return 1
+  fi
+
+  local -r name="${1}"
+  local -r dest_dir="${2}"
+  shift
+  shift
+  local -a code_dirs=$*
+  local -r output="${dest_dir}/${shortname}.${name}-${timestamp}.tar.bz2"
+
+  tar -cvjf "${output}" ${code_dirs[*]}
+  echo "${output}"
+}
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  export -f sp_global_pre_prompt
+  export -f sp_global_create_tarbz2_backup
+else
+  >&2 echo "Error: Executing library of function definitions ${0}."
+  exit 1
+fi

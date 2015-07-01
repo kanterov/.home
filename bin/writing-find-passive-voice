@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Purpose: To find passive voice in text files passed in
+# Usage: $0 FILE [...]
+# Expects: WRITING_IRREGULAR_WORDS env var or assumes ~/.irregular.words
+# Note: Modified from Matt Might's excellent '3 shell scripts ...'
+# blog post:
+# http://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/
+
+if [ "${BASH_SOURCE[0]}" != "${0}" ]; then
+  >&2 echo "Error: attempted to source executable script ${0}"
+  >&2 echo "Nothing to do."
+else
+  function usage() {
+    echo "Usage: $(basename "$0") FILE [...]"
+  }
+
+  function verifyFiles {
+    for f in "${@}"; do
+      if [ ! -f "${f}" ]; then
+        >&2 echo "Error: File ${f} not found"
+        return 1
+      fi
+    done
+  }
+
+  if [ "$#" -lt 1 ]; then
+    usage
+    exit 1
+  fi
+
+  set -eu
+  declare -r irregularwords_file="${WRITING_IRREGULAR_WORDS:-"${HOME}/.irregular.words"}"
+  verifyFiles $* "${irregularwords_file}"
+
+  declare -ar irregularwords=($(cat "${irregularwords_file}"))
+  declare -r irregularwords_regex="$(echo "${irregularwords[*]}" | sed 's/ /|/g')"
+
+  ! egrep -i -n --color \
+    "\\b(am|are|were|being|is|been|was|be)\\b(${irregularwords_regex})\\b" \
+    $*
+fi

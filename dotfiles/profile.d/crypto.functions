@@ -1,0 +1,9 @@
+function spp_crypto_passgen() {
+  if [ "$#" -eq 0 ]; then
+    local -r len=32
+  else
+    local -r len=$1
+  fi
+
+  openssl rand -base64 "${len}" 2>/dev/null
+}

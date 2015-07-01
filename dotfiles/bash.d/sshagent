@@ -1,0 +1,16 @@
+export -i SSH_AGENT_PID=$(pgrep -u "${USER}" ssh-agent)
+if [[ "${SSH_AGENT_PID}" == "" ]]; then
+  eval "$(ssh-agent)" >/dev/null
+else
+  export SSH_AUTH_SOCK=$(find /tmp -name agent.$((${SSH_AGENT_PID} - 1)) 2>/dev/null)
+fi;
+
+if ssh-add -l | fgrep "agent has no identities" >/dev/null; then
+  declare -ar pubkeys=($(ls "${HOME}/.ssh/*.pub"))
+  for key in "${pubkeys[@]}"; do
+    declare -r file="$HOME/.ssh/$(basename "${key}.pub")"
+    if [ -f "${file}" ]; then
+      ssh-add -t 7d "${file}"
+    fi
+  done
+fi

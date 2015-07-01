@@ -1,0 +1,5 @@
+alias gerrit-branch-prune="git co master \
+  && git pull --quiet gerrit master \
+  && git lsmerged \
+  | grep -v master \
+  | (xargs git rmbr 2>/dev/null || echo \"Nothing to prune\")"

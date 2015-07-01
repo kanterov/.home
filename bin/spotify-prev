@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ "${PLATFORM}" = "Linux" ]; then
+  dbus-send --print-reply \
+    --dest=org.mpris.MediaPlayer2.spotify \
+    /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+else
+  >&2 echo "ERROR: Not running on Linux."
+  >&2 echo "ERROR: PLATFORM=${PLATFORM}"
+  exit 1
+fi

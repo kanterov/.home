@@ -1,0 +1,3 @@
+# Requires downloading NuGet.exe:
+# http://nuget.codeplex.com/downloads/get/222685
+alias nuget="mono --runtime=v4.0.30319 ${HOME}/bin/NuGet.exe"

@@ -38,7 +38,7 @@ syn keyword scalaObject object nextgroup=scalaClassName skipwhite
 syn keyword scalaTrait trait nextgroup=scalaClassName skipwhite
 syn match scalaDefName "[^ =:;([]\+" contained nextgroup=scalaDefSpecializer skipwhite
 syn match scalaValName "[^ =:;([]\+" contained
-syn match scalaVarName "[^ =:;([]\+" contained 
+syn match scalaVarName "[^ =:;([]\+" contained
 syn match scalaClassName "[^ =:;(\[]\+" contained nextgroup=scalaClassSpecializer skipwhite
 syn region scalaDefSpecializer start="\[" end="\]" contained contains=scalaDefSpecializer
 syn region scalaClassSpecializer start="\[" end="\]" contained contains=scalaClassSpecializer
@@ -96,7 +96,7 @@ syn region scalaXmlEscape matchgroup=scalaXmlEscapeSpecial start="{" matchgroup=
 syn match scalaXmlQuote "&[^;]\+;" contained
 syn match scalaXmlComment "<!--\_[^>]*-->" contained
 
-syn sync fromstart
+"syn sync fromstart
 
 " map Scala groups to standard groups
 hi link scalaKeyword Keyword

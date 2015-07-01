@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if ! pgrep -u "${USER}" ssh-agent; then
+  rm "${SSH_AUTH_SOCK:-"${HOME}/.ssh/ssh-agent.sock"}"
+  eval "${SSHAGENT}" "${SSHAGENTARGS}"
+fi
+
+declare -r timeout="96h"
+declare -ra rsa_keys=(git gh bb ssh lookout)
+declare -ra dsa_keys=()
+
+for t in "${rsa_keys[@]}"; do
+  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_rsa"
+done
+
+for t in "${dsa_keys[@]}"; do
+  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_dsa"
+done

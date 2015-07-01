@@ -1,0 +1,5 @@
+IPSec gateway vpn.yourcompany.com
+IPSec ID groupid
+IPSec secret groupsecret
+Xauth username yourusername
+Local Port 0

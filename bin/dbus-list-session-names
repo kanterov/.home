@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [ "${PLATFORM}" = "Linux" ]; then
+  dbus-send --session           \
+    --dest=org.freedesktop.DBus \
+    --type=method_call          \
+    --print-reply               \
+    /org/freedesktop/DBus       \
+    org.freedesktop.DBus.ListNames
+else
+  >&2 echo "ERROR: Not running on Linux."
+  >&2 echo "ERROR: PLATFORM=${PLATFORM}"
+  exit 1
+fi
