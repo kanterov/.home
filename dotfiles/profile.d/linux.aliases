@@ -1,0 +1,6 @@
+alias record_terminal="xvidcap --audio yes \
+  --audio_in /dev/dsp3 \
+  --cap_geometry 1440x1800+0+0 \
+  --gui no --quality 80"
+
+alias lswifi="iwlist wlp2s0 scanning |grep SSID | sort | uniq"
