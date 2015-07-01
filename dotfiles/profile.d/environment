@@ -5,10 +5,10 @@ function sourceProfileInit() {
     return 1
   fi
 
-  local -r path="${HOME}/.profile.d/${1}"
+  local -r profile_path="${HOME}/.profile.d/${1}"
 
-  if [ -f "${path}" ]; then
-    source "${path}"
+  if [ -f "${profile_path}" ]; then
+    source "${profile_path}"
   fi
 }
 
@@ -28,6 +28,7 @@ sourceProfileInit "python.functions"
 sourceProfileInit "github.functions"
 sourceProfileInit "ssh.functions"
 sourceProfileInit "gerrit.functions"
+sourceProfileInit "github.functions"
 sourceProfileInit "lookout.functions"
 sourceProfileInit "crypto.functions"
 
@@ -63,6 +64,7 @@ sourceProfileInit "scala.aliases"
 sourceProfileInit "work.aliases"
 sourceProfileInit "gerrit.aliases"
 sourceProfileInit "lookout.aliases"
+sourceProfileInit "linux.aliases"
 
 if [ "${PLATFORM}" = "Darwin" ]; then
   sourceProfileInit "osx.env"

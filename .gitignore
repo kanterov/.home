@@ -21,3 +21,4 @@ dotfiles/xmonad/*.o
 dotfiles/xmonad/*.errors
 dotfiles/xmonad/xmonad-x86_64-*
 dotfiles/profile.d/lookout.*
+dotfiles/weechat/sec.conf

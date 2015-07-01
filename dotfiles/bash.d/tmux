@@ -27,6 +27,22 @@ function setup_window() {
   tmux split-window -h   -t "${default_session_name}:${idx}" "${cmd}";
 }
 
+function setup_single_pane_window() {
+  if [ "$#" -ne 3 ]; then
+    >&2 echo "ERROR: Expected 2 arguments, received $# for ${FUNCNAME}."
+    >&2 echo "USAGE: ${FUNCNAME} INDEX NAME DIR"
+    return 1
+  fi
+
+  local -r idx="${1}"
+  local -r name="${2}"
+  local -r dir="${3}"
+  local -r cmd="cd ${dir}; ${sh_cmd}"
+
+  tmux set-window-option -t "${default_session_name}" -g automatic-rename on;
+  tmux new-window        -t "${default_session_name}:${idx}" -k -n "${name}" "${cmd}";
+}
+
 function setup_nix_window() {
   if [ "$#" -ne 3 ]; then
     >&2 echo "ERROR: Expected 2 arguments, received $# for ${FUNCNAME}."
@@ -60,10 +76,14 @@ function configure_windows() {
     tab_idx=$((tab_idx+1))
   done
 
-  for d in "${docs[@]}"; do
-    setup_window "${tab_idx}" "${d}" "${root_dir}/docs/${d}"
-    tab_idx=$((tab_idx+1))
-  done
+  setup_window "${tab_idx}" "nix" "${HOME}/src/nixos"
+  tab_idx=$((tab_idx+1))
+  setup_window "${tab_idx}" "oss" "${HOME}/src/oss"
+  tab_idx=$((tab_idx+1))
+  setup_single_pane_window "${tab_idx}" "chat" "${HOME}"
+  tab_idx=$((tab_idx+1))
+  setup_window "${tab_idx}" "vpn" "${HOME}"
+  tab_idx=$((tab_idx+1))
 }
 
 tmux start-server

@@ -13,27 +13,40 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
+import Graphics.X11.ExtraTypes.XF86
 import qualified Data.Map        as M
 --import Control.Monad.Trans
 --import System.FilePath
 --import System.Directory
 --import XMonad.Util.WorkspaceScreenshot
 
-supoTerminal = "uxterm"
+supoTerminal = "urxvt"
+-- supoTerminal = "uxterm"
 
 supoWorkspaces =
   [ "1:term"
-  , "2:admin"
-  , "3:research"
-  , "4:media"
+  , "2:tickets"
+  , "3:reviews"
+  , "4:hangouts"
+  , "5:chat"
+  , "6:media"
+  , "7:shittier"
   ]
 
 supoManageHook = composeAll
-  [ className =? "Chromium"       --> doShift "2:admin"
-  , className =? "Firefox"  	    --> doShift "2:admin"
-  , className =? "Opera"  	      --> doShift "3:research"
-  , resource  =? "spotify"        --> doShift "4:media"
-  , className =? "xterm"          --> doShift "1:term"
+  [ className =? "xterm"            --> doShift "1:term"
+  , className =? "xterm-unicode"    --> doShift "1:term"
+  , className =? "rxvt-unicode"     --> doShift "1:term"
+  , className =? "urxvt"            --> doShift "1:term"
+  , appName   =? "firefox-tickets"  --> doShift "2:work"
+  , className =? "Chromium"         --> doShift "3:reviews"
+  , appName   =? "firefox-reviews"  --> doShift "3:reviews"
+  , appName   =? "firefox-hangouts" --> doShift "4:video"
+  , appName   =? "firefox-lookout"  --> doShift "4:video"
+  , className =? "hipchat"          --> doShift "5:chat"
+  , className =? "skype"            --> doShift "5:chat"
+  , appName   =? "firefox-spotify"  --> doShift "6:media"
+  , appName   =? "firefox-shittier" --> doShift "7:shittier"
   , isFullscreen --> (doF W.focusDown <+> doFullFloat)
   ]
 
@@ -98,6 +111,10 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
+  -- Sleep computer
+  , ((modMask .|. controlMask, xK_s),
+     spawn "slimlock; systemctl hybrid-sleep")
+
   -- Lock the screen using slimlock.
   , ((modMask .|. controlMask, xK_l),
      spawn "slimlock")
@@ -105,18 +122,6 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Use this to launch programs without a key binding.
   , ((modMask, xK_space),
      spawn supoDmenuCmd)
-
-  -- Mute volume.
-  , ((modMask .|. controlMask, xK_m),
-     spawn "amixer -q set Master toggle")
-
-  -- Decrease volume.
-  , ((modMask .|. controlMask, xK_j),
-     spawn "amixer -q set Master 5%-")
-
-  -- Increase volume.
-  , ((modMask .|. controlMask, xK_k),
-     spawn "amixer -q set Master 5%+")
 
   -- Fn key labeled with mute/unmute symbol
   , ((0, 0x1008FF12),
@@ -132,6 +137,12 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Put contents from primary selection into X selection
   , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
+
+  -- Decrement brightness
+  , ((0, xF86XK_KbdBrightnessDown), spawn "brightness-down")
+
+  -- Increment brightness
+  , ((0, xF86XK_KbdBrightnessUp), spawn "brightness-up")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -296,15 +307,16 @@ defaults = defaultConfig {
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  --xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   --initCapturing
   xmonad $ defaults {
-    logHook = dynamicLogWithPP $ xmobarPP {
-        ppOutput = hPutStrLn xmproc
-      , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-      , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-      , ppSep = "   "
-    }
-    , manageHook = manageDocks <+> supoManageHook
+    --logHook = dynamicLogWithPP $ xmobarPP {
+    --    ppOutput = hPutStrLn xmproc
+    --  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+    --  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+    --  , ppSep = "   "
+    --}
+    --,
+    manageHook = manageDocks <+> supoManageHook
     , startupHook = setWMName "LG3D"
   }

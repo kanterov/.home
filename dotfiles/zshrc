@@ -19,5 +19,3 @@ setopt extended_glob
 for snippet in ${HOME}/.zsh.d/rc/S[0-9][0-9]*[^~]; do
   source ${snippet}
 done
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

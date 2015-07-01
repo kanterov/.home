@@ -18,7 +18,7 @@
 [status]
   color = auto
 [branch]
-  autosetuprebase = always
+	autosetuprebase = always
 [gc]
   reflogexpireunreachable = 1
 [rerere]
@@ -35,18 +35,15 @@
   ciall = "commit -a -v"
   cleanbr = "symbolic-ref -m 'Creating clean branch' HEAD "
   descbr = !git branch --edit-description $1
+  draftpatchset = "push gerrit HEAD:refs/for/drafts"
   brdesc = !git show-branch-description
-  unmerge = "reset --hard ORIG_HEAD"
-  lsbr = "branch" # list all branches, even remote ones
-  mkbr = "branch" # create branch if you specify a branch name after it, e.g. git mkbr upgrading_rails
-  # remove branch named after it, e.g. git rmbr upgrading_rails
-  rmbr = "branch -D"
-  # rename branch from one name to another
-  mvbr = "branch -m"
+  freshsearch = !git fetch origin && git search
+  fetchpatch = "fetch gerrit"
   hist = "log --no-merges --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
   log = "log -p"
-  lol = "log --no-merges --graph --decorate --pretty=oneline --abbrev-commit"
-  lola = "log --no-merges --graph --decorate --pretty=oneline --abbrev-commit --all"
+  lol = "log --no-merges --graph --decorate --pretty=format:\"%h %ad %aN %s\" --color --date=short"
+  lola = "log --no-merges --graph --decorate --pretty=format:\"%h %ad %aN %s\" --color --date=short --all"
+  lsbr = "branch" # list all branches, even remote ones
   lsdel = !git log --diff-filter=D --summary | grep delete
   lsmerged = "branch --merged"
   # list remote repositories
@@ -57,6 +54,9 @@
   lstag = "tag -l"
   # list unmerged branches
   lsunmerged = "branch --no-merged"
+  # list patchsets
+  lspatchsets = "ls-remote gerrit refs/changes/*"
+  mkbr = "branch" # create branch if you specify a branch name after it, e.g. git mkbr upgrading_rails
   # create a new tag based on specified commit
   mktag = "tag -a"
   # remove existing tag by name
@@ -73,6 +73,10 @@
   modst = "submodule status"
   # add new submodule, i.e. git modadd module-name url
   modadd = "submodule add"
+  # rename branch from one name to another
+  mvbr = "branch -m"
+  pushpatchset = "push gerrit HEAD:refs/for/master"
+  pullpatchset = !git fetchpatch $1 && git reset --hard FETCH_HEAD
   # push local committed changes to rubyforge and origin (usually GitHub)
   osspush = !git push rubyforge master && git push origin master
   # pull changes from rubyforge and origin (usually GitHub)
@@ -81,6 +85,8 @@
   osssync = !git osspull && git osspush
   # show last 15 log entries
   recentlog = "log -n 15"
+  # remove branch named after it, e.g. git rmbr upgrading_rails
+  rmbr = "branch -D"
   # stat diff
   sdiff = "diff --stat"
   # short log
@@ -101,6 +107,7 @@
   tpush = "push -u"
   # add tracking to a branch
   track = "branch --track"
+  unmerge = "reset --hard ORIG_HEAD"
   # word diff
   wdiff = "diff --word-diff"
   # prints out the branches a commit is on
@@ -111,7 +118,6 @@
   whtag = "name-rev --name-only"
   # search alias
   search = "log --all  --pretty=oneline -S"
-  fresh-search = !git fetch origin && git search
   # pull and update submodules
   up = !git pull && git submodule update
   latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
@@ -123,7 +129,18 @@
   autocorrect = 1
 [hub]
   protocol = https
+	host = source.flexilis.local
 [push]
   default = nothing
 [rebase]
   stat = true
+[lookout "gerrit"]
+	host = gerrit.flexilis.local
+	port = 29418
+	protocol = ssh
+	user = spotter
+[lookout "source"]
+	host = source.flexilis.local
+	port = 22
+	protocol = ssh
+	user = git

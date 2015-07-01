@@ -137,7 +137,7 @@ URxvt.url-select.underline: true
 URxvt.matcher.button: 1
 
 ! Mouse free URL clicks
-URxvt.keysym.C-u:     perl:url-select:select_next
+URxvt.keysym.C-N:     perl:url-select:select_next
 
 URxvt.keysym.F11:     perl:fullscreen:switch
 URxvt.font-size.step: 2
