@@ -1,0 +1,58 @@
+function ghRepo() { echo $(git config --get github.repo); }
+
+function ghRepoUrl() {
+  echo "https://github.com/$(ghRepo)";
+}
+
+function ghBranchUrl() {
+  local branch="$1";
+  echo "$(ghRepoUrl)/branches/${branch}";
+}
+
+function ghTagsUrl() {
+  echo "$(ghRepoUrl)/tags";
+}
+
+function ghCompareUrl() {
+  local first="$1";
+  local last="$2";
+  echo "$(ghRepoUrl)/compare/${first}...${last}";
+}
+
+function ghCommitUrl() {
+  local commit="$1";
+  echo "$(ghRepoUrl)/commit/${commit}";
+}
+
+function ghSearchUrl() {
+  local keywords="$1";
+  local choice="$2";
+  echo "$(ghRepoUrl)/search?q=${keywords}&choice=${choice}";
+}
+
+function ghStatus() {
+  curl -s https://status.github.com/api/status.json  | jq '.status' | tr -d '"'
+}
+
+function sp_github_profile() {
+  local -r profile="$(echo "${1:-lookout}" | tr '[[:lower:]]' '[[:upper:]]')"
+
+  local -r url="$(env | grep "^${profile}_GITHUB_URL" | cut -f2 -d'=')"
+  local -r user="$(env | grep "^${profile}_GITHUB_USER" | cut -f2 -d'=')"
+  local -r pass="$(env | grep "^${profile}_GITHUB_PASSWORD" | cut -f2 -d'=')"
+
+  export GITHUB_URL="${url}"
+  export GITHUB_USER="${user}"
+  export GITHUB_PASSWORD="${pass}"
+}
+
+alias ghrepourl="ghRepoUrl"
+alias ghcompurl="ghCompareUrl"
+alias ghbranchurl="ghBranchUrl"
+alias ghtagsurl="ghTagsUrl"
+alias ghcommiturl="ghCommitUrl"
+alias ghsearchcode="ghSearchUrl $1"
+alias ghsearchlogs="ghSearchUrl $1 grep"
+alias ghsearchauthor="ghSearchUrl $1 author"
+alias ghsearchcommitter="ghSearchUrl $1 committer"
+
