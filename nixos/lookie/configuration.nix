@@ -6,12 +6,10 @@
 
 let
 
-  hsPkgs = with pkgs.haskellPackages; [
+  hsPkgs = pkgs: with pkgs.haskellngPackages; [
     cabal2nix
-    cabalInstall
     doctest
     ghc
-    ghcCore
     hlint
     pandoc
     pointfree
@@ -19,9 +17,8 @@ let
     ShellCheck
     taffybar
     xmobar
-    xmonadContrib
-    xmonadExtras
-    xmonadScreenshot
+    vty
+    zlib
   ];
 
 in
@@ -40,7 +37,7 @@ in
   boot.extraModprobeConfig = ''
     options libata.force=noncq
     options resume=/dev/sda5
-    options snd_hda_intel index=0 model=intel-mac-auto id=PCH 
+    options snd_hda_intel index=0 model=intel-mac-auto id=PCH
     options snd_hda_intel index=1 model=intel-mac-auto id=HDMI
     options snd-hda-intel model=mbp101
     options hid_apple fnmode=2
@@ -65,14 +62,21 @@ in
   ];
 
   nix.useChroot = true;
-  nix.trustedBinaryCaches = [ http://hydra.nixos.org ];
-  nix.binaryCaches =
-    [
-      http://cache.nixos.org
-      http://hydra.nixos.org
-    ];
+  nix.trustedBinaryCaches = [
+    https://cache.nixos.org
+  ];
+  nix.binaryCaches = [
+    https://cache.nixos.org
+    http://hydra.nixos.org
+  ];
 
-  networking.hostName = "lookie";
+  networking.hostName = "redhorn.spotter.lkt.is";
+  networking.nameservers = [
+    "208.67.222.222"
+    "8.8.8.8"
+    "208.67.220.220"
+    "8.8.4.4"
+  ];
   networking.interfaceMonitor.enable = true;
   networking.firewall.enable = true;
   networking.wireless.enable = true;
@@ -83,6 +87,8 @@ in
 
   # don't need it
   hardware.bluetooth.enable = false;
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   environment.variables = {
     #Z_HOME = "\${HOME}/src/zedtech";
@@ -90,6 +96,7 @@ in
   environment.systemPackages = with pkgs; [
     # CLI tools
     ack
+    acpid
     bind
     binutils
     pdsh
@@ -120,7 +127,7 @@ in
     xbindkeys
     pamixer
     xscreensaver
-    tk 
+    tk
     zip
     unzip
     sysdig
@@ -139,6 +146,13 @@ in
     libressl
     gnupg
     gnupg1compat
+    zfs
+    zfstools
+    xlibs.xmodmap
+    zlib
+
+    # publishing
+    asciidoc-full
 
     # power management
     acpi
@@ -151,11 +165,14 @@ in
     hipchat
     dmenu
     stalonetray
+    wpa_supplicant_gui
+    adobe-reader
 
     # music/media
-    mplayer2
+    mplayer
     spotify
     vlc
+    imagemagick
 
     #security
     keepassx
@@ -164,22 +181,33 @@ in
     openvpn
     vpnc
     nmap
+    lastpass-cli
 
     # virtualization
     vagrant
     packer
+    linuxPackages.virtualboxHardened
 
     # development
     vim
+    gcc48
+    ncurses
+    gnumake
     python
     pypyPackages.pip
     pypyPackages.virtualenvwrapper
+    python3
+    ruby
+    bundix
     erlang
-    #oraclejdk8
+    openjdk
     scala
     sbt
     nixops
-  ] ++ hsPkgs;
+    disnix
+    consul
+    nodejs
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.firefox.enableGoogleTalkPlugin = true;
@@ -187,26 +215,44 @@ in
   nixpkgs.config.chromium.enablePepperFlash = true;
   nixpkgs.config.chromium.enablePepperPDF = true;
   nixpkgs.config.packageOverrides = pkgs: {
-    #jre = pkgs.oraclejre8;
-    #jdk = pkgs.oraclejdk8;
-    #linux_3_19 = pkgs.linux_3_19.override {
-    #  extraConfig = ''
-    #    THUNDERBOLT m
-    #  '';
-    #};
+    jre = pkgs.oraclejre8;
+    jdk = pkgs.oraclejdk8;
+    linux_3_18 = pkgs.linux_3_18.override {
+      extraConfig = ''
+        THUNDERBOLT m
+      '';
+    };
+    haskellEnv = pkgs.haskellngPackages.ghcWithPackages hsPkgs;
   };
 
   powerManagement.enable = true;
 
   programs.light.enable = true;
-  programs.ssh.startAgent = true;
+  programs.ssh.startAgent = false;
   programs.ssh.agentTimeout = "96h";
   programs.bash.enableCompletion = true;
+
+  services.redshift.enable = true;
+  services.redshift.brightness.day = "0.95";
+  services.redshift.brightness.night = "0.7";
+  services.redshift.latitude = "40.1097";
+  services.redshift.longitude = "88.2042";
+
+  services.redis.enable = true;
 
   services.locate.enable = true;
   services.mpd.enable = true;
   services.upower.enable = true;
 
+  services.acpid.enable = true;
+  services.acpid.powerEventCommands = builtins.readFile ./acpi-power-commands;
+  services.acpid.lidEventCommands = builtins.readFile ./acpi-lid-commands;
+  services.acpid.acEventCommands = builtins.readFile ./acpi-ac-commands;
+
+  services.virtualboxHost.enable = true;
+  users.extraGroups.vboxusers.members = [ "spotter" ];
+
+  services.xserver.startGnuPGAgent = true;
   services.xserver.enable = true;
   services.xserver.enableTCP = false;
   services.xserver.layout = "us";
@@ -247,6 +293,10 @@ in
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = true;
+  security.pki.certificateFiles = [
+    ./lookout_ca.crt
+    ./verisign_ca.crt
+  ];
 
   users.mutableUsers = true;
   users.ldap.daemon.enable = false;
