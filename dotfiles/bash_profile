@@ -7,16 +7,12 @@ function sourceFile() {
 
   local -r path="${1}"
   if [ -f "${path}" ]; then
-    if [ -z "${TMUX}" ]; then
+    if env | grep "^TMUX=" >/dev/null 2>&1; then
       echo "Sourcing ${path}..."
     fi
     source "${path}"
   fi
 }
-
-
-# environment variables
-sourceFile "${HOME}/.profile.d/environment"
 
 # setup Nix
 sourceFile "${HOME}/.nix-profile/etc/profile.d/nix.sh"
@@ -25,6 +21,13 @@ sourceFile "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 sourceFile "${HOME}/.bash.d/autocompleter"
 sourceFile "${HOME}/.bash.d/git"
 sourceFile "${HOME}/.bash.d/history"
+
+# environment variables
+if [ -z "${SUPO_ENV_LOADED}" ]; then
+  sourceFile "${HOME}/.profile.d/environment"
+  export SUPO_ENV_LOADED=1
+fi
+
 sourceFile "${HOME}/.bash.d/tmux"
 
 # merge .Xdefaults settings
@@ -32,3 +35,5 @@ if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
 
 # merge .Xmodmap settings
 if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
+
+
