@@ -19,5 +19,34 @@ function gerrit-download-patch() {
     >&2 echo "ERROR: Local changes:"
     echo "${stat}"
     return 1
-  fi
+   fi
 }
+
+function gerrit-backup-push-ticket() {
+  local -r current_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+  if [ "$#" -gt 2 -o "${current_branch}" == "master" ]; then
+    >&2 echo "ERROR: Expected 0, 1, or 2 arguments for ${FUNCNAME}, received $#."
+    >&2 echo "USAGE: ${FUNCNAME} [BRANCH] [TICKETID]"
+    >&2 echo "NOTE: Must not be on master branch locally."
+    return 1
+  fi
+
+  local -r base="$(basename --suffix=.git "${PWD}")"
+  local -r remote="deployer0"
+  local -r gerrit_backup_host="${GERRIT_BACKUP_HOST:-gerritbackup}"
+  local -r base_branch="${1:-master}"
+  local -r ticket="${2:-"${current_branch}"}"
+  local -r refspec="${ticket}:refs/for/${base_branch}/${ticket}"
+
+  if git ls-remote --heads --exit-code "${remote}" "refs/heads/${ticket}"; then
+    echo "Backing up branch (${current_branch}) on ${remote}."
+    git push --quiet "${remote}" "${ticket}" --force-with-lease="${current_branch}"
+  else
+    echo "Creating backup branch ${current_branch} to ${remote}."
+    git push --quiet "${remote}" "${ticket}"
+  fi
+  ssh -A "${gerrit_backup_host}" -- \
+    git -C "~/repos/services/${base}.git" push --quiet gerrit "${refspec}"
+}
+
