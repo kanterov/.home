@@ -23,10 +23,7 @@ sourceFile "${HOME}/.bash.d/git"
 sourceFile "${HOME}/.bash.d/history"
 
 # environment variables
-if [ -z "${SUPO_ENV_LOADED}" ]; then
-  sourceFile "${HOME}/.profile.d/environment"
-  export SUPO_ENV_LOADED=1
-fi
+sourceFile "${HOME}/.profile.d/environment"
 
 sourceFile "${HOME}/.bash.d/tmux"
 
