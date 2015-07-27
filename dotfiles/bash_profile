@@ -17,6 +17,8 @@ function sourceFile() {
 # setup Nix
 sourceFile "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
+update-status-bar
+
 # random autocompleters
 sourceFile "${HOME}/.bash.d/autocompleter"
 sourceFile "${HOME}/.bash.d/git"
@@ -32,5 +34,4 @@ if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
 
 # merge .Xmodmap settings
 if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
-
 

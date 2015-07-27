@@ -307,16 +307,7 @@ defaults = defaultConfig {
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 main = do
-  --xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  --initCapturing
-  xmonad $ defaults {
-    --logHook = dynamicLogWithPP $ xmobarPP {
-    --    ppOutput = hPutStrLn xmproc
-    --  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-    --  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-    --  , ppSep = "   "
-    --}
-    --,
-    manageHook = manageDocks <+> supoManageHook
+  xmonad =<< dzen defaults {
+      manageHook = manageDocks <+> supoManageHook
     , startupHook = setWMName "LG3D"
   }

@@ -1,0 +1,10 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 3.0
+total_run_times 0
+use_spacer left
+uppercase no
+
+TEXT
+load: ${loadavg 1 2 3}      batt: ${battery_bar} ${battery_time}      mfree: ${memeasyfree}      swap: ${swapbar}     conns: ${tcp_portmon 1 65535 count}       [${wireless_essid wlp2s0}] (${wireless_link_qual wlp2s0}%)      ${time %a %Y-%b-%d %I:%M%P}

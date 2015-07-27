@@ -144,3 +144,15 @@ URxvt.font-size.step: 2
 URxvt.keysym.F4:      perl:font-size:incglobal
 URxvt.keysym.F3:      perl:font-size:decglobal
 
+!! dzen2
+!!dzen2.font:       -*-montecarlo-medium-*-*-*-11-*-*-*-*-*-*-*
+dzen2.font:       xft:Inconsolata:size=12
+dzen2.faceSize1:  14
+dzen2.faceSize2:  16
+dzen2.faceSize3:  18
+dzen2.faceSize4:  20
+dzen2.initialFont:1
+dzen2.renderFont: true
+dzen2.faceName:   Inconsolata
+dzen2.background: #f157b1
+dzen2.foreground: #ffffff
