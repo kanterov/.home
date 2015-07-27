@@ -33,7 +33,7 @@ function gerrit-backup-push-ticket() {
   fi
 
   local -r base="$(basename --suffix=.git "${PWD}")"
-  local -r remote="deployer0"
+  local -r remote="backup"
   local -r gerrit_backup_host="${GERRIT_BACKUP_HOST:-gerritbackup}"
   local -r base_branch="${1:-master}"
   local -r ticket="${2:-"${current_branch}"}"
