@@ -1,8 +1,3 @@
 #!/usr/bin/env bash
 
-xrandr --output DP2 --primary --left-of eDP1 --auto
-xrandr --output DP2 --primary --left-of eDP1 --auto
-xrandr --output DP2 --primary --left-of eDP1 --auto
-xrandr --output DP2 --primary --left-of eDP1 --auto
-xrandr --output DP2 --primary --left-of eDP1 --auto
-xrandr --output DP2 --primary --left-of eDP1 --auto
+xrandr --output DP2 --primary --auto --output eDP1 --off
