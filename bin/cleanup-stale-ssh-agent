@@ -9,10 +9,18 @@ declare -r timeout="96h"
 declare -ra rsa_keys=(git gh bb ssh lookout)
 declare -ra dsa_keys=()
 
-for t in "${rsa_keys[@]}"; do
-  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_rsa"
-done
+function add-ssh-keys() {
+  local -r key_type="${1}"
+  shift
+  local -ra keys=("${@}")
 
-for t in "${dsa_keys[@]}"; do
-  ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_dsa"
-done
+  for t in "${keys[@]}"; do
+    local key_file="${HOME}/.ssh/${t}.id_${key_type}"
+    if [ -f "${key_file}" ]; then
+      ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_rsa"
+    fi
+  done
+}
+
+add-ssh-keys "rsa" "${rsa_keys[@]}"
+add-ssh-keys "dsa" "${dsa_keys[@]}"
