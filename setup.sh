@@ -2,6 +2,7 @@
 
 declare -r df_dir="${PWD}/dotfiles"
 declare -r sf_dir="${PWD}/bin"
+declare -r wp_dir="${PWD}/wallpapers"
 declare -ra dotfiles=($(ls "${df_dir}"))
 declare -ra scripts=($(ls "${sf_dir}"))
 
@@ -43,3 +44,6 @@ function linkBinScripts() {
 set -eu
 linkDotfiles
 linkBinScripts
+
+ln -sf "${wp_dir}/bean.jpg" "${HOME}/.wallpaper"
+ln -sf "${wp_dir}/rainbow.jpg" "${HOME}/.background-image"
