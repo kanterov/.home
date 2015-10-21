@@ -5,13 +5,25 @@ alias record_terminal="xvidcap --audio yes \
 
 alias lswifi="iwlist wlp2s0 scanning |grep SSID | sort | uniq"
 
+alias default-blue-headphones="pactl list short sinks \
+  | grep -i bluez \
+  | head -1 \
+  | cut -f2 \
+  | xargs pacmd set-default-sink"
+alias default-blue-microphone="pactl list short sources \
+  | grep -i bluez \
+  | head -1 \
+  | cut -f2 \
+  | xargs pacmd set-default-source"
+alias default-blue-headset="default-blue-microphone; default-blue-headphones"
+
 alias default-usb-headphones="pactl list short sinks \
-  | grep USB \
+  | grep -i usb \
   | head -1 \
   | cut -f2 \
   | xargs pacmd set-default-sink"
 alias default-usb-microphone="pactl list short sources \
-  | grep USB \
+  | grep -i usb \
   | head -1 \
   | cut -f2 \
   | xargs pacmd set-default-source"
