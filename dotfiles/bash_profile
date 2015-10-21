@@ -14,24 +14,20 @@ function sourceFile() {
   fi
 }
 
+update-status-bar
+
 # setup Nix
 sourceFile "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
-update-status-bar
+# environment variables
+sourceFile "${HOME}/.profile.d/environment"
 
 # random autocompleters
 sourceFile "${HOME}/.bash.d/autocompleter"
 sourceFile "${HOME}/.bash.d/git"
 sourceFile "${HOME}/.bash.d/history"
 
-# environment variables
-sourceFile "${HOME}/.profile.d/environment"
-
 sourceFile "${HOME}/.bash.d/tmux"
 
-# merge .Xdefaults settings
-if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
-
-# merge .Xmodmap settings
-if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
-
+# OPAM configuration
+. /home/spotter/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true

@@ -1,1 +1,3 @@
 #/usr/bin/xscreensaver -no-splash &
+"${HOME}/bin/update-status-bar"
+urxvt &
