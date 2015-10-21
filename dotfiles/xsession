@@ -1,3 +1,13 @@
-if [[ -f ${HOME}/.Xdefaults ]]; then
-  xrdb -merge ${HOME}/.Xdefaults
-fi
+#!/usr/bin/env bash
+
+"${HOME}/bin/update-status-bar"
+
+# merge .Xdefaults settings
+if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
+
+# merge .Xmodmap settings
+if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
+
+/run/current-system/sw/bin/feh --bg-scale "${HOME}/.wallpaper"
+
+exec xmonad
