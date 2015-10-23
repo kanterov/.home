@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+declare -r profile_anchor="\.hangouts$"
+declare -r profile_root="${HOME}/.mozilla/firefox"
+declare -r profile_dir="$(ls -lrc "${profile_root}" \
+  | grep "${profile_anchor}" \
+  | tail -1 \
+  | awk '{ print $9 }')"
+
+firefox --profile "${profile_root}/${profile_dir}" --no-remote

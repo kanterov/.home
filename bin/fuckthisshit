@@ -1,0 +1,6 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p curl -i bash
+
+declare -r msg="$(curl http://whatthecommit.com/index.txt)"
+
+echo "${msg}"

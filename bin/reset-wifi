@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo systemctl restart wpa_supplicant
+sleep 2
+sudo dhclient -4 wlp2s0
+
+watch -n 1 -d -c "iwconfig wlp2s0; ifconfig wlp2s0"

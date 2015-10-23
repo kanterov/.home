@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+declare -r profile_anchor="spotter@lookout$"
+declare -r profile_root="${HOME}/.mozilla/firefox"
+declare -r profile_dir="$(ls -lrc "${profile_root}" \
+  | grep "${profile_anchor}" \
+  | tail -1 \
+  | awk '{ print $9 }')"
+
+echo "${profile_dir}"
+
+firefox --profile "${profile_root}/${profile_dir}" --no-remote --safe
