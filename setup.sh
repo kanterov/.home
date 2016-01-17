@@ -25,20 +25,20 @@ function linkDotfile() {
 function linkDotfiles() {
   local bf
 
-  for df in "${dotfiles[@]}"; {
-    bf="$(basename ${df})";
+  for df in "${dotfiles[@]}"; do
+    bf="$(basename "${df}")";
     linkDotfile "${df_dir}/${bf}" "${HOME}/.${bf}"
-  }
+  done
 }
 
 function linkBinScripts() {
   local sf
 
   mkdir -p "${HOME}/bin";
-  for sf in "${scripts[@]}"; {
+  for sf in "${scripts[@]}"; do
     sf="$(basename "${sf}")";
     linkDotfile "${sf_dir}/${sf}" "${HOME}/bin/${sf}"
-  }
+  done
 }
 
 set -eu
