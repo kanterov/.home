@@ -10,9 +10,6 @@
 [submodule "dotfiles/vim/bundle/vim-colorschemes"]
 	path = dotfiles/vim/bundle/vim-colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "dotfiles/vim/bundle/vim-valgrind"]
-	path = dotfiles/vim/bundle/vim-valgrind
-	url = git://github.com/mbbx6spp/vim-valgrind.git
 [submodule "dotfiles/vim/bundle/vim-rails"]
 	path = dotfiles/vim/bundle/vim-rails
 	url = https://github.com/tpope/vim-rails.git
