@@ -7,9 +7,9 @@ function sourceFile() {
 
   local -r path="${1}"
   if [ -f "${path}" ]; then
-    if env | grep "^TMUX=" >/dev/null 2>&1; then
-      echo "Sourcing ${path}..."
-    fi
+    #if env | grep "^TMUX=" >/dev/null 2>&1; then
+    #  echo "Sourcing ${path}..."
+    #fi
     source "${path}"
   fi
 }
@@ -27,7 +27,9 @@ sourceFile "${HOME}/.bash.d/autocompleter"
 sourceFile "${HOME}/.bash.d/git"
 sourceFile "${HOME}/.bash.d/history"
 
-sourceFile "${HOME}/.bash.d/tmux"
+if [ -z "${SSH_TTY}" ] && [ -z "${SSH_CONNECTION}" ] && [ -z "${SSH_CLIENT}" ]; then
+  sourceFile "${HOME}/.bash.d/tmux"
+fi
 
 # OPAM configuration
 . /home/spotter/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
