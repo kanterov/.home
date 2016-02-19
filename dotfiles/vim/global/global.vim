@@ -70,12 +70,11 @@ set statusline+=%{fugitive#statusline()}
 set statusline+=%#warningmsg# " display a warning if fileformat isnt unix
 set statusline+=%{&ff!='unix'?'['.&ff.']':''}
 set statusline+=%*
-set statusline+=%#warningmsg# " display a warning if file encoding isnt utf-8
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
-set statusline+=%h      "help file flag
 set statusline+=%y      "filetype
-set statusline+=%r      "read only flag
 set statusline+=%m      "modified flag
 set statusline+=%#error# " display a warning if &et is wrong, or we have mixed-indenting
 set statusline+=%{&paste?'[paste]':''}
@@ -158,6 +157,15 @@ let g:gist_use_password_in_gitconfig = 0
 " NERDTree settings
 let g:NERDTreeChDirMode = '2'
 let g:NERDTreeQuitOnOpen = '1'
+
+" Idris mode settings
+let g:idris_indent_if = 3
+let g:idris_indent_case = 5
+let g:idris_indent_let = 4
+let g:idris_indent_where = 6
+let g:idris_indent_do = 3
+let g:idris_indent_rewrite = 8
+
 nmap <silent> <F9> :NERDTreeToggle<CR>
 nmap <S-F9> :call LoadProject(input("Project name? "))<CR>
 
@@ -179,8 +187,22 @@ noremap Q gq
 "make Y consistent with C and D
 nnoremap Y y$
 
-"mark syntax errors with :signs
+map <silent> <Leader>e :Errors<CR>
+map <Leader>s :SyntasticToggleMode<CR>
+
+map <Leader>s :SyntasticToggleMode<CR>
+
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_enable_signs=1
+let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 1
+
+" Reload
+map <silent> tu :call GHC_BrowseAll()<CR>
+
+" Type Lookup
+map <silent> tw :call GHC_ShowType(1)<CR>
 
 syntax on
 set background=dark
@@ -189,7 +211,8 @@ let g:solarized_termtrans=1
 let g:solarized_bold=1
 let g:solarized_underline=1
 let g:solarized_italics=1
-colorscheme jellyx
+"colorscheme jellyx
+colorscheme lucius
 
 " Ctrl+P
 let g:ctrlp_map = '<c-p>'
@@ -199,9 +222,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ }
-
-" TaskList keybindings
-map <F3> <Esc>:TaskList<CR>
 
 " alt+n or alt+p to navigate between entries in QuickFix
 map <silent> <M-p> <Esc>:cp<CR>
