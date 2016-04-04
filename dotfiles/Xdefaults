@@ -11,7 +11,7 @@ Xft.lineHeight: -1
 Xft.linePadding: -1
 
 *renderFont: true
-*font: xft:Inconsolata:size=12
+*font: xft:Inconsolata:size=9
 *faceName: Inconsolata
 *faceSize1: 8
 *faceSize2: 11

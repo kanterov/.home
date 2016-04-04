@@ -4,9 +4,11 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 set paste
+set term=linux
 set viminfo^=!
 " allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+"set backspace=indent,eol,start
+
 " store lots of :cmdline history
 set history=2000
 set showcmd     "show incomplete cmds down the bottom
@@ -21,11 +23,14 @@ set whichwrap+=<,>,[,]
 set modelines=0
 set cursorline
 
+
 set clipboard+=unnamed  " Yanks go on clipboard instead.
 set cf              " Enable error files & error jumping.
 set autowrite       " Writes on make/shell commands
 set ruler           " Ruler on
 set nu              " Line numbers on
+set notimeout
+set ttimeout
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Set the font
@@ -47,7 +52,8 @@ set expandtab
 " Visual
 set showmatch  " Show matching brackets.
 set mat=5  " Bracket blinking.
-set list
+"set list
+set wrap
 " Show $ at end of line and trailing space as ~
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 " No blinking .
@@ -154,6 +160,16 @@ let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
 let g:gist_use_password_in_gitconfig = 0
 
+" Enable arrow keys for Surface Pro3 touchpad
+nnoremap <Left> h
+nnoremap <Right> l
+nnoremap <Up> k
+nnoremap <Down> j
+inoremap <up> k
+inoremap <down> j
+inoremap <left> h
+inoremap <right> l
+
 " NERDTree settings
 let g:NERDTreeChDirMode = '2'
 let g:NERDTreeQuitOnOpen = '1'
@@ -177,7 +193,7 @@ nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
 
 "map to bufexplorer
-nnoremap <C-B> :BufExplorer<CR>
+nmap <leader>b :BufExplorer<CR>
 
 " }}}
 
@@ -192,6 +208,7 @@ map <Leader>s :SyntasticToggleMode<CR>
 
 map <Leader>s :SyntasticToggleMode<CR>
 
+let g:syntastic_shell="/bin/sh"
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_enable_signs=1
@@ -224,21 +241,21 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " alt+n or alt+p to navigate between entries in QuickFix
-map <silent> <M-p> <Esc>:cp<CR>
-map <silent> <M-n> <Esc>:cn<CR>
+nmap <silent> <M-p> <Esc>:cp<CR>
+nmap <silent> <M-n> <Esc>:cn<CR>
 
 " use Firefox tab shortcuts in vim
-nmap <C-S-]> gt
-nmap <C-S-[> gT
-nmap <C-S-1> 1gt
-nmap <C-S-3> 3gt
-nmap <C-S-4> 4gt
-nmap <C-S-5> 5gt
-nmap <C-S-6> 6gt
-nmap <C-S-7> 7gt
-nmap <C-S-8> 8gt
-nmap <C-S-9> 9gt
-nmap <C-S-0> :tablast<CR>
+nmap <C-]> gt
+nmap <C-[> gT
+nmap <C-1> 1gt
+nmap <C-3> 3gt
+nmap <C-4> 4gt
+nmap <C-5> 5gt
+nmap <C-6> 6gt
+nmap <C-7> 7gt
+nmap <C-8> 8gt
+nmap <C-9> 9gt
+nmap <C-0> :tablast<CR>
 
 " Wrap stuff...
 command! -nargs=* Wrap set wrap linebreak nolist

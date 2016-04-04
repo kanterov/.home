@@ -104,7 +104,7 @@ supoBorderWidth = 1
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
-supoModMask = mod4Mask
+supoModMask = mod1Mask
 
 supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Start a terminal.  Terminal to start is specified by supoTerminal variable.
