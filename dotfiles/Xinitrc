@@ -1,3 +1,3 @@
-#/usr/bin/xscreensaver -no-splash &
 "${HOME}/bin/update-status-bar"
+xautolock -time 10 -locker slimlock
 urxvt &

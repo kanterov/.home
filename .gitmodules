@@ -43,15 +43,12 @@
 [submodule "dotfiles/vim/bundle/ctrlp.vim"]
 	path = dotfiles/vim/bundle/ctrlp.vim
 	url = git://github.com/kien/ctrlp.vim.git
-[submodule "dotfiles/vim/bundle/bufexplorer"]
-	path = dotfiles/vim/bundle/bufexplorer
-	url = https://github.com/markabe/bufexplorer.git
 [submodule "dotfiles/vim/bundle/ack.vim"]
 	path = dotfiles/vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
 [submodule "dotfiles/vim/bundle/vim-scala"]
 	path = dotfiles/vim/bundle/vim-scala
 	url = https://github.com/derekwyatt/vim-sbt.git
-[submodule "dotfiles/vim/bundle/vim-airline"]
-	path = dotfiles/vim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline
+[submodule "dotfiles/vim/bundle/elm.vim"]
+	path = dotfiles/vim/bundle/elm.vim
+	url = https://github.com/lambdatoast/elm.vim.git

@@ -7,3 +7,6 @@ set convert-meta off
 "\e[1;5D": backward-word
 "\e[5C": forward-word
 "\e[5D": backward-word
+
+
+"\C-xe": rlwrap-call-editor

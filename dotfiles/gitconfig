@@ -77,13 +77,6 @@
   mvbr = "branch -m"
   pushpatchset = "push gerrit HEAD:refs/for/master"
   pullpatchset = !git fetchpatch $1 && git reset --hard FETCH_HEAD
-  # push local committed changes to rubyforge and origin (usually GitHub)
-  osspush = !git push rubyforge master && git push origin master
-  # pull changes from rubyforge and origin (usually GitHub)
-  osspull = !git pull rubyforge master && git pull origin master
-  # sync (pull then push) from rubyforge and origin (usually GitHub)
-  osssync = !git osspull && git osspush
-  # show last 15 log entries
   recentlog = "log -n 15"
   # remove branch named after it, e.g. git rmbr upgrading_rails
   rmbr = "branch -D"
@@ -122,6 +115,8 @@
   up = !git pull && git submodule update
   latest-tags = for-each-ref --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=taggerdate refs/tags
   summarize-branches = for-each-ref --sort=-committerdate refs/heads --format=%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject) for-each-ref --sort=-committerdate refs/heads --format='%(committerdate:short) %(objectname:short) by %(authorname) %(refname:short) | %(contents:subject)'
+  fixup-change = !git fixup && git resquash $1/$2 && git push $1 HEAD:refs/publish/$2/$3
+  gerrit-publish = !git push $1 HEAD:refs/publish/$2/$3
   fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
   squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
   resquash = rebase --interactive --autosquash
@@ -134,13 +129,5 @@
   default = nothing
 [rebase]
   stat = true
-[lookout "gerrit"]
-	host = gerrit.flexilis.local
-	port = 29418
-	protocol = ssh
-	user = spotter
-[lookout "source"]
-	host = source.flexilis.local
-	port = 22
-	protocol = ssh
-	user = git
+[transfer]
+	fsckobjects = true

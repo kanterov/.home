@@ -37,7 +37,7 @@ function gerrit-backup-push-ticket() {
   local -r gerrit_backup_host="${GERRIT_BACKUP_HOST:-gerritbackup}"
   local -r base_branch="${1:-master}"
   local -r ticket="${2:-"${current_branch}"}"
-  local -r refspec="${ticket}:refs/for/${base_branch}/${ticket}"
+  local -r refspec="${ticket}:refs/publish/${base_branch}/${ticket}"
 
   if git ls-remote --heads --exit-code "${remote}" "refs/heads/${ticket}"; then
     echo "Backing up branch (${current_branch}) on ${remote}."

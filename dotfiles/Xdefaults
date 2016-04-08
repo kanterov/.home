@@ -119,13 +119,12 @@ URxvt.scrollBar: false
 URxvt.underLine: on
 URxvt.renderFont: true
 URxvt.faceName: Inconsolata
-
 URxvt.faceSize1: 8
-URxvt.faceSize2: 11
-URxvt.faceSize3: 12
-URxvt.faceSize4: 14
-URxvt.faceSize5: 18
-URxvt.faceSize6: 22
+URxvt.faceSize2: 10
+URxvt.faceSize3: 14
+URxvt.faceSize4: 20
+URxvt.faceSize5: 24
+URxvt.faceSize6: 32
 URxvt.initialFont: 1
 
 URxvt.urlLauncher: firefox

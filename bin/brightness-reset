@@ -1,1 +1,1 @@
-echo 1050 | sudo tee /sys/class/backlight/intel_backlight/brightness >/dev/null
+light -pb -S 50

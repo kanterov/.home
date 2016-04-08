@@ -96,7 +96,7 @@ tabConfig =
   }
 
 -- Width of the window border in pixels.
-supoBorderWidth = 1
+supoBorderWidth = 0
 
 
 ------------------------------------------------------------------------
@@ -111,9 +111,11 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
-  -- Sleep computer
-  , ((modMask .|. controlMask, xK_s),
-     spawn "slimlock; systemctl hybrid-sleep")
+  , ((modMask .|. controlMask, xK_t),
+     spawn "configure-thunderbolt-display")
+
+  , ((modMask .|. controlMask, xK_d),
+     spawn "configure-laptop-display")
 
   -- Lock the screen using slimlock.
   , ((modMask .|. controlMask, xK_l),
@@ -124,25 +126,35 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn supoDmenuCmd)
 
   -- Fn key labeled with mute/unmute symbol
-  , ((0, 0x1008FF12),
+  , ((0, xK_F10),
      spawn "amixer -q set Master toggle")
 
   -- Fn key labeled with volume decrease
-  , ((0, 0x1008FF11),
+  , ((0, xK_F11),
      spawn "amixer -q set Master 5%-")
 
   -- Fn key labeled with volume increase
-  , ((0, 0x1008FF13),
+  , ((0, xK_F12),
      spawn "amixer -q set Master 5%+")
 
   -- Put contents from primary selection into X selection
   , ((modMask .|. shiftMask, xK_b), spawn "xsel -op | xsel -ib")
 
   -- Decrement brightness
-  , ((0, xF86XK_KbdBrightnessDown), spawn "brightness-down")
+  , ((0, xK_F1),
+    spawn "/var/setuid-wrappers/light -U 5")
 
   -- Increment brightness
-  , ((0, xF86XK_KbdBrightnessUp), spawn "brightness-up")
+  , ((0, xK_F2),
+    spawn "/var/setuid-wrappers/light -A 5")
+
+  -- Audio Media
+  , ((0, xK_F3),
+    spawn "/var/setuid-wrappers/light -U 5")
+
+  -- Mission Control
+  , ((0, xK_F4),
+    spawn "slimlock")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -195,10 +207,6 @@ supoKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Expand the master area.
   , ((modMask, xK_l),
     sendMessage Expand)
-
-  -- Push window back into tiling.
-  , ((modMask, xK_t),
-    withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area.
   , ((modMask, xK_comma),
@@ -266,7 +274,8 @@ supoMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Perform an arbitrary action each time xmonad starts or is restarted
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
-supoStartupHook = return ()
+supoStartupHook = do
+  return ()
 
 
 ------------------------------------------------------------------------
