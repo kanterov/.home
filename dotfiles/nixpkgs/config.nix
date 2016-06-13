@@ -1,10 +1,28 @@
 { pkgs }:
 let
   # Inherit utilities
-  inherit (pkgs) lib buildEnv vim_configurable;
+  inherit (pkgs) lib stdenv fetchurl buildEnv vim_configurable;
 
   homeDir = builtins.getEnv "HOME";
   vimrcFile = "${homeDir}/.vim/global/global.vim";
+
+  telegraf = let
+    version = "0.12.0-1";
+  in stdenv.mkDerivation {
+    inherit version;
+    name = "telegraf-${version}";
+    src = fetchurl {
+      url    = "http://get.influxdb.org/telegraf/telegraf-${version}_linux_amd64.tar.gz";
+      sha256 = "1yx3vf5c4q04n518hsq053jnlafxgjlg3fxn4j2590nvq471sy0b";
+    };
+    buildInputs = with pkgs; [ gnutar patchelf ];
+    buildCommand = ''
+      mkdir -p $out/bin
+      tar -C $out/bin -xzvf $src --strip-components=3 ./usr/bin/telegraf
+      patchelf --set-interpreter ${stdenv.glibc}/lib64/ld-linux-x86-64.so.2 $out/bin/telegraf
+      patchelf --shrink-rpath $out/bin/telegraf
+    '';
+  };
 
   vimMbbx6spp = vim_configurable.customize {
     name = "vim-mbbx6spp";
@@ -30,6 +48,7 @@ let
           "latex-live-preview"
           "neco-ghc"
           "neocomplete"
+          "neomake"
           "nerdtree"
           "nerdcommenter"
           "quickfixstatus"
@@ -41,7 +60,9 @@ let
           "vim-addon-nix"
           "vim-addon-syntax-checker"
           "vim-addon-vim2nix"
+          "vim-buffergator"
           "vim-hardtime"
+          "vim-nix"
           "vim-snippets"
           "vimproc"
           "youcompleteme"
@@ -50,16 +71,32 @@ let
     ];
   };
 
+  haskell = pkgs.haskellPackages.ghcWithPackages (p: with p; [
+    ghc-mod
+    hoogle
+    hlint
+    pointfree
+    cabal-install
+    cabal2nix
+    #idris
+  ]);
+
 in {
   allowUnfree = true;
   #firefox.enableGeckoMediaPlayer = true;
   firefox.enableGoogleTalkPlugin = true;
-  #firefox.enableAdobeFlash = true;
+  firefox.enableAdobeFlash = false;
+  chromium = {
+    enablePepperFlash = true;
+    enablePepperPDF = true;
+    enableWideVine = true;
+  };
 
   jre = pkgs.oraclejre8;
   jdk = pkgs.oraclejdk8;
 
   packageOverrides = pkgs: {
+    inherit telegraf;
     mbbx6sppDesktop = lib.lowPrio (buildEnv {
       name = "desktop-mbbx6spp";
       ignoreCollisions = true;
@@ -69,9 +106,11 @@ in {
         dzen2
         pavucontrol
         chromium
+        imagemagick
         firefox-wrapper
         spotify
         xmonad-with-packages
+        skype
       ];
     });
     mbbx6sppEnv = lib.lowPrio (buildEnv {
@@ -79,25 +118,21 @@ in {
       ignoreCollisions = true;
       paths = with pkgs; [
         bash
-	bashCompletion
-	bashInteractive
+        bashCompletion
+        bashInteractive
 
         # superior editor :)
         vimMbbx6spp
 
         # languages/compilers/REPLs
-        haskellPackages.idris
-        haskellPackages.ghc
-        haskellPackages.ghc-mod
-        haskellPackages.hoogle
-        haskellPackages.hlint
-        haskellPackages.pointfree
+        haskell
         scala
-        clang
+        #clang
         nix-repl
         nix-prefetch-scripts
 
         # command line utilities
+        awscli
         ctags
         gitAndTools.gitFull
         gitAndTools.git-annex
@@ -106,9 +141,9 @@ in {
         gitAndTools.tig
         gnupg
         pwgen
-        qemu
         silver-searcher
         haskellPackages.ShellCheck
+        keybase
         siege
         openssh
         tmux
@@ -119,14 +154,15 @@ in {
         urxvt_perl
         urxvt_perls
         urxvt_tabbedex
+        mtr
+        pdsh
 
         # ncurses console "apps"
-        cadaver
+        #cadaver
         calcurse
         canto-curses
         cherrytree
         ctodo
-        davfs2
         findbugs
         gitinspector
         hexcurse
@@ -143,7 +179,6 @@ in {
         remind
         rlwrap
         sipcalc
-        sup
         typespeed # for my colemak learnings :)
         weechat
       ];
