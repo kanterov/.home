@@ -111,6 +111,7 @@ in {
         spotify
         xmonad-with-packages
         skype
+	mbbx6sppEnv
       ];
     });
     mbbx6sppEnv = lib.lowPrio (buildEnv {
@@ -139,7 +140,7 @@ in {
         gitAndTools.git-extras
         gitAndTools.git2cl
         gitAndTools.tig
-        gnupg
+        gnupg21
         pwgen
         silver-searcher
         haskellPackages.ShellCheck
