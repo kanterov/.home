@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-if ! pgrep -u "${USER}" ssh-agent; then
-  rm "${SSH_AUTH_SOCK:-"${HOME}/.ssh/ssh-agent.sock"}"
-  eval "${SSHAGENT}" "${SSHAGENTARGS}"
-fi
+gpg-connect-agent /bye
 
-declare -r timeout="96h"
+declare -r timeout="12h"
 declare -ra rsa_keys=(git gh bb ssh lookout)
 declare -ra dsa_keys=()
 
