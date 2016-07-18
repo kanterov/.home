@@ -6,24 +6,6 @@ let
   homeDir = builtins.getEnv "HOME";
   vimrcFile = "${homeDir}/.vim/global/global.vim";
 
-  telegraf = let
-    version = "0.12.0-1";
-  in stdenv.mkDerivation {
-    inherit version;
-    name = "telegraf-${version}";
-    src = fetchurl {
-      url    = "http://get.influxdb.org/telegraf/telegraf-${version}_linux_amd64.tar.gz";
-      sha256 = "1yx3vf5c4q04n518hsq053jnlafxgjlg3fxn4j2590nvq471sy0b";
-    };
-    buildInputs = with pkgs; [ gnutar patchelf ];
-    buildCommand = ''
-      mkdir -p $out/bin
-      tar -C $out/bin -xzvf $src --strip-components=3 ./usr/bin/telegraf
-      patchelf --set-interpreter ${stdenv.glibc}/lib64/ld-linux-x86-64.so.2 $out/bin/telegraf
-      patchelf --shrink-rpath $out/bin/telegraf
-    '';
-  };
-
   vimMbbx6spp = vim_configurable.customize {
     name = "vim-mbbx6spp";
     vimrcConfig.customRC = builtins.readFile vimrcFile + ''
@@ -57,12 +39,15 @@ let
           "tagbar"
           "taglist"
           "Syntastic"
+          "Solarized"
           "vim-addon-nix"
           "vim-addon-syntax-checker"
           "vim-addon-vim2nix"
           "vim-buffergator"
           "vim-hardtime"
           "vim-nix"
+          "vim-orgmode"
+          "vim-pandoc"
           "vim-snippets"
           "vimproc"
           "youcompleteme"
@@ -78,12 +63,10 @@ let
     pointfree
     cabal-install
     cabal2nix
-    #idris
   ]);
 
 in {
   allowUnfree = true;
-  #firefox.enableGeckoMediaPlayer = true;
   firefox.enableGoogleTalkPlugin = true;
   firefox.enableAdobeFlash = false;
   chromium = {
@@ -95,8 +78,7 @@ in {
   jre = pkgs.oraclejre8;
   jdk = pkgs.oraclejdk8;
 
-  packageOverrides = pkgs: {
-    inherit telegraf;
+  packageOverrides = pkgs: rec {
     mbbx6sppDesktop = lib.lowPrio (buildEnv {
       name = "desktop-mbbx6spp";
       ignoreCollisions = true;
@@ -108,13 +90,17 @@ in {
         chromium
         imagemagick
         firefox-wrapper
-        spotify
         xmonad-with-packages
-        skype
-	mbbx6sppEnv
+        mbbx6sppEnv
+        (stdenv.lib.overrideDerivation spotify (oldAttrs: {
+          src = fetchurl {
+            url = http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.0.32.96.g3c8a06e6-37_amd64.deb;
+            sha256 = "0nk5sf3x9vf5ivm035h7rnjx0wvqlvii1i2mwvv50h86wmc25iih";
+          };
+        }))
       ];
     });
-    mbbx6sppEnv = lib.lowPrio (buildEnv {
+    mbbx6sppEnv = buildEnv {
       name = "devenv-mbbx6spp";
       ignoreCollisions = true;
       paths = with pkgs; [
@@ -183,6 +169,6 @@ in {
         typespeed # for my colemak learnings :)
         weechat
       ];
-    });
+    };
   };
 }

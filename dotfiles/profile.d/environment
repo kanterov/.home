@@ -68,6 +68,7 @@ sourceProfileInit "work.aliases"
 sourceProfileInit "gerrit.aliases"
 sourceProfileInit "lookout.aliases"
 sourceProfileInit "linux.aliases"
+sourceProfileInit "nix.aliases"
 
 if [ "${PLATFORM}" = "Darwin" ]; then
   sourceProfileInit "osx.env"

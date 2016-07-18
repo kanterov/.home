@@ -1,0 +1,7 @@
+currentProjectIncluded: true
+hackagePath: /home/spotter/.cabal/packages/hackage.haskell.org/
+tagsFileHeader: true
+tagsFileName: codex.tags
+tagsFileSorted: true
+tagsCmd: ctags --tag-relative=no --recurse -f "$TAGS" "$SOURCES"
+stackOpts: ''
