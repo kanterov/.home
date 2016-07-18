@@ -11,15 +11,15 @@ Xft.lineHeight: -1
 Xft.linePadding: -1
 
 *renderFont: true
-*font: xft:Inconsolata:size=9
+*font: xft:Inconsolata:size=13
 *faceName: Inconsolata
-*faceSize1: 8
-*faceSize2: 11
-*faceSize3: 12
-*faceSize4: 14
+*faceSize1: 10
+*faceSize2: 12
+*faceSize3: 13
+*faceSize4: 16
 *faceSize5: 18
 *faceSize6: 22
-*initialFont: 1
+*initialFont: 3
 
 !!! XTerm
 
@@ -119,13 +119,13 @@ URxvt.scrollBar: false
 URxvt.underLine: on
 URxvt.renderFont: true
 URxvt.faceName: Inconsolata
-URxvt.faceSize1: 8
-URxvt.faceSize2: 10
-URxvt.faceSize3: 14
+URxvt.faceSize1: 10
+URxvt.faceSize2: 12
+URxvt.faceSize3: 16
 URxvt.faceSize4: 20
 URxvt.faceSize5: 24
 URxvt.faceSize6: 32
-URxvt.initialFont: 1
+URxvt.initialFont: 2
 
 URxvt.urlLauncher: firefox
 URxvt.selectToClipboard: true
