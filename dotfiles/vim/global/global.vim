@@ -4,10 +4,10 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 set paste
-set term=linux
+"set term=linux
 set viminfo^=!
 " allow backspacing over everything in insert mode
-"set backspace=indent,eol,start
+set backspace=indent,eol,start
 
 " store lots of :cmdline history
 set history=2000
@@ -31,7 +31,7 @@ set ruler           " Ruler on
 set nu              " Line numbers on
 set notimeout
 set ttimeout
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
+set timeoutlen=150  " Time to wait after ESC (default causes an annoying delay)
 
 " Set the font
 set gfn=Inconsolata\ 14
@@ -72,11 +72,11 @@ set directory=~/.vim/tmp     " Where temporary files will go.
 
 " statusline setup
 set statusline=%f       "tail of the filename
-set statusline+=%{fugitive#statusline()}
+"set statusline+=%{fugitive#statusline()}
 set statusline+=%#warningmsg# " display a warning if fileformat isnt unix
 set statusline+=%{&ff!='unix'?'['.&ff.']':''}
 set statusline+=%*
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
@@ -120,6 +120,8 @@ set scrolloff=3
 set sidescrolloff=7
 set sidescroll=1
 
+set tags=tags;/,codex.tags;/
+
 filetype on
 filetype indent on
 filetype plugin on
@@ -136,18 +138,8 @@ set hidden
 
 " Plugin dependent integration {{{
 
-" Minibuffer Explorer Settings
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/application.rb'
-
-" Pathogen integration
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 
 " Setup VimChat settings
 let g:vimchat_statusicon = 0
@@ -182,8 +174,8 @@ let g:idris_indent_where = 6
 let g:idris_indent_do = 3
 let g:idris_indent_rewrite = 8
 
-nmap <silent> <F9> :NERDTreeToggle<CR>
-nmap <S-F9> :call LoadProject(input("Project name? "))<CR>
+nnoremap <silent> <Leader>n :NERDTreeToggle<CR>
+nnoremap <C-B> :BuffergatorToggle<CR>
 
 " Session settings
 nmap <C-S> :SessionList<CR>
@@ -191,9 +183,6 @@ nmap <C-S> :SessionList<CR>
 "make <c-l> clear the highlight as well as redraw
 nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
-
-"map to bufexplorer
-nmap <leader>b :BufExplorer<CR>
 
 " }}}
 
@@ -228,8 +217,8 @@ let g:solarized_termtrans=1
 let g:solarized_bold=1
 let g:solarized_underline=1
 let g:solarized_italics=1
-"colorscheme jellyx
-colorscheme lucius
+colorscheme jellyx
+"colorscheme lucius
 
 " Ctrl+P
 let g:ctrlp_map = '<c-p>'
