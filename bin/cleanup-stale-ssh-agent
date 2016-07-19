@@ -3,7 +3,7 @@
 gpg-connect-agent /bye
 
 declare -r timeout="12h"
-declare -ra rsa_keys=(git gh bb ssh lookout)
+declare -ra rsa_keys=(github git gh bb ssh lookout)
 declare -ra dsa_keys=()
 
 function add-ssh-keys() {
@@ -14,10 +14,10 @@ function add-ssh-keys() {
   for t in "${keys[@]}"; do
     local key_file="${HOME}/.ssh/${t}.id_${key_type}"
     if [ -f "${key_file}" ]; then
-      ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_rsa"
+      ssh-add -t${timeout} "${HOME}/.ssh/${t}.id_${key_type}"
     fi
   done
 }
 
 add-ssh-keys "rsa" "${rsa_keys[@]}"
-add-ssh-keys "dsa" "${dsa_keys[@]}"
+add-ssh-keys "ed25519" "${rsa_keys[@]}"

@@ -14,7 +14,7 @@ let
     vimrcConfig.vam.knownPlugins = pkgs.vimPlugins;
     vimrcConfig.vam.pluginDictionaries = [
       { names = [
-          #"airline"
+          "airline"
           "align"
           "calendar"
           "colors-solarized"
@@ -107,6 +107,14 @@ in {
         bash
         bashCompletion
         bashInteractive
+        fortune
+        keybase
+        mtr
+
+        wget
+        curl
+        unzip
+        zip
 
         # superior editor :)
         vimMbbx6spp
@@ -115,6 +123,7 @@ in {
         haskell
         scala
         #clang
+        jdk
         nix-repl
         nix-prefetch-scripts
 
@@ -133,6 +142,7 @@ in {
         keybase
         siege
         openssh
+        bind
         tmux
         tree
         xsel
@@ -150,7 +160,6 @@ in {
         canto-curses
         cherrytree
         ctodo
-        findbugs
         gitinspector
         hexcurse
         khal
@@ -162,7 +171,7 @@ in {
         mpg123
         mutt
         newsbeuter
-        pianobar
+        #pianobar
         remind
         rlwrap
         sipcalc
