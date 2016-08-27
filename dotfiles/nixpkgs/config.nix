@@ -50,7 +50,7 @@ let
           "vim-pandoc"
           "vim-snippets"
           "vimproc"
-          "youcompleteme"
+          #"youcompleteme"
         ];
       }
     ];
@@ -63,8 +63,80 @@ let
     pointfree
     cabal-install
     cabal2nix
+    idris
   ]);
 
+  mbbx6sppEnv = lib.lowPrio (buildEnv {
+      name = "devenv-mbbx6spp";
+      ignoreCollisions = true;
+      paths = with pkgs; [
+      bash
+      bashCompletion
+      bashInteractive
+      fortune
+
+      # superior editor :)
+      vimMbbx6spp
+
+      # languages/compilers/REPLs
+      haskell
+      jdk
+      scala
+      clang
+      nix-repl
+      nix-prefetch-scripts
+
+      # command line utilities
+      awscli
+      ctags
+      gitAndTools.gitFull
+      gitAndTools.git-annex
+      gitAndTools.git-extras
+      gitAndTools.git2cl
+      gitAndTools.tig
+      gnupg21
+      pwgen
+      silver-searcher
+      haskellPackages.ShellCheck
+      keybase
+      siege
+      openssh
+      tmux
+      tree
+      xsel
+      rxvt_unicode-with-plugins
+      urxvt_font_size
+      urxvt_perl
+      urxvt_perls
+      urxvt_tabbedex
+      mtr
+      pdsh
+
+      # ncurses console "apps"
+      calcurse
+      canto-curses
+      cherrytree
+      ctodo
+      findbugs
+      gitinspector
+      hexcurse
+      khal
+      mailnag
+      mairix
+      mediainfo
+      moc
+      mp3gain
+      mpg123
+      mutt
+      newsbeuter
+      pianobar
+      remind
+      rlwrap
+      sipcalc
+      typespeed # for my colemak learnings :)
+      weechat
+      ];
+  });
 in {
   allowUnfree = true;
   firefox.enableGoogleTalkPlugin = true;
@@ -92,12 +164,7 @@ in {
         firefox-wrapper
         xmonad-with-packages
         mbbx6sppEnv
-        (stdenv.lib.overrideDerivation spotify (oldAttrs: {
-          src = fetchurl {
-            url = http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.0.32.96.g3c8a06e6-37_amd64.deb;
-            sha256 = "0nk5sf3x9vf5ivm035h7rnjx0wvqlvii1i2mwvv50h86wmc25iih";
-          };
-        }))
+        spotify
       ];
     });
     mbbx6sppEnv = buildEnv {
