@@ -33,6 +33,7 @@ alias tiga='tig --all'
 # web cat
 alias wcat='wget -q -O -'
 alias ack='ag'
+alias vim=vim-mbbx6spp
 
 #alias e='emacs -Q'
 #alias ec='emacsclient -n'
