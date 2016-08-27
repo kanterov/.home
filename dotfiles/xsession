@@ -10,6 +10,10 @@ if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
 
 /run/current-system/sw/bin/feh --bg-scale "${HOME}/.wallpaper"
 
-gpg-connect-agent /bye
+eval "$(gpg-agent \
+  --daemon \
+  --enable-ssh-support \
+  --sh \
+  --write-env-file ~/.gpg-agent)"
 
 exec xmonad
