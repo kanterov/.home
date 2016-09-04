@@ -66,77 +66,6 @@ let
     idris
   ]);
 
-  mbbx6sppEnv = lib.lowPrio (buildEnv {
-      name = "devenv-mbbx6spp";
-      ignoreCollisions = true;
-      paths = with pkgs; [
-      bash
-      bashCompletion
-      bashInteractive
-      fortune
-
-      # superior editor :)
-      vimMbbx6spp
-
-      # languages/compilers/REPLs
-      haskell
-      jdk
-      scala
-      clang
-      nix-repl
-      nix-prefetch-scripts
-
-      # command line utilities
-      awscli
-      ctags
-      gitAndTools.gitFull
-      gitAndTools.git-annex
-      gitAndTools.git-extras
-      gitAndTools.git2cl
-      gitAndTools.tig
-      gnupg21
-      pwgen
-      silver-searcher
-      haskellPackages.ShellCheck
-      keybase
-      siege
-      openssh
-      tmux
-      tree
-      xsel
-      rxvt_unicode-with-plugins
-      urxvt_font_size
-      urxvt_perl
-      urxvt_perls
-      urxvt_tabbedex
-      mtr
-      pdsh
-
-      # ncurses console "apps"
-      calcurse
-      canto-curses
-      cherrytree
-      ctodo
-      findbugs
-      gitinspector
-      hexcurse
-      khal
-      mailnag
-      mairix
-      mediainfo
-      moc
-      mp3gain
-      mpg123
-      mutt
-      newsbeuter
-      pianobar
-      remind
-      rlwrap
-      sipcalc
-      typespeed # for my colemak learnings :)
-      weechat
-      ];
-  });
 in {
   allowUnfree = true;
   firefox.enableGoogleTalkPlugin = true;
@@ -155,6 +84,7 @@ in {
       name = "desktop-mbbx6spp";
       ignoreCollisions = true;
       paths = with pkgs; [
+        arandr
         conky
         dmenu
         dzen2
@@ -182,6 +112,7 @@ in {
         curl
         unzip
         zip
+        gnupg
 
         # superior editor :)
         vimMbbx6spp
