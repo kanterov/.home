@@ -44,6 +44,7 @@ function linkBinScripts() {
 set -eu
 linkDotfiles
 linkBinScripts
+mkdir -p "${HOME}/.vim/tmp" "${HOME}/.vim/backups"
 
 ln -sf "${wp_dir}/bean.jpg" "${HOME}/.wallpaper"
 ln -sf "${wp_dir}/rainbow.jpg" "${HOME}/.background-image"
