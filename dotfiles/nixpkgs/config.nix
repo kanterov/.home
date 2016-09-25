@@ -50,7 +50,7 @@ let
           "vim-pandoc"
           "vim-snippets"
           "vimproc"
-          #"youcompleteme"
+          "youcompleteme"
         ];
       }
     ];
@@ -70,11 +70,6 @@ in {
   allowUnfree = true;
   firefox.enableGoogleTalkPlugin = true;
   firefox.enableAdobeFlash = false;
-  chromium = {
-    enablePepperFlash = true;
-    enablePepperPDF = true;
-    enableWideVine = true;
-  };
 
   jre = pkgs.oraclejre8;
   jdk = pkgs.oraclejdk8;
@@ -95,6 +90,7 @@ in {
         xmonad-with-packages
         mbbx6sppEnv
         spotify
+        evince
       ];
     });
     mbbx6sppEnv = buildEnv {
@@ -151,6 +147,12 @@ in {
         urxvt_tabbedex
         mtr
         pdsh
+        xorg.xev
+        xorg.xkbcomp
+        xorg.xkbevd
+        xorg.xkbprint
+        xorg.xkbutils
+        xorg.xmodmap
 
         # ncurses console "apps"
         #cadaver
