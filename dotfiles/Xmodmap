@@ -1,11 +1,11 @@
-remove Lock = Caps_Lock
-remove Control = Control_L
+clear Lock
+clear Control
+clear Mod4
+clear Mod1
 
-keysym Caps_Lock = Control_L
-keysym Control_L = Caps_Lock
-
-add Lock = Caps_Lock
-add Control = Control_L
+add Control = Caps_Lock Control_L Control_R
+keycode 108 = Super_R
+add Mod1 = Super_L Alt_L Alt_R
 
 keycode 160 = XF86AudioMute
 keycode 176 = XF86AudioRaiseVolume
