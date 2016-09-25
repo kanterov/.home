@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 
+eval "$(gpg-agent \
+  --daemon \
+  --enable-ssh-support \
+  --sh \
+  --write-env-file ~/.gpg-agent)"
+
+if xrandr --listmonitors | grep -q \+HDMI-0; then
+  sh "${HOME}/.screenlayout/monitor-only.sh"
+fi
+
 "${HOME}/bin/update-status-bar"
+
+/run/current-system/sw/bin/feh --bg-scale "${HOME}/.wallpaper"
 
 # merge .Xdefaults settings
 if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
 
 # merge .Xmodmap settings
 if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
-
-/run/current-system/sw/bin/feh --bg-scale "${HOME}/.wallpaper"
-
-eval "$(gpg-agent \
-  --daemon \
-  --enable-ssh-support \
-  --sh \
-  --write-env-file ~/.gpg-agent)"
 
 exec xmonad
