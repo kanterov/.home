@@ -20,4 +20,6 @@ if [ -s "${HOME}/.Xdefaults" ]; then xrdb -merge "${HOME}/.Xdefaults" ; fi
 # merge .Xmodmap settings
 if [ -f "${HOME}/.Xmodmap" ]; then xmodmap "${HOME}/.Xmodmap"; fi
 
+if [ -f "${HOME}/.bluetooth.d/required" ]; then "${HOME}/.bluetooth.d/required"; fi
+
 exec xmonad

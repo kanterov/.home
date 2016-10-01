@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+function main() {
+  if [ -z "$@" ]; then
+    local -ra devices=(
+      "28:37:37:2B:DA:54" # trackpad
+      "4C:57:CA:E6:55:75" # magic mouse
+      "40:30:04:0F:AF:5F" # wireless keyboard
+      "14:07:29:11:09:36" # wireless headphones
+    )
+  else
+    local -ra devices=($@)
+  fi
+
+  {
+    echo "list" # list available controllers
+    echo "devices" # list devices
+    echo "power on"
+    #echo "register-profile a2dp-sink"
+
+    for d in "${devices[@]}"; do
+      echo "pair ${d}"
+      echo "trust ${d}"
+      echo "connect ${d}"
+      sleep 1
+    done
+
+    echo "devices"
+  } | bluetoothctl --agent=on
+}
+
+set -eu
+set -o pipefail
+main $@
