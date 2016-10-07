@@ -52,3 +52,10 @@
 [submodule "dotfiles/vim/bundle/elm.vim"]
 	path = dotfiles/vim/bundle/elm.vim
 	url = https://github.com/lambdatoast/elm.vim.git
+[submodule "dotfiles/vim/bundle/neco-ghc.git"]
+  path = dotfiles/vim/bundle/neco-ghc
+  url = https://github.com/eagletmt/neco-ghc.git
+[submodule "dotfiles/emacs.d"]
+	path = dotfiles/emacs.d
+	url = https://github.com/syl20bnr/spacemacs.git
+	branch = master
