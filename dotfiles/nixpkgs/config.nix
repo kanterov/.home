@@ -64,6 +64,10 @@ let
     cabal-install
     cabal2nix
     idris
+    xmonad
+    xmonad-contrib
+    xmonad-utils
+    xmonad-extras
   ]);
 
 in {
@@ -112,6 +116,7 @@ in {
 
         # superior editor :)
         vimMbbx6spp
+        emacs25
 
         # languages/compilers/REPLs
         haskell
