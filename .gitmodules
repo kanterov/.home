@@ -1,60 +1,9 @@
-[submodule "dotfiles/vim/bundle/neocomplcache"]
-	path = dotfiles/vim/bundle/neocomplcache
-	url = git://github.com/Shougo/neocomplcache.git
-[submodule "dotfiles/vim/bundle/syntastic"]
-	path = dotfiles/vim/bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
-[submodule "dotfiles/vim/bundle/vim-rebar"]
-	path = dotfiles/vim/bundle/vim-rebar
-	url = git://github.com/mbbx6spp/vim-rebar.git
-[submodule "dotfiles/vim/bundle/vim-colorschemes"]
-	path = dotfiles/vim/bundle/vim-colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "dotfiles/vim/bundle/vim-rails"]
-	path = dotfiles/vim/bundle/vim-rails
-	url = https://github.com/tpope/vim-rails.git
-[submodule "dotfiles/vim/bundle/vim-powerline"]
-	path = dotfiles/vim/bundle/vim-powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
-[submodule "dotfiles/vim/bundle/vim-haskell-cabal"]
-	path = dotfiles/vim/bundle/vim-haskell-cabal
-	url = git://github.com/mbbx6spp/vim-haskell-cabal.git
-[submodule "dotfiles/vim/bundle/vim-fuzzyfinder-pathogen"]
-	path = dotfiles/vim/bundle/vim-fuzzyfinder-pathogen
-	url = https://github.com/itspriddle/vim-fuzzyfinder-pathogen.git
-[submodule "dotfiles/vim/bundle/vim-fugitive"]
-	path = dotfiles/vim/bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "dotfiles/vim/bundle/vim-elixir"]
-	path = dotfiles/vim/bundle/vim-elixir
-	url = git://github.com/elixir-lang/vim-elixir.git
-[submodule "dotfiles/vim/bundle/vim-colors-solarized"]
-	path = dotfiles/vim/bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "dotfiles/vim/bundle/sessionman.vim"]
-	path = dotfiles/vim/bundle/sessionman.vim
-	url = https://github.com/vim-scripts/sessionman.vim.git
-[submodule "dotfiles/vim/bundle/nerdtree"]
-	path = dotfiles/vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "dotfiles/vim/bundle/gist-vim"]
-	path = dotfiles/vim/bundle/gist-vim
-	url = https://github.com/mattn/gist-vim.git
-[submodule "dotfiles/vim/bundle/ctrlp.vim"]
-	path = dotfiles/vim/bundle/ctrlp.vim
-	url = git://github.com/kien/ctrlp.vim.git
-[submodule "dotfiles/vim/bundle/ack.vim"]
-	path = dotfiles/vim/bundle/ack.vim
-	url = https://github.com/mileszs/ack.vim.git
 [submodule "dotfiles/vim/bundle/vim-scala"]
 	path = dotfiles/vim/bundle/vim-scala
 	url = https://github.com/derekwyatt/vim-sbt.git
 [submodule "dotfiles/vim/bundle/elm.vim"]
 	path = dotfiles/vim/bundle/elm.vim
 	url = https://github.com/lambdatoast/elm.vim.git
-[submodule "dotfiles/vim/bundle/neco-ghc.git"]
-  path = dotfiles/vim/bundle/neco-ghc
-  url = https://github.com/eagletmt/neco-ghc.git
 [submodule "dotfiles/emacs.d"]
 	path = dotfiles/emacs.d
 	url = https://github.com/syl20bnr/spacemacs.git
