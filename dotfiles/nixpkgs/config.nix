@@ -23,6 +23,7 @@ let
           "ghcmod"
           "gitgutter"
           "Gist"
+          "haskell-vim"
           "haskellconceal"
           "hasksyn"
           "hoogle"
@@ -31,8 +32,10 @@ let
           "neco-ghc"
           "neocomplete"
           "neomake"
+          "neosnippet"
           "nerdtree"
           "nerdcommenter"
+          "purescript-vim"
           "quickfixstatus"
           "quickrun"
           "rainbow_parentheses"
@@ -40,6 +43,10 @@ let
           "taglist"
           "Syntastic"
           "Solarized"
+          "Spacegray-vim"
+          "stylish-haskell"
+          "surround"
+          "table-mode"
           "vim-addon-nix"
           "vim-addon-syntax-checker"
           "vim-addon-vim2nix"
@@ -48,8 +55,10 @@ let
           "vim-nix"
           "vim-orgmode"
           "vim-pandoc"
+          "vim-signify"
           "vim-snippets"
           "vimproc"
+          "vimshell"
           "youcompleteme"
         ];
       }
@@ -91,10 +100,12 @@ in {
         chromium
         imagemagick
         firefox-wrapper
-        xmonad-with-packages
+        #xmonad-with-packages
         mbbx6sppEnv
         spotify
         evince
+        slack
+        purple-hangouts
       ];
     });
     mbbx6sppEnv = buildEnv {
@@ -150,6 +161,7 @@ in {
         urxvt_perl
         urxvt_perls
         urxvt_tabbedex
+        urxvt_theme_switch
         mtr
         pdsh
         xorg.xev
