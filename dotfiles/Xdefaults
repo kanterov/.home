@@ -11,8 +11,8 @@ Xft.lineHeight: -1
 Xft.linePadding: -1
 
 *renderFont: true
-*font: xft:Inconsolata:size=13
-*faceName: Inconsolata
+*font: xft:Terminus:size=12
+*faceName: Terminus
 *faceSize1: 10
 *faceSize2: 12
 *faceSize3: 13
@@ -118,9 +118,9 @@ URxvt.highlightSelection: true
 URxvt.scrollBar: false
 URxvt.underLine: on
 URxvt.renderFont: true
-URxvt.faceName: Inconsolata
-URxvt.faceSize1: 10
-URxvt.faceSize2: 12
+URxvt.faceName: xft:FreeMono:size=12
+URxvt.faceSize1: 12
+URxvt.faceSize2: 14
 URxvt.faceSize3: 16
 URxvt.faceSize4: 20
 URxvt.faceSize5: 24
@@ -129,7 +129,7 @@ URxvt.initialFont: 2
 
 URxvt.urlLauncher: firefox
 URxvt.selectToClipboard: true
-URxvt.perl-ext: default,matcher,fullscreen,font-size,url-select
+URxvt.perl-ext: default,matcher,fullscreen,font-size,resize-font,url-select,selection-to-clipboard
 URxvt.url-launcher: firefox
 URxvt.url-select.launcher: firefox
 URxvt.url-select.underline: true
@@ -142,8 +142,10 @@ URxvt.keysym.C-S-N:     perl:url-select:select_next
 
 URxvt.keysym.F11:     perl:fullscreen:switch
 URxvt.font-size.step: 2
-URxvt.keysym.C-S-_:   perl:font-size:incglobal
-URxvt.keysym.C-S-+:   perl:font-size:decglobal
+URxvt.keysym.C-Down:   perl:font-size:incglobal
+URxvt.keysym.C-Up:   perl:font-size:decglobal
+URxvt.size-font.smaller: C-Down
+URxvt.size-font.bigger: C-Up
 
 !! dzen2
 dzen2.dpi:        160
@@ -168,3 +170,11 @@ dzen2.faceSize6: 32
 dzen2.initialFont: 2
 dzen2.background: #f157b1
 dzen2.foreground: #ffffff
+
+emacs.font:Terminus-12
+emacs.faceName: Terminus
+emacs.faceSize1: 12
+emacs.faceSize2: 14
+emacs.faceSize3: 16
+emacs.faceSize4: 18
+emacs.initialFont: 1
