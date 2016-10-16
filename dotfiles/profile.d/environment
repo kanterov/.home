@@ -56,6 +56,7 @@ sourceProfileInit "gerrit.env"
 sourceProfileInit "lookout.env"
 sourceProfileInit "xmonad.env"
 sourceProfileInit "gradle.env"
+sourceProfileInit "crypto.env"
 
 sourceProfileInit "all.aliases"
 sourceProfileInit "personal.aliases"
@@ -69,6 +70,7 @@ sourceProfileInit "gerrit.aliases"
 sourceProfileInit "lookout.aliases"
 sourceProfileInit "linux.aliases"
 sourceProfileInit "nix.aliases"
+sourceProfileInit "crypto.aliases"
 
 if [ "${PLATFORM}" = "Darwin" ]; then
   sourceProfileInit "osx.env"
