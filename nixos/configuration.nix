@@ -13,6 +13,7 @@ in
       ./hardware-configuration.nix
     ];
 
+  boot.kernelPackages = pkgs.linuxPackages_4_7;
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -24,12 +25,11 @@ in
     options snd_hda_intel index=1 model=intel-mac-auto id=HDMI
     options snd-hda-intel model=mbp101
     options hid_apple fnmode=2
+    options hci reset=1
   '';
-
   # TODO: update for your TZ
   time.timeZone = cfg.timeZone;
 
-  # I like a good font selection...
   fonts.enableFontDir = true;
   fonts.enableCoreFonts = true;
   fonts.enableGhostscriptFonts = true;
@@ -44,17 +44,24 @@ in
     terminus_font
   ];
 
-  # Keep your environment sane
   nix.useSandbox = true;
-  nix.binaryCaches = cfg.binaryCaches;
+  nix.binaryCaches =
+    [
+      https://cache.nixos.org
+    ];
 
-  networking.hostName = cfg.hostName;
+  # TODO: Update
+  networking.extraHosts = ''
+  127.0.0.1 mydevbox.local
+  '';
+  #networking.nameservers = [ "8.8.4.4" "8.8.8.8" ];
+  networking.hostName = "dkmbp0";
   networking.firewall.enable = true;
   networking.wireless.enable = true;
 
   # TODO: enable bluetooth if you use it on your MBP, otherwise I
   # just disable to save on battery.
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth.enable = false;
   # This enables the facetime HD webcam on newer Macbook Pros (mid-2014+).
   hardware.facetimehd.enable = true;
   hardware.opengl.extraPackages = [ pkgs.vaapiIntel ];
@@ -72,6 +79,8 @@ in
     acpi
     vim
     git
+    hidapi
+    emacs25
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -79,26 +88,114 @@ in
     linux = pkgs.linuxPackages.override {
       extraConfig = ''
         THUNDERBOLT m
+        CONFIG_SND_USB=y
+        CONFIG_SND_USB_AUDIO=m
       '';
     };
   };
 
   powerManagement.enable = true;
+  powerManagement.powerDownCommands = ''
+    # disable XHC1 and ARPT for wakeup
+    echo 'disable XHC1' > /proc/acpi/wakeup
+    echo 'disable ARPT' > /proc/acpi/wakeup
+    echo 'enable LID0'  > /proc/acpi/wakeup
+  '';
+  powerManagement.powerUpCommands = ''
+    # disable XHC1 and ARPT for wakeup
+    echo 'disable XHC1' > /proc/acpi/wakeup
+    echo 'disable ARPT' > /proc/acpi/wakeup
+    echo 'enable LID0'  > /proc/acpi/wakeup
+  '';
 
   programs.light.enable = true;
   programs.bash.enableCompletion = true;
 
-  services.locate.enable = true;
+  services.acpid.enable = true;
+  services.dnsmasq.enable = true;
+  services.dnsmasq.extraConfig = ''
+    address=/dev/127.0.0.1
+    server=/prod/10.11.10.53
+    server=/stage/10.10.10.53
+  '';
+  services.dnsmasq.servers = [
+    "8.8.4.4"
+    "8.8.8.8"
+  ];
 
-  # Sensible to keep for powermanagement
+  services.locate.enable = true;
+  services.logind.extraConfig = ''
+    HandlePowerKey=suspend
+    HandleLidSwitch=suspend
+  '';
+  services.openvpn.servers.prod = {
+    autoStart = false;
+    config = builtins.readFile ./vpn.prod.conf;
+    up = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
+    down = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
+  };
+  services.openvpn.servers.stage = {
+    autoStart = true;
+    config = builtins.readFile ./vpn.stage.conf;
+    up = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
+    down = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
+  };
+
+  #services.thermald.enable = true;
+
   services.tlp.enable = true;
+  services.tlp.extraConfig = ''
+    DISK_IDLE_SECS_ON_AC=0
+    DISK_IDLE_SECS_ON_BAT=2
+
+    MAX_LOST_WORK_SECS_ON_AC=15
+    MAX_LOST_WORK_SECS_ON_BAT=60
+
+    CPU_SCALING_GOVERNOR_ON_AC=performance
+    CPU_SCALING_GOVERNOR_ON_BAT=powersave
+
+    SCHED_POWERSAVE_ON_AC=0
+    SCHED_POWERSAVE_ON_BAT=1
+
+    DISK_IOSCHED="deadline cfq"
+
+    SATA_LINKPWR_ON_AC=max_performance
+    SATA_LINKPWR_ON_BAT=min_power
+
+    PCIE_ASPM_ON_AC=performance
+    PCIE_ASPM_ON_BAT=powersave
+
+    WIFI_PWR_ON_AC=off
+    WIFI_PWR_ON_BAT=on
+
+    SOUND_POWER_SAVE_ON_AC=0
+    SOUND_POWER_SAVE_ON_BAT=1
+
+    RUNTIME_PM_ON_AC=on
+    RUNTIME_PM_ON_BAT=auto
+
+    USB_AUTOSUSPEND=1
+
+    DEVICES_TO_ENABLE_ON_AC="bluetooth wifi wwan"
+    DEVICES_TO_DISABLE_ON_BAT="wwan"
+  '';
 
   services.xserver.enable = true;
   services.xserver.enableTCP = false;
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "mac";
   #services.xserver.videoDrivers = [ "intel" ];
-  services.xserver.xkbOptions = "terminate:ctrl_alt_bksp, ctrl:nocaps";
+  services.xserver.xkbOptions = pkgs.lib.concatStringsSep "," [
+    "altwin2:cmd_n_ctrl"
+    "terminate:ctrl_alt_bksp"
+    "ctrl:nocaps"
+  ];
+  # TODO: uncomment and amend if you use an external monitor
+  #services.xserver.xrandrHeads = [ "HDMI-0" "eDP" ];
+  #services.xserver.resolutions = [
+  #  { x = "3840"; y = "2160"; }
+  #  { x = "2880"; y = "1800"; }
+  #];
 
   services.xserver.desktopManager.default = "none";
   services.xserver.desktopManager.xterm.enable = false;
@@ -108,10 +205,16 @@ in
 
   services.xserver.windowManager.default = "xmonad";
   services.xserver.windowManager.xmonad.enable = true;
-  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+  services.xserver.windowManager.xmonad.extraPackages = hpkgs: with hpkgs; [
+    xmonad
+    xmonad-contrib
+    xmonad-extras
+    xmonad-utils
+  ];
 
   services.xserver.multitouch.enable = true;
   services.xserver.multitouch.invertScroll = true;
+  services.xserver.multitouch.tapButtons = true;
 
   services.xserver.synaptics.additionalOptions = ''
     Option "VertScrollDelta" "-100"
@@ -126,16 +229,52 @@ in
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = true;
 
+  system.activationScripts.gpe17disable = pkgs.lib.stringAfter [ "usrbinenv" ] ''
+    # disable the ACPI interrupt problem on gep17
+    "${pkgs.coreutils}/bin/echo" disable > /sys/firmware/acpi/interrupts/gpe17
+  '';
+
+  systemd.user.services.emacs = {
+    description = "Emacs Daemon";
+    environment = {
+      GTK_DATA_PREFIX = config.system.path;
+      SSH_AUTH_SOCK = "%t/gnupg/S.gpg-agent.ssh";
+      GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
+      NIX_PROFILES = "${pkgs.lib.concatStringsSep " " config.environment.profiles}";
+      TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
+      ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
+    };
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = "${pkgs.emacs25}/bin/emacs --daemon";
+      ExecStop = "${pkgs.emacs25}/bin/emacsclient --eval (kill-emacs)";
+      Restart = "always";
+    };
+    wantedBy = [ "default.target" ];
+  };
+
+  systemd.services.emacs.enable = true;
+
   users.mutableUsers = true;
   users.ldap.daemon.enable = false;
-  # TODO: update username and description, etc.
   users.extraUsers."${cfg.user}" = {
     isNormalUser = true;
     uid = 1000;
     group = "users";
     description = cfg.name;
-    extraGroups = [ "wheel" "networkmanager" "systemd-journal" "disk" "audio" "video" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "messagebus"
+      "systemd-journal"
+      "disk"
+      "audio"
+      "video"
+      "docker"
+    ];
     createHome = true;
     home = "/home/${cfg.user}";
   };
+
+  virtualisation.docker.enable = true;
 }
