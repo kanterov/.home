@@ -33,6 +33,7 @@ let
           "neocomplete"
           "neomake"
           "neosnippet"
+          "neosnippet-snippets"
           "nerdtree"
           "nerdcommenter"
           "purescript-vim"
@@ -162,7 +163,10 @@ in {
         urxvt_perls
         urxvt_tabbedex
         urxvt_theme_switch
+        uzbl
+
         mtr
+        speedtest-cli
         pdsh
         xorg.xev
         xorg.xkbcomp
