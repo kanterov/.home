@@ -45,17 +45,14 @@ in
   ];
 
   nix.useSandbox = true;
-  nix.binaryCaches =
-    [
-      https://cache.nixos.org
-    ];
+  nix.binaryCaches = cfg.binaryCaches;
 
-  # TODO: Update
+  # TODO: Update your /etc/hosts content here
   networking.extraHosts = ''
   127.0.0.1 mydevbox.local
   '';
   #networking.nameservers = [ "8.8.4.4" "8.8.8.8" ];
-  networking.hostName = "dkmbp0";
+  networking.hostName = cfg.hostName;
   networking.firewall.enable = true;
   networking.wireless.enable = true;
 
@@ -111,37 +108,13 @@ in
   programs.light.enable = true;
   programs.bash.enableCompletion = true;
 
+  ### Power saving settings below ###
   services.acpid.enable = true;
-  services.dnsmasq.enable = true;
-  services.dnsmasq.extraConfig = ''
-    address=/dev/127.0.0.1
-    server=/prod/10.11.10.53
-    server=/stage/10.10.10.53
-  '';
-  services.dnsmasq.servers = [
-    "8.8.4.4"
-    "8.8.8.8"
-  ];
-
-  services.locate.enable = true;
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
     HandleLidSwitch=suspend
   '';
-  services.openvpn.servers.prod = {
-    autoStart = false;
-    config = builtins.readFile ./vpn.prod.conf;
-    up = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
-    down = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
-  };
-  services.openvpn.servers.stage = {
-    autoStart = true;
-    config = builtins.readFile ./vpn.stage.conf;
-    up = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
-    down = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
-  };
-
-  #services.thermald.enable = true;
+  services.thermald.enable = true;
 
   services.tlp.enable = true;
   services.tlp.extraConfig = ''
@@ -179,6 +152,12 @@ in
     DEVICES_TO_ENABLE_ON_AC="bluetooth wifi wwan"
     DEVICES_TO_DISABLE_ON_BAT="wwan"
   '';
+
+  system.activationScripts.gpe17disable = pkgs.lib.stringAfter [ "usrbinenv" ] ''
+    # disable the ACPI interrupt problem on gep17
+    "${pkgs.coreutils}/bin/echo" disable > /sys/firmware/acpi/interrupts/gpe17
+  '';
+  ### Power saving settings above ###
 
   services.xserver.enable = true;
   services.xserver.enableTCP = false;
@@ -228,11 +207,6 @@ in
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = true;
-
-  system.activationScripts.gpe17disable = pkgs.lib.stringAfter [ "usrbinenv" ] ''
-    # disable the ACPI interrupt problem on gep17
-    "${pkgs.coreutils}/bin/echo" disable > /sys/firmware/acpi/interrupts/gpe17
-  '';
 
   systemd.user.services.emacs = {
     description = "Emacs Daemon";
